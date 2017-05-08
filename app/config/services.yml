@@ -11,3 +11,6 @@ services:
     app.user_manager:
                 class: AppBundle\Manager\UserManager
                 autowire: true
+    app.expense_manager:
+                class: AppBundle\Manager\ExpenseManager
+                autowire: true
