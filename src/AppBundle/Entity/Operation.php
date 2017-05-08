@@ -125,5 +125,15 @@ class Operation
     {
         return $this->category;
     }
+
+//    /**
+//     * Get category id
+//     *
+//     * @return integer
+//     */
+//    public function getCategoryId()
+//    {
+//        return $this->category->getId();
+//    }
 }
 
