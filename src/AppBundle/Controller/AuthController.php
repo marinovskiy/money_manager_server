@@ -8,6 +8,7 @@
 
 namespace AppBundle\Controller;
 
+use AppBundle\Entity\Device;
 use AppBundle\Entity\User;
 use AppBundle\Form\LoginType;
 use AppBundle\Form\RegistrationType;
@@ -53,8 +54,15 @@ class AuthController extends Controller
             $user->setPassword($password);
 
             $this->get('app.user_manager')->registerUser($user);
-            $this->getDoctrine()->getManager()->persist($user);
-            $this->getDoctrine()->getManager()->flush();
+
+            $em = $this->getDoctrine()->getManager();
+
+            $em->persist($user);
+
+            $this->updateApiKeyAndCheckDevice($user, $request->headers->get('platformType'), $request->headers->get('udid'));
+//            $this->updateApiKeyAndCheckDevice($user, $form->get('platformType')->getData(), $form->get('udid')->getData());
+
+            $em->flush();
 
             $response = new Response(
                 $serializer->serialize(
@@ -94,20 +102,25 @@ class AuthController extends Controller
         }
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $user = $this->get('app.user_manager')->findUserByEmail($form->get('email')->getData());
+//            $user = $this->get('app.user_manager')->findUserByEmail($form->get('email')->getData());
+//            $logger->info($user->getEmail());
 
             if ($user) {
                 if (password_verify($form->get('password')->getData(), $user->getPassword())) {
 
-                    $response = new Response(
-                        $serializer->serialize(
-                            $user,
-                            'json'
-                        ),
-                        200
-                    );
-                    $response->headers->set('Content-Type', 'application/json');
-                    return $response;
+//                    $this->updateApiKeyAndCheckDevice($user, $request->headers->get('platformType'), $request->headers->get('udid'));
+//                    $this->getDoctrine()->getManager()->flush();
+
+//                    $response = new Response(
+//                        $serializer->serialize(
+//                            $user,
+//                            'json'
+//                        ),
+//                        200
+//                    );
+//                    $response->headers->set('Content-Type', 'application/json');
+//                    return $response;
+                    throw new HttpException(200, 'User not found');
                 }
             } else {
                 throw new HttpException(404, 'User not found');
@@ -115,5 +128,24 @@ class AuthController extends Controller
         }
 
         throw new HttpException(400, 'Bad credentials');
+    }
+
+    private function updateApiKeyAndCheckDevice($user, $type, $udid)
+    {
+        $em = $this->getDoctrine()->getManager();
+        $deviceRepository = $em->getRepository('AppBundle:Device');
+        $device = $deviceRepository->findOneBy(['udid' => $udid]);
+
+        if (!$device) {
+            $device = new Device();
+            $em->persist($device);
+        }
+
+        $device->setUser($user)
+            ->setUdid($udid)
+            ->setPlatformType($type)
+            ->setApiKey();
+
+        $user->setApiKey($device->getApiKey());
     }
 }

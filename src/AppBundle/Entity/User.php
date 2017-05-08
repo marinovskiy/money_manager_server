@@ -2,6 +2,7 @@
 
 namespace AppBundle\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Validator\Constraints as Assert;
@@ -63,10 +64,16 @@ class User implements UserInterface
     private $plainPassword;
 
     /**
-     * @var string
      *
-     * @ORM\Column(name="apiKey", type="string", length=255, nullable=true)
+     * @ORM\OneToMany(targetEntity="Device", mappedBy="user", cascade={"remove","persist"})
      */
+    private $devices;
+
+//    /**
+//     * var string
+//     *
+//     * ORM\Column(name="apiKey", type="string", length=255, nullable=true)
+//     */
     private $apiKey;
 
     /**
@@ -89,6 +96,10 @@ class User implements UserInterface
      */
     private $gender;
 
+    public function __construct()
+    {
+        $this->devices = new ArrayCollection();
+    }
 
     /**
      * Get id
@@ -212,32 +223,17 @@ class User implements UserInterface
         $this->plainPassword = $plainPassword;
     }
 
-    /**
-     * Set apiKey
-     *
-     * @param string $apiKey
-     *
-     * @return User
-     */
-    public function setApiKey($apiKey = null)
-    {
-        if ($apiKey) {
-            $this->apiKey = $apiKey;
-        } else {
-            $this->apiKey = bin2hex(random_bytes(16));
-        }
-
-        return $this;
-    }
-
-    /**
-     * Get apiKey
-     *
-     * @return string
-     */
     public function getApiKey()
     {
         return $this->apiKey;
+//        return $this->devices->get(0).$this->getApiKey();
+    }
+
+    public function setApiKey($apiKey)
+    {
+        $this->apiKey = $apiKey;
+
+        return $this;
     }
 
     /**
@@ -330,5 +326,39 @@ class User implements UserInterface
 
     public function eraseCredentials()
     {
+    }
+
+    /**
+     * Add devices
+     *
+     * @param Device $devices
+     *
+     * @return User
+     */
+    public function addDevice(Device $devices)
+    {
+        $this->devices[] = $devices;
+
+        return $this;
+    }
+
+    /**
+     * Remove devices
+     *
+     * @param Device $devices
+     */
+    public function removeDevice(Device $devices)
+    {
+        $this->devices->removeElement($devices);
+    }
+
+    /**
+     * Get devices
+     *
+     * @return Device[]
+     */
+    public function getDevices()
+    {
+        return $this->devices;
     }
 }

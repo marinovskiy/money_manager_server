@@ -25,8 +25,8 @@ class UserManager
     {
         $user
             ->setRole(User::ROLE_USER)
-            ->setEnabled(true)
-            ->setApiKey();
+            ->setEnabled(true);
+//            ->setApiKey();
         return $user;
     }
 

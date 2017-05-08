@@ -27,6 +27,8 @@ class RegistrationType extends AbstractType
             ->add('firstName', TextType::class)
             ->add('lastName', TextType::class)
             ->add('gender', TextType::class)
+//            ->add('platformType', TextType::class)
+//            ->add('udid', TextType::class)
             ->add('plainPassword', RepeatedType::class, [
                 'type' => PasswordType::class,
                 'first_name' => 'password',
