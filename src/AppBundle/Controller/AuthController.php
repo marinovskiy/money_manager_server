@@ -8,6 +8,7 @@
 
 namespace AppBundle\Controller;
 
+use AppBundle\AppBundle;
 use AppBundle\Entity\Device;
 use AppBundle\Entity\User;
 use AppBundle\Form\LoginType;
@@ -88,7 +89,12 @@ class AuthController extends Controller
         $logger->info('LOGIN ACTION');
 
         $encoders = array(new JsonEncoder());
-        $normalizers = array(new ObjectNormalizer());
+        $normalizer = new ObjectNormalizer(null);
+        $normalizer->setIgnoredAttributes(array('email'));
+        $normalizer->setCircularReferenceHandler(function ($object) {
+            return $object->getId();
+        });
+        $normalizers = array($normalizer);
         $serializer = new Serializer($normalizers, $encoders);
 
         $data = json_decode($request->getContent(), true);
@@ -102,32 +108,37 @@ class AuthController extends Controller
         }
 
         if ($form->isSubmitted() && $form->isValid()) {
-//            $user = $this->get('app.user_manager')->findUserByEmail($form->get('email')->getData());
-//            $logger->info($user->getEmail());
+
+            $email = $form->get('email')->getData();
+
+            $logger->info($email);
+
+            $user = $this->getDoctrine()->getRepository(User::class)->loadUserByEmail($email);
+//            $user = $this->get('app.user_manager')->loadDeviceTest();
 
             if ($user) {
                 if (password_verify($form->get('password')->getData(), $user->getPassword())) {
 
-//                    $this->updateApiKeyAndCheckDevice($user, $request->headers->get('platformType'), $request->headers->get('udid'));
-//                    $this->getDoctrine()->getManager()->flush();
+                    $this->updateApiKeyAndCheckDevice($user, $request->headers->get('platformType'), $request->headers->get('udid'));
+                    $this->getDoctrine()->getManager()->flush();
 
-//                    $response = new Response(
-//                        $serializer->serialize(
-//                            $user,
-//                            'json'
-//                        ),
-//                        200
-//                    );
-//                    $response->headers->set('Content-Type', 'application/json');
-//                    return $response;
-                    throw new HttpException(200, 'User not found');
+                    $response = new Response(
+                        $serializer->serialize(
+                            $user,
+                            'json'
+                        ),
+                        200
+                    );
+                    $response->headers->set('Content-Type', 'application/json');
+                    return $response;
+//                    throw new HttpException(404, 'User not found');
                 }
             } else {
                 throw new HttpException(404, 'User not found');
             }
         }
 
-        throw new HttpException(400, 'Bad credentials');
+        throw new HttpException(403, 'something other');
     }
 
     private function updateApiKeyAndCheckDevice($user, $type, $udid)

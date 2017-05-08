@@ -64,16 +64,12 @@ class User implements UserInterface
     private $plainPassword;
 
     /**
+     * @var Device[]
      *
      * @ORM\OneToMany(targetEntity="Device", mappedBy="user", cascade={"remove","persist"})
      */
     private $devices;
 
-//    /**
-//     * var string
-//     *
-//     * ORM\Column(name="apiKey", type="string", length=255, nullable=true)
-//     */
     private $apiKey;
 
     /**
@@ -112,6 +108,16 @@ class User implements UserInterface
     }
 
     /**
+     * Get email
+     *
+     * @return string
+     */
+    public function getEmail()
+    {
+        return $this->email;
+    }
+
+    /**
      * Set email
      *
      * @param string $email
@@ -126,13 +132,13 @@ class User implements UserInterface
     }
 
     /**
-     * Get email
+     * Get firstName
      *
      * @return string
      */
-    public function getEmail()
+    public function getFirstName()
     {
-        return $this->email;
+        return $this->firstName;
     }
 
     /**
@@ -150,13 +156,13 @@ class User implements UserInterface
     }
 
     /**
-     * Get firstName
+     * Get lastName
      *
      * @return string
      */
-    public function getFirstName()
+    public function getLastName()
     {
-        return $this->firstName;
+        return $this->lastName;
     }
 
     /**
@@ -174,13 +180,13 @@ class User implements UserInterface
     }
 
     /**
-     * Get lastName
+     * Get password
      *
      * @return string
      */
-    public function getLastName()
+    public function getPassword()
     {
-        return $this->lastName;
+        return $this->password;
     }
 
     /**
@@ -195,16 +201,6 @@ class User implements UserInterface
         $this->password = $password;
 
         return $this;
-    }
-
-    /**
-     * Get password
-     *
-     * @return string
-     */
-    public function getPassword()
-    {
-        return $this->password;
     }
 
     /**
@@ -237,6 +233,16 @@ class User implements UserInterface
     }
 
     /**
+     * Get role
+     *
+     * @return string
+     */
+    public function getRole()
+    {
+        return $this->role;
+    }
+
+    /**
      * Set role
      *
      * @param string $role
@@ -251,13 +257,13 @@ class User implements UserInterface
     }
 
     /**
-     * Get role
+     * Get enabled
      *
-     * @return string
+     * @return bool
      */
-    public function getRole()
+    public function getEnabled()
     {
-        return $this->role;
+        return $this->enabled;
     }
 
     /**
@@ -275,13 +281,13 @@ class User implements UserInterface
     }
 
     /**
-     * Get enabled
+     * Get gender
      *
-     * @return bool
+     * @return string
      */
-    public function getEnabled()
+    public function getGender()
     {
-        return $this->enabled;
+        return $this->gender;
     }
 
     /**
@@ -297,17 +303,6 @@ class User implements UserInterface
 
         return $this;
     }
-
-    /**
-     * Get gender
-     *
-     * @return string
-     */
-    public function getGender()
-    {
-        return $this->gender;
-    }
-
 
     public function getRoles()
     {
@@ -342,15 +337,15 @@ class User implements UserInterface
         return $this;
     }
 
-    /**
-     * Remove devices
-     *
-     * @param Device $devices
-     */
-    public function removeDevice(Device $devices)
-    {
-        $this->devices->removeElement($devices);
-    }
+//    /**
+//     * Remove devices
+//     *
+//     * @param Device $devices
+//     */
+//    public function removeDevice(Device $devices)
+//    {
+//        $this->devices->removeElement($devices);
+//    }
 
     /**
      * Get devices

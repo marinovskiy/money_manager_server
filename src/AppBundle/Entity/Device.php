@@ -2,6 +2,7 @@
 
 namespace AppBundle\Entity;
 
+use AppBundle\Entity\User;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -153,10 +154,9 @@ class Device
      * Set user
      *
      * @param User $user
-     *
      * @return Device
      */
-    public function setUser($user)
+    public function setUser(User $user = null)
     {
         $this->user = $user;
 
@@ -173,4 +173,3 @@ class Device
         return $this->user;
     }
 }
-
