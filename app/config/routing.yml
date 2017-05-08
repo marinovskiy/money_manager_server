@@ -15,3 +15,10 @@ expense_add:
 expenses_list:
     path:     /expenses
     defaults: {_controller: AppBundle:Expense:expenseList}
+
+operations_new:
+    path:     /operations/new
+    defaults: {_controller: AppBundle:Operation:operationsNew}
+operations_list:
+    path:     /operations
+    defaults: {_controller: AppBundle:Operation:operationsList}

@@ -29,6 +29,13 @@ class AppKernel extends Kernel
             $bundles[] = new Doctrine\Bundle\FixturesBundle\DoctrineFixturesBundle();
         }
 
+//        if (in_array($this->getEnvironment(), ['dev', 'test'])) {
+//            //...
+//            $bundles[] = new Nelmio\Alice\Bridge\Symfony\NelmioAliceBundle();
+//            $bundles[] = new Fidry\AliceDataFixtures\Bridge\Symfony\FidryAliceDataFixturesBundle();
+//            $bundles[] = new Hautelook\AliceBundle\HautelookAliceBundle();
+//        }
+
         return $bundles;
     }
 

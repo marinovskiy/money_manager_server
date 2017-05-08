@@ -3,13 +3,16 @@
  * Created by PhpStorm.
  * User: alex
  * Date: 5/8/17
- * Time: 9:42 AM
+ * Time: 1:41 PM
  */
 
 namespace AppBundle\Controller;
 
-use AppBundle\Entity\Expense;
-use AppBundle\Form\AddExpenseType;
+use AppBundle\Entity\Operation;
+use AppBundle\Form\NewOperationType;
+use AppBundle\Manager\OperationManager;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -18,13 +21,13 @@ use Symfony\Component\Serializer\Encoder\JsonEncoder;
 use Symfony\Component\Serializer\Normalizer\ObjectNormalizer;
 use Symfony\Component\Serializer\Serializer;
 
-class ExpenseController extends Controller
+class OperationController extends Controller
 {
     /*
-     * @Route("/expense/add" name="add_expense")
+     * @Route("/operations/new" name="operations_new")
      * @Method("POST")
      */
-    public function addExpenseAction(Request $request)
+    public function operationsNewAction(Request $request)
     {
         $encoders = array(new JsonEncoder());
         $normalizers = array(new ObjectNormalizer());
@@ -32,9 +35,9 @@ class ExpenseController extends Controller
 
         $data = json_decode($request->getContent(), true);
 
-        $expense = new Expense();
-        $form = $this->createForm(AddExpenseType::class, $expense);
-        $form->submit($data['expense']);
+        $operation = new Operation();
+        $form = $this->createForm(NewOperationType::class, $operation);
+        $form->submit($data['operation']);
 
         $logger = $this->get('logger');
         $logger->info('I just got the logger');
@@ -44,13 +47,13 @@ class ExpenseController extends Controller
         }
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $this->get('app.expense_manager')->addExpense($expense);
-            $this->getDoctrine()->getManager()->persist($expense);
+//            $this->get('app.expense_manager')->addExpense($operation);
+            $this->getDoctrine()->getManager()->persist($operation);
             $this->getDoctrine()->getManager()->flush();
 
             $response = new Response(
                 $serializer->serialize(
-                    $expense,
+                    $operation,
                     'json'
                 ),
                 200
@@ -63,39 +66,21 @@ class ExpenseController extends Controller
     }
 
     /*
-     * @Route("/expense/{expense_id}" name="edit_expense")
-     * @Method("PUT")
-     */
-    public function editExpenseAction(Request $request)
-    {
-
-    }
-
-    /*
-     * @Route("/expense/{expense_id}" name="delete_expense")
-     * @Method("DELETE")
-     */
-    public function deleteExpenseAction(Request $request)
-    {
-
-    }
-
-    /*
-     * @Route("/expenses" name="expense_list")
+     * @Route("/operations" name="operations_list")
      * @Method("GET")
      */
-    public function expenseListAction(Request $request)
+    public function operationsListAction(Request $request)
     {
         $encoders = array(new JsonEncoder());
         $normalizers = array(new ObjectNormalizer());
         $serializer = new Serializer($normalizers, $encoders);
 
         $em = $this->getDoctrine()->getManager();
-        $expenses = $em->getRepository(Expense::class)->loadAllExpenses();
+        $operations = $em->getRepository(Operation::class)->loadAllOperations();
 
         $response = new Response(
             $serializer->serialize(
-                $expenses,
+                $operations,
                 'json'
             ),
             200
