@@ -49,7 +49,6 @@ class AuthController extends Controller
         }
 
         if ($form->isSubmitted() && $form->isValid()) {
-
             $password = $this->get('security.password_encoder')
                 ->encodePassword($user, $user->getPlainPassword());
             $user->setPassword($password);
@@ -108,18 +107,18 @@ class AuthController extends Controller
         }
 
         if ($form->isSubmitted() && $form->isValid()) {
-
-            $email = $form->get('email')->getData();
-
-            $logger->info($email);
-
-            $user = $this->getDoctrine()->getRepository(User::class)->loadUserByEmail($email);
-//            $user = $this->get('app.user_manager')->loadDeviceTest();
+            $user = $this
+                ->getDoctrine()
+                ->getRepository(User::class)
+                ->loadUserByEmail($form->get('email')->getData());
 
             if ($user) {
                 if (password_verify($form->get('password')->getData(), $user->getPassword())) {
-
-                    $this->updateApiKeyAndCheckDevice($user, $request->headers->get('platformType'), $request->headers->get('udid'));
+                    $this->updateApiKeyAndCheckDevice(
+                        $user,
+                        $request->headers->get('platformType'),
+                        $request->headers->get('udid')
+                    );
                     $this->getDoctrine()->getManager()->flush();
 
                     $response = new Response(
@@ -131,7 +130,6 @@ class AuthController extends Controller
                     );
                     $response->headers->set('Content-Type', 'application/json');
                     return $response;
-//                    throw new HttpException(404, 'User not found');
                 }
             } else {
                 throw new HttpException(404, 'User not found');
