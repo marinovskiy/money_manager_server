@@ -9,6 +9,7 @@
 namespace AppBundle\Controller;
 
 use AppBundle\Entity\User;
+use AppBundle\Form\LoginType;
 use AppBundle\Form\RegistrationType;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
@@ -51,7 +52,7 @@ class AuthController extends Controller
                 ->encodePassword($user, $user->getPlainPassword());
             $user->setPassword($password);
 
-            $this->get('app.user_manager')->registerUser($user, $request);
+            $this->get('app.user_manager')->registerUser($user);
             $this->getDoctrine()->getManager()->persist($user);
             $this->getDoctrine()->getManager()->flush();
 
@@ -75,6 +76,44 @@ class AuthController extends Controller
      */
     public function loginAction(Request $request)
     {
+        $logger = $this->get('logger');
+        $logger->info('LOGIN ACTION');
 
+        $encoders = array(new JsonEncoder());
+        $normalizers = array(new ObjectNormalizer());
+        $serializer = new Serializer($normalizers, $encoders);
+
+        $data = json_decode($request->getContent(), true);
+
+        $user = new User();
+        $form = $this->createForm(LoginType::class, $user);
+        $form->submit($data['user']);
+
+        foreach ($form->getErrors() as $err) {
+            $logger->info($err->getMessage());
+        }
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $user = $this->get('app.user_manager')->findUserByEmail($form->get('email')->getData());
+
+            if ($user) {
+                if (password_verify($form->get('password')->getData(), $user->getPassword())) {
+
+                    $response = new Response(
+                        $serializer->serialize(
+                            $user,
+                            'json'
+                        ),
+                        200
+                    );
+                    $response->headers->set('Content-Type', 'application/json');
+                    return $response;
+                }
+            } else {
+                throw new HttpException(404, 'User not found');
+            }
+        }
+
+        throw new HttpException(400, 'Bad credentials');
     }
 }

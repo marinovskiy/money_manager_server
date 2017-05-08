@@ -38,14 +38,12 @@ class User implements UserInterface
 
     /**
      * @var string
-     * @Assert\NotBlank(message="$FirstName can not be empty")
      * @ORM\Column(name="firstName", type="string", length=50)
      */
     private $firstName;
 
     /**
      * @var string
-     * @Assert\NotBlank(message="$LastName can not be empty")
      * @ORM\Column(name="lastName", type="string", length=50)
      */
     private $lastName;
@@ -87,7 +85,6 @@ class User implements UserInterface
 
     /**
      * @var string
-     * @Assert\NotBlank(message="Gender can not be empty")
      * @ORM\Column(name="gender", type="string", length=255)
      */
     private $gender;
