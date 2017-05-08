@@ -1,3 +1,9 @@
 app:
     resource: '@AppBundle/Controller/'
     type: annotation
+user_registration:
+    path:     /registration
+    defaults: {_controller: AppBundle:Auth:registration}
+user_login:
+    path:     /login
+    defaults: {_controller: AppBundle:Auth:login}
