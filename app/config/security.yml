@@ -7,6 +7,11 @@ security:
         AppBundle\Entity\User: bcrypt
 
     providers:
+        database_users:
+                entity:
+                    class: AppBundle:User
+                    property: email
+
         in_memory:
             memory:
                 users:
@@ -16,15 +21,37 @@ security:
                     john:
                         password: $2y$12$1ht6JXh8CcXsscT0yqBZ4uwwAbdn6eyPGH9tLXj73SYS2bLeb5y3S
                         roles: 'ROLE_USER'
-        user_provider:
-                  entity:
-                      class:    AppBundle:User
-                      property: apiKey
+                    john1:
+                        password: $2y$12$zgIZhlBxN0SP20cBS.8SfuyQ6uUpUDgtisI1m48h5VaydF63UEi9C
+                        roles: 'ROLE_USER'
+
+#        user_provider:
+#                  entity:
+#                      class:    AppBundle:User
+#                      property: apiKey
 
     firewalls:
         dev:
             pattern: ^/(_(profiler|wdt)|css|images|js)/
             security: false
+
+        secured_area:
+
+            pattern: ^/
+
+            anonymous: true
+
+            provider: database_users
+
+            form_login:
+                check_path: security_login
+                login_path: security_login
+                default_target_path: homepage
+#                csrf_token_generator: security.csrf.token_manager
+
+            logout:
+                path: security_logout
+                target: homepage
 
         api_auth:
             pattern:  ^/api/(registration|login)
