@@ -30,8 +30,21 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 class ApiAuthController extends Controller
 {
     /**
+     * @Route("/test")
+     * @Method({"GET", "POST"})
+     */
+    public function testAction(Request $request)
+    {
+        $logger = $this->get('logger');
+        $logger->info('I just got the logger');
+        $logger->info($this->getUser()->getEmail());
+
+        return new Response('john');
+    }
+
+    /**
      * @Route("/registration", name="api_user_registration")
-     * @Method({"POST"})
+     * @Method({"GET", "POST"})
      */
     public function registrationAction(Request $request)
     {
@@ -76,7 +89,7 @@ class ApiAuthController extends Controller
 
     /**
      * @Route("/login", name="api_user_login")
-     * @Method({"POST"})
+     * @Method({"GET", "POST"})
      */
     public function loginAction(Request $request)
     {

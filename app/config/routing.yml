@@ -14,37 +14,6 @@ admin:
     resource: "@AppBundle/Controller/Admin/"
     type:     annotation
 
-register:
-    path:     /register
-    defaults: {_controller: AppBundle:Auth:register}
-login:
-    path:     /login
-    defaults: {_controller: AppBundle:Auth:login}
-login_check:
-    path:     /login_check
-    defaults: {_controller: AppBundle:Auth:loginCheck}
-logout:
-    path:     /logout
-    defaults: {_controller: AppBundle:Auth:logout}
-
-default:
-    path:     /
-    defaults: {_controller: AppBundle:Default:index}
-
-#apiTest:
-#    path:     /api/test
-#    defaults: {_controller: AppBundle:Default:apiTest}
-#
-#expense_add:
-#    path:     /expense/add
-#    defaults: {_controller: AppBundle:Expense:addExpense}
-#expenses_list:
-#    path:     /expenses
-#    defaults: {_controller: AppBundle:Expense:expenseList}
-#
-#operations_new:
-#    path:     /operations/new
-#    defaults: {_controller: AppBundle:Operation:operationsNew}
-#operations_list:
-#    path:     /operations
-#    defaults: {_controller: AppBundle:Operation:operationsList}
+#default:
+#    path:     /
+#    defaults: {_controller: AppBundle:Default:index}

@@ -16,48 +16,28 @@ security:
                     john:
                         password: $2y$12$1ht6JXh8CcXsscT0yqBZ4uwwAbdn6eyPGH9tLXj73SYS2bLeb5y3S
                         roles: 'ROLE_USER'
-        database_users:
-            entity: { class: AppBundle:User, property: email }
-#        user_provider:
-#                  entity:
-#                      class: AppBundle:User
-#                      property: email
-#                      property: apiKey
+        user_provider:
+                  entity:
+                      class:    AppBundle:User
+                      property: apiKey
 
     firewalls:
         dev:
             pattern: ^/(_(profiler|wdt)|css|images|js)/
             security: false
 
-        auth:
-            pattern: ^/secure/
-            anonymous: ~
-            guard:
-                authenticators:
-                    - app.form_login_authenticator
-#                logout:
-#                     path: /logout
-#                     target: /
-
-
-#            form_login:
-#                login_path: login
-#                check_path: login
-#                csrf_token_generator: security.csrf.token_manager
-
         api:
-            pattern: ^/api/
+            pattern: ^/api
             guard:
                 authenticators:
                     - api.token_authenticator
 
         admin:
-            pattern: ^/admin
+#            pattern: ^/admin
 #            anonymous: ~
             security: true
             http_basic: ~
 
     access_control:
-        - { path: '^/login', roles: IS_AUTHENTICATED_ANONYMOUSLY }
 #        - { path: '^/', roles: ROLE_USER }
         - { path: '^/admin', roles: ROLE_ADMIN }

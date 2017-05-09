@@ -19,18 +19,4 @@ class DefaultController extends Controller
 //        ]);
           return $this->render('default/main.html.twig');
     }
-
-    /**
-     * @Route("/api/test", name="apiTest")
-     */
-    public function apiTestAction(Request $request)
-    {
-        $logger = $this->get('logger');
-        $logger->info($this->getUser()->getEmail());
-
-        // replace this example code with whatever you need
-        return $this->render('default/index.html.twig', [
-            'base_dir' => realpath($this->getParameter('kernel.root_dir').'/..').DIRECTORY_SEPARATOR,
-        ]);
-    }
 }
