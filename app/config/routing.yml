@@ -2,23 +2,31 @@ app:
     resource: '@AppBundle/Controller/'
     type: annotation
 
-user_registration:
-    path:     /registration
-    defaults: {_controller: AppBundle:Auth:registration}
-user_login:
-    path:     /login
-    defaults: {_controller: AppBundle:Auth:login}
+api:
+    resource: "@AppBundle/Controller/Api/"
+    type:     annotation
 
-expense_add:
-    path:     /expense/add
-    defaults: {_controller: AppBundle:Expense:addExpense}
-expenses_list:
-    path:     /expenses
-    defaults: {_controller: AppBundle:Expense:expenseList}
-
-operations_new:
-    path:     /operations/new
-    defaults: {_controller: AppBundle:Operation:operationsNew}
-operations_list:
-    path:     /operations
-    defaults: {_controller: AppBundle:Operation:operationsList}
+#apiTest:
+#    path:     /api/test
+#    defaults: {_controller: AppBundle:Default:apiTest}
+#
+#user_registration:
+#    path:     /registration
+#    defaults: {_controller: AppBundle:Auth:registration}
+#user_login:
+#    path:     /api/login
+#    defaults: {_controller: AppBundle:Auth:login}
+#
+#expense_add:
+#    path:     /expense/add
+#    defaults: {_controller: AppBundle:Expense:addExpense}
+#expenses_list:
+#    path:     /expenses
+#    defaults: {_controller: AppBundle:Expense:expenseList}
+#
+#operations_new:
+#    path:     /operations/new
+#    defaults: {_controller: AppBundle:Operation:operationsNew}
+#operations_list:
+#    path:     /operations
+#    defaults: {_controller: AppBundle:Operation:operationsList}

@@ -6,7 +6,7 @@
  * Time: 9:23 AM
  */
 
-namespace AppBundle\Controller;
+namespace AppBundle\Controller\Api;
 
 use AppBundle\AppBundle;
 use AppBundle\Entity\Device;
@@ -14,6 +14,7 @@ use AppBundle\Entity\User;
 use AppBundle\Form\LoginType;
 use AppBundle\Form\RegistrationType;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Exception\HttpException;
@@ -23,9 +24,12 @@ use Symfony\Component\Serializer\Serializer;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 
+/**
+ * @Route("/api")
+ */
 class AuthController extends Controller
 {
-    /*
+    /**
      * @Route("/registration", name="api_user_registration")
      * @Method({"POST"})
      */
@@ -64,21 +68,13 @@ class AuthController extends Controller
 
             $em->flush();
 
-            $response = new Response(
-                $serializer->serialize(
-                    $user,
-                    'json'
-                ),
-                200
-            );
-            $response->headers->set('Content-Type', 'application/json');
-            return $response;
+            return new JsonResponse($user);
         }
 
         throw new HttpException(400, 'Invalid data');
     }
 
-    /*
+    /**
      * @Route("/login", name="api_user_login")
      * @Method({"POST"})
      */
@@ -121,15 +117,7 @@ class AuthController extends Controller
                     );
                     $this->getDoctrine()->getManager()->flush();
 
-                    $response = new Response(
-                        $serializer->serialize(
-                            $user,
-                            'json'
-                        ),
-                        200
-                    );
-                    $response->headers->set('Content-Type', 'application/json');
-                    return $response;
+                    return new JsonResponse($user);
                 }
             } else {
                 throw new HttpException(404, 'User not found');

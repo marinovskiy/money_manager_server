@@ -6,7 +6,7 @@
  * Time: 1:41 PM
  */
 
-namespace AppBundle\Controller;
+namespace AppBundle\Controller\Api;
 
 use AppBundle\Entity\Operation;
 use AppBundle\Form\NewOperationType;
