@@ -27,7 +27,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 /**
  * @Route("/api")
  */
-class AuthController extends Controller
+class ApiAuthController extends Controller
 {
     /**
      * @Route("/registration", name="api_user_registration")

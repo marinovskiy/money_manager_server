@@ -18,3 +18,7 @@ services:
     app.expense_manager:
                 class: AppBundle\Manager\ExpenseManager
                 autowire: true
+
+    app.form_login_authenticator:
+            class: AppBundle\Security\FormLoginAuthenticator
+            arguments: ["@router", "@security.password_encoder"]
