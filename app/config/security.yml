@@ -26,8 +26,11 @@ security:
             pattern: ^/(_(profiler|wdt)|css|images|js)/
             security: false
 
+        api_auth:
+            pattern:  ^/api/(registration|login)
+            security: false
         api:
-            pattern: ^/api
+            pattern: ^/api/
             guard:
                 authenticators:
                     - api.token_authenticator
