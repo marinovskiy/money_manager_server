@@ -6,16 +6,13 @@ api:
     resource: "@AppBundle/Controller/Api/"
     type:     annotation
 
+api:
+    resource: "@AppBundle/Controller/Admin/"
+    type:     annotation
+
 #apiTest:
 #    path:     /api/test
 #    defaults: {_controller: AppBundle:Default:apiTest}
-#
-#user_registration:
-#    path:     /registration
-#    defaults: {_controller: AppBundle:Auth:registration}
-#user_login:
-#    path:     /api/login
-#    defaults: {_controller: AppBundle:Auth:login}
 #
 #expense_add:
 #    path:     /expense/add

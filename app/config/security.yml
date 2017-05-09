@@ -3,14 +3,26 @@
 security:
 
     encoders:
+        Symfony\Component\Security\Core\User\User:
+                    algorithm: bcrypt
+                    cost: 12
         AppBundle\Entity\User: bcrypt
 
     # http://symfony.com/doc/current/security.html#b-configuring-how-users-are-loaded
     providers:
+        in_memory:
+            memory:
+                users:
+                    admin:
+                        password: $2y$12$0G4FyrVuD.Yxw/ob804mr.e8dbUjMNelURrYmHbL.Thx4ok0IJMpS
+                        roles: 'ROLE_ADMIN'
+                    john:
+                        password: $2y$12$1ht6JXh8CcXsscT0yqBZ4uwwAbdn6eyPGH9tLXj73SYS2bLeb5y3S
+                        roles: 'ROLE_USER'
         user_provider:
-            entity:
-                class: AppBundle:User
-                property: apiKey
+                  entity:
+                      class: AppBundle:User
+                      property: apiKey
 #        in_memory:
 #            memory: ~
 
@@ -25,12 +37,14 @@ security:
             guard:
                 authenticators:
                     - api.token_authenticator
-            # activate different ways to authenticate
 
-            # http://symfony.com/doc/current/security.html#a-configuring-how-your-users-will-authenticate
-            #http_basic: ~
+        admin:
+#            pattern: ^/admin
+#            anonymous: ~
+            security: true
+            http_basic: ~
 
-            # http://symfony.com/doc/current/cookbook/security/form_login_setup.html
-            #form_login: ~
-#     access_control:
-#     - { path: ^/, roles: ROLE_ADMIN }
+    access_control:
+        # this is a catch-all for the admin area
+        # additional security lives in the controllers
+        - { path: '^/admin', roles: ROLE_ADMIN }
