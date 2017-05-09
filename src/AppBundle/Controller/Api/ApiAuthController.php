@@ -38,6 +38,7 @@ class ApiAuthController extends Controller
         $logger = $this->get('logger');
         $logger->info('I just got the logger');
         $logger->info($this->getUser()->getEmail());
+        $logger->info($request->headers);
 
         return new Response('john');
     }
