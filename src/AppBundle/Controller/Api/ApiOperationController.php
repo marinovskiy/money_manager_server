@@ -21,7 +21,7 @@ use Symfony\Component\Serializer\Encoder\JsonEncoder;
 use Symfony\Component\Serializer\Normalizer\ObjectNormalizer;
 use Symfony\Component\Serializer\Serializer;
 
-class OperationController extends Controller
+class ApiOperationController extends Controller
 {
     /*
      * @Route("/operations/new" name="operations_new")

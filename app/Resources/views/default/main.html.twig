@@ -8,9 +8,13 @@
 
 <body>
 
-<button>Login</button>
-
-<button>Registration</button>
+    {% if app.user %}
+        <a href="{{ path('profile_me') }}">My profile</a>
+        <a href="{{ path('logout') }}">Logout</a>
+    {% else %}
+        <a href="{{ path('login') }}">Login</a>
+        <a href="{{ path('registration') }}">Registration</a>
+    {% endif %}
 
 </body>
 </html>

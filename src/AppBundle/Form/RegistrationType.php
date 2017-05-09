@@ -8,11 +8,12 @@
 
 namespace AppBundle\Form;
 
-
 use AppBundle\Entity\User;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\EmailType;
 use Symfony\Component\Form\Extension\Core\Type\PasswordType;
+use Symfony\Component\Form\Extension\Core\Type\RadioType;
 use Symfony\Component\Form\Extension\Core\Type\RepeatedType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -26,7 +27,9 @@ class RegistrationType extends AbstractType
             ->add('email', EmailType::class)
             ->add('firstName', TextType::class)
             ->add('lastName', TextType::class)
-            ->add('gender', TextType::class)
+            ->add('gender', RadioType::class, [
+                'label' => 'Gender',
+            ])
 //            ->add('platformType', TextType::class)
 //            ->add('udid', TextType::class)
             ->add('plainPassword', RepeatedType::class, [

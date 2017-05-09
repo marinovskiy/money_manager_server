@@ -9,6 +9,7 @@
 namespace AppBundle\DataFixtures\ORM;
 
 use AppBundle\Entity\Category;
+use AppBundle\Entity\Currency;
 use AppBundle\Entity\User;
 use Doctrine\Common\DataFixtures\FixtureInterface;
 use Doctrine\Common\Persistence\ObjectManager;
@@ -21,6 +22,26 @@ class LoadCategoryData implements FixtureInterface, ContainerAwareInterface
 
     public function load(ObjectManager $manager)
     {
+        // currencies
+        $currency1 = new Currency();
+        $currency1->setRegion('United States of Americe');
+        $currency1->setRegionSymbol('USA');
+        $currency1->setName('USA Dollar');
+        $currency1->setSymbol('USD');
+
+        $currency2 = new Currency();
+        $currency2->setRegion('Ukraine');
+        $currency2->setRegionSymbol('UA');
+        $currency2->setName('UA Grivna');
+        $currency2->setSymbol('UAH');
+
+        $currency3 = new Currency();
+        $currency3->setRegion('test');
+        $currency3->setRegionSymbol('TEST');
+        $currency3->setName('Tugriki');
+        $currency3->setSymbol('TG');
+
+        // categories
         $category1 = new Category();
         $category1->setName('Food');
         $category1->setType(Category::CATEGORY_TYPE_EXPENSE);
@@ -41,6 +62,7 @@ class LoadCategoryData implements FixtureInterface, ContainerAwareInterface
         $category5->setName('Stipend');
         $category5->setType(Category::CATEGORY_TYPE_INCOME);
 
+        // users
         $user = new User();
         $user->setEmail('alex1@text.com');
         $user->setFirstName('alex');
@@ -48,21 +70,22 @@ class LoadCategoryData implements FixtureInterface, ContainerAwareInterface
         $user->setGender(User::GENDER_MALE);
         $user->setRole(User::ROLE_ADMIN);
         $user->setEnabled(true);
-
         $plainPassword = 'qwerty';
         $encoder = $this->container->get('security.password_encoder');
         $encoded = $encoder->encodePassword($user, $plainPassword);
-
         $this->container->get('app.user_manager')->registerUser($user);
-
         $user->setPassword($encoded);
 
+        // save
         $manager->persist($category1);
         $manager->persist($category2);
         $manager->persist($category3);
         $manager->persist($category4);
         $manager->persist($category5);
         $manager->persist($user);
+        $manager->persist($currency1);
+        $manager->persist($currency2);
+        $manager->persist($currency3);
         $manager->flush();
     }
 
