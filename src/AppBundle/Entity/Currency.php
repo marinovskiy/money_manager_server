@@ -24,20 +24,6 @@ class Currency implements \JsonSerializable
     /**
      * @var string
      *
-     * @ORM\Column(name="region", type="string", length=255)
-     */
-    private $region;
-
-    /**
-     * @var string
-     *
-     * @ORM\Column(name="regionSymbol", type="string", length=255)
-     */
-    private $regionSymbol;
-
-    /**
-     * @var string
-     *
      * @ORM\Column(name="name", type="string", length=255)
      */
     private $name;
@@ -58,54 +44,6 @@ class Currency implements \JsonSerializable
     public function getId()
     {
         return $this->id;
-    }
-
-    /**
-     * Set region
-     *
-     * @param string $region
-     *
-     * @return Currency
-     */
-    public function setRegion($region)
-    {
-        $this->region = $region;
-
-        return $this;
-    }
-
-    /**
-     * Get region
-     *
-     * @return string
-     */
-    public function getRegion()
-    {
-        return $this->region;
-    }
-
-    /**
-     * Set regionSymbol
-     *
-     * @param string $regionSymbol
-     *
-     * @return Currency
-     */
-    public function setRegionSymbol($regionSymbol)
-    {
-        $this->regionSymbol = $regionSymbol;
-
-        return $this;
-    }
-
-    /**
-     * Get regionSymbol
-     *
-     * @return string
-     */
-    public function getRegionSymbol()
-    {
-        return $this->regionSymbol;
     }
 
     /**
@@ -160,8 +98,6 @@ class Currency implements \JsonSerializable
     {
         return [
             'id' => $this->getId(),
-            'region' => $this->getRegion(),
-            'regionSymbol' => $this->getRegionSymbol(),
             'name' => $this->getName(),
             'symbol' => $this->getSymbol(),
         ];

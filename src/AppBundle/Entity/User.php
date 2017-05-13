@@ -92,9 +92,17 @@ class User implements UserInterface, \JsonSerializable
      */
     private $gender;
 
+    /**
+     * @var Account[]
+     *
+     * @ORM\OneToMany(targetEntity="Account", mappedBy="user", cascade={"remove","persist"})
+     */
+    private $accounts;
+
     public function __construct()
     {
         $this->devices = new ArrayCollection();
+        $this->accounts = new ArrayCollection();
     }
 
     /**
@@ -219,10 +227,43 @@ class User implements UserInterface, \JsonSerializable
         $this->plainPassword = $plainPassword;
     }
 
+    /**
+     * Add devices
+     *
+     * @param Device $devices
+     *
+     * @return User
+     */
+    public function addDevice(Device $devices)
+    {
+        $this->devices[] = $devices;
+
+        return $this;
+    }
+
+    /**
+     * Remove devices
+     *
+     * @param Device $devices
+     */
+    public function removeDevice(Device $devices)
+    {
+        $this->devices->removeElement($devices);
+    }
+
+    /**
+     * Get devices
+     *
+     * @return Device[]
+     */
+    public function getDevices()
+    {
+        return $this->devices;
+    }
+
     public function getApiKey()
     {
         return $this->apiKey;
-//        return $this->devices->get(0).$this->getApiKey();
     }
 
     public function setApiKey($apiKey)
@@ -304,6 +345,48 @@ class User implements UserInterface, \JsonSerializable
         return $this;
     }
 
+    /**
+     * Add account
+     *
+     * @param Account $account
+     *
+     * @return User
+     */
+    public function addAccount(Account $account)
+    {
+        $this->accounts->add($account);
+
+        return $this;
+    }
+
+    /**
+     * Remove account
+     *
+     * @param Account $account
+     */
+    public function removeAccount(Account $account)
+    {
+        $this->devices->removeElement($account);
+    }
+
+    /**
+     * Get accounts
+     *
+     * @return Account[]
+     */
+    public function getAccounts()
+    {
+        return $this->accounts;
+    }
+
+    /**
+     * @param Account[] $accounts
+     */
+    public function setAccounts($accounts)
+    {
+        $this->accounts = $accounts;
+    }
+
     public function getRoles()
     {
         return ['ROLE_USER'];
@@ -321,40 +404,6 @@ class User implements UserInterface, \JsonSerializable
 
     public function eraseCredentials()
     {
-    }
-
-    /**
-     * Add devices
-     *
-     * @param Device $devices
-     *
-     * @return User
-     */
-    public function addDevice(Device $devices)
-    {
-        $this->devices[] = $devices;
-
-        return $this;
-    }
-
-//    /**
-//     * Remove devices
-//     *
-//     * @param Device $devices
-//     */
-//    public function removeDevice(Device $devices)
-//    {
-//        $this->devices->removeElement($devices);
-//    }
-
-    /**
-     * Get devices
-     *
-     * @return Device[]
-     */
-    public function getDevices()
-    {
-        return $this->devices;
     }
 
     function jsonSerialize()

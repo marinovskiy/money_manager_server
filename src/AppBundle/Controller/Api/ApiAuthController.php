@@ -35,10 +35,10 @@ class ApiAuthController extends Controller
      */
     public function testAction(Request $request)
     {
-        $logger = $this->get('logger');
-        $logger->info('I just got the logger');
-        $logger->info($this->getUser()->getEmail());
-        $logger->info($request->headers);
+//        $logger = $this->get('logger');
+//        $logger->info('I just got the logger');
+//        $logger->info($this->getUser()->getEmail());
+//        $logger->info($request->headers);
 
         return new Response('john');
     }

@@ -27,8 +27,10 @@ class RegistrationType extends AbstractType
             ->add('email', EmailType::class)
             ->add('firstName', TextType::class)
             ->add('lastName', TextType::class)
-            ->add('gender', RadioType::class, [
+            ->add('gender', ChoiceType::class, [
                 'label' => 'Gender',
+                'expanded' => true,
+                'choices' => [ucfirst(User::GENDER_MALE) => User::GENDER_MALE, ucfirst(User::GENDER_FEMALE) => User::GENDER_FEMALE]
             ])
 //            ->add('platformType', TextType::class)
 //            ->add('udid', TextType::class)

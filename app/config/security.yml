@@ -35,33 +35,29 @@ security:
             pattern: ^/(_(profiler|wdt)|css|images|js)/
             security: false
 
+        api_auth:
+            pattern:  ^/api/(registration|login)$
+            security: false
+        api:
+            pattern: ^/api
+            guard:
+                authenticators:
+                    - api.token_authenticator
+            stateless: true
+            anonymous: false
+
         secured_area:
-
             pattern: ^/
-
             anonymous: true
-
             provider: database_users
-
             form_login:
                 check_path: login
                 login_path: login
                 default_target_path: homepage
 #                csrf_token_generator: security.csrf.token_manager
-
             logout:
                 path:   logout
                 target: homepage
-
-        api_auth:
-            pattern:  ^/api/(registration|login)
-            security: false
-        api:
-            pattern: ^/api/
-            guard:
-                authenticators:
-                    - api.token_authenticator
-
         admin:
 #            pattern: ^/admin
 #            anonymous: ~
@@ -70,5 +66,8 @@ security:
 
     access_control:
         - { path: ^/login, roles: IS_AUTHENTICATED_ANONYMOUSLY }
-        - { path: ^/, roles: [ROLE_USER, IS_AUTHENTICATED_ANONYMOUSLY] }
         - { path: '^/admin', roles: ROLE_ADMIN }
+#        - { path: '^/api/(registration|login)$', roles: IS_AUTHENTICATED_ANONYMOUSLY }
+#        - { path: '^/api', roles: ROLE_USER }
+        - { path: ^/accounts, roles: ROLE_USER }
+        - { path: ^/, roles: [ROLE_USER, IS_AUTHENTICATED_ANONYMOUSLY] }

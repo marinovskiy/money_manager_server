@@ -1,20 +1,22 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <meta charset="UTF-8"/>
-    <title>Money Manager</title>
-    <link rel="stylesheet" href="{{ asset('css/bootstrap.min.css') }}" />
-</head>
+{% extends "::base.html.twig" %}
+{% block body %}
 
-<body>
+    {#<div class="navbar navbar-inverse bg-success">#}
+        {#{% if app.user %}#}
+            {#<a href="{{ path('profile_me') }}">My profile</a>#}
+            {#<a href="{{ path('logout') }}">Logout</a>#}
+        {#{% else %}#}
+            {#<a href="{{ path('login') }}">Login</a>#}
+            {#<a href="{{ path('registration') }}">Registration</a>#}
+        {#{% endif %}#}
+    {#</div>#}
+    {#<div class="container-full">#}
+        {#<div class="row">#}
+            {#<div class="col-md-12">#}
+                    {#<div class="headerDiv">#}
 
-    {% if app.user %}
-        <a href="{{ path('profile_me') }}">My profile</a>
-        <a href="{{ path('logout') }}">Logout</a>
-    {% else %}
-        <a href="{{ path('login') }}">Login</a>
-        <a href="{{ path('registration') }}">Registration</a>
-    {% endif %}
-
-</body>
-</html>
+                {#</div>#}
+            {#</div>#}
+        {#</div>#}
+    {#</div>#}
+{% endblock %}

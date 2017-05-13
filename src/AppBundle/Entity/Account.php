@@ -38,10 +38,23 @@ class Account
     /**
      * @var string
      *
+     * @ORM\Column(name="currency", type="string", length=255)
+     */
+    private $currency;
+
+    /**
+     * @var string
+     *
      * @ORM\Column(name="balance", type="decimal", precision=10, scale=0)
      */
     private $balance;
 
+    /**
+     * @var User
+     *
+     * @ORM\ManyToOne(targetEntity="User", inversedBy="accounts")
+     */
+    private $user;
 
     /**
      * Get id
@@ -102,6 +115,22 @@ class Account
     }
 
     /**
+     * @return string
+     */
+    public function getCurrency()
+    {
+        return $this->currency;
+    }
+
+    /**
+     * @param string $currency
+     */
+    public function setCurrency($currency)
+    {
+        $this->currency = $currency;
+    }
+
+    /**
      * Set balance
      *
      * @param string $balance
@@ -124,5 +153,27 @@ class Account
     {
         return $this->balance;
     }
-}
 
+    /**
+     * Set user
+     *
+     * @param User $user
+     * @return Account
+     */
+    public function setUser(User $user = null)
+    {
+        $this->user = $user;
+
+        return $this;
+    }
+
+    /**
+     * Get user
+     *
+     * @return User
+     */
+    public function getUser()
+    {
+        return $this->user;
+    }
+}

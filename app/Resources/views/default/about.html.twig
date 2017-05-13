@@ -1,0 +1,13 @@
+{% extends "::base.html.twig" %}
+{% block body %}
+
+    <nav class="navbar navbar-toggleable-md navbar-inverse bg-primary">
+        <a class="navbar-brand" href="{{ path('homepage') }}">Main</a>
+        <a class="navbar-brand" href="{{ path('profile_me') }}">Profile</a>
+        <a class="navbar-brand" href="{{ path('about') }}">About</a>
+        <a class="navbar-brand" href="{{ path('logout') }}">Sign out</a>
+    </nav>
+
+    About page
+
+{% endblock %}

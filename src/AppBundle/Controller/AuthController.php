@@ -1,10 +1,4 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: alex
- * Date: 5/9/17
- * Time: 2:54 PM
- */
 
 namespace AppBundle\Controller;
 
@@ -13,6 +7,7 @@ use AppBundle\Form\RegistrationType;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+use Symfony\Component\Security\Core\Authentication\Token\UsernamePasswordToken;
 
 /**
  * @Route("/auth")
@@ -33,10 +28,16 @@ class AuthController extends Controller
                 ->encodePassword($user, $user->getPlainPassword());
             $user->setPassword($password);
 
+            $this->get('app.user_manager')->registerUser($user);
+
             // 4) save the User!
             $em = $this->getDoctrine()->getManager();
             $em->persist($user);
             $em->flush();
+
+            $token = new UsernamePasswordToken($user, null, 'main', $user->getRoles());
+            $this->get('security.token_storage')->setToken($token);
+            $this->get('session')->set('_security_main', serialize($token));
 
             return $this->redirectToRoute('login');
         }
@@ -50,9 +51,9 @@ class AuthController extends Controller
      */
     public function loginAction()
     {
-        if ($this->get('security.authorization_checker')->isGranted('IS_AUTHENTICATED_FULLY')) {
-            return $this->redirect($this->generateUrl('homepage'));
-        }
+//        if ($this->get('security.authorization_checker')->isGranted('IS_AUTHENTICATED_FULLY')) {
+//            return $this->redirect($this->generateUrl('homepage'));
+//        }
 
         $helper = $this->get('security.authentication_utils');
 

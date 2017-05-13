@@ -19,4 +19,11 @@ class DefaultController extends Controller
 //        ]);
         return $this->render('default/main.html.twig');
     }
+    /**
+     * @Route("/about", name="about")
+     */
+    public function aboutAction(Request $request)
+    {
+        return $this->render('default/about.html.twig');
+    }
 }

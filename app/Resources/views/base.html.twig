@@ -1,13 +1,30 @@
 <!DOCTYPE html>
 <html>
-    <head>
-        <meta charset="UTF-8" />
-        <title>{% block title %}Welcome!{% endblock %}</title>
-        {% block stylesheets %}{% endblock %}
-        <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}" />
-    </head>
-    <body>
-        {% block body %}{% endblock %}
-        {% block javascripts %}{% endblock %}
-    </body>
+<head>
+    <meta charset="UTF-8"/>
+    <title>{% block title %}Welcome!{% endblock %}</title>
+    {% block stylesheets %}
+        <link rel="stylesheet" href="{{ asset('bootstrap/css/bootstrap.css') }}">
+        <link rel="stylesheet" href="{{ asset('bootstrap/style.css') }}">
+    {% endblock %}
+    <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}"/>
+</head>
+
+
+<nav class="navbar navbar-toggleable-md navbar-inverse bg-primary">
+    <a class="navbar-brand" href="{{ path('homepage') }}">Main</a>
+    {% if app.user %}
+        <a class="navbar-brand" href="{{ path('profile_me') }}">Profile</a>
+    {% endif %}
+    <a class="navbar-brand" href="{{ path('about') }}">About</a>
+    {% if app.user %}
+        <a class="navbar-brand" href="{{ path('logout') }}">Sign out</a>
+        {% else %}
+        <a class="navbar-brand" href="{{ path('login') }}">Login</a>
+        <a class="navbar-brand" href="{{ path('registration') }}">Registration</a>
+    {% endif %}
+</nav>
+
+{% block body %}{% endblock %}
+{% block javascripts %}{% endblock %}
 </html>

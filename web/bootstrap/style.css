@@ -1,0 +1,39 @@
+html, body {
+    background-color: #f9f9f9;
+}
+
+.headerDiv {
+    height: 60px;
+    /*background-color: #832af7;*/
+    background-color: greenyellow;
+    margin: 0 auto;
+}
+
+.container-centered {
+    float: none;
+    margin: 0 auto;
+}
+
+.container-form {
+    margin-top: 16px;
+}
+
+button {
+    margin-top: 32px;
+}
+
+.card-container {
+    margin: 48px;
+}
+
+.image-profile {
+    width: 28%;
+    margin: 12px;
+}
+
+.div-horizontal {
+    width: 100%;
+    text-align: center;
+    /*margin: 0 auto;*/
+    /*display: inline-block;*/
+}

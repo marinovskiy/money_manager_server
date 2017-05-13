@@ -1,16 +1,21 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <meta charset="UTF-8"/>
-    <title>Money Manager</title>
-    <link rel="stylesheet" href="{{ asset('css/bootstrap.min.css') }}" />
-</head>
-
-<body>
-
-Hello, {{ app.user.firstName }} {{ app.user.lastName }}
-<br>
-Your email is {{ app.user.email }}
-
-</body>
-</html>
+{% extends "::base.html.twig" %}
+{% block body %}
+    <div class="div-horizontal">
+        <div class="card card-inverse card-primary card-container text-right" style="width: 32rem;">
+            <img class="card-img-top image-profile" src="https://goo.gl/gW3khP" alt="Card image cap">
+            <div class="card-block">
+                {{ app.user.firstName }}
+                {{ app.user.lastName }}
+                {{ app.user.email }}
+            </div>
+        </div>
+        <div class="card card-inverse card-primary card-container text-right" style="width: 32rem;">
+            <img class="card-img-top image-profile" src="https://goo.gl/gW3khP" alt="Card image cap">
+            <div class="card-block">
+                {{ app.user.firstName }}
+                {{ app.user.lastName }}
+                {{ app.user.email }}
+            </div>
+        </div>
+    </div>
+{% endblock %}
