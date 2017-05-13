@@ -96,5 +96,10 @@ class Category
     {
         return $this->type;
     }
+
+    public function __toString()
+    {
+        return $this->getName();
+    }
 }
 

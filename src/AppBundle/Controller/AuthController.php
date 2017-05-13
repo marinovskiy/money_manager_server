@@ -51,9 +51,9 @@ class AuthController extends Controller
      */
     public function loginAction()
     {
-//        if ($this->get('security.authorization_checker')->isGranted('IS_AUTHENTICATED_FULLY')) {
-//            return $this->redirect($this->generateUrl('homepage'));
-//        }
+        if ($this->get('security.authorization_checker')->isGranted('IS_AUTHENTICATED_FULLY')) {
+            return $this->redirect($this->generateUrl('homepage'));
+        }
 
         $helper = $this->get('security.authentication_utils');
 

@@ -24,20 +24,14 @@ class LoadCategoryData implements FixtureInterface, ContainerAwareInterface
     {
         // currencies
         $currency1 = new Currency();
-        $currency1->setRegion('United States of Americe');
-        $currency1->setRegionSymbol('USA');
         $currency1->setName('USA Dollar');
         $currency1->setSymbol('USD');
 
         $currency2 = new Currency();
-        $currency2->setRegion('Ukraine');
-        $currency2->setRegionSymbol('UA');
         $currency2->setName('UA Grivna');
         $currency2->setSymbol('UAH');
 
         $currency3 = new Currency();
-        $currency3->setRegion('test');
-        $currency3->setRegionSymbol('TEST');
         $currency3->setName('Tugriki');
         $currency3->setSymbol('TG');
 

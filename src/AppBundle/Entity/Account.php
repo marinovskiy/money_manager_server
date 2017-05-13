@@ -2,6 +2,7 @@
 
 namespace AppBundle\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -10,7 +11,7 @@ use Doctrine\ORM\Mapping as ORM;
  * @ORM\Table(name="account")
  * @ORM\Entity(repositoryClass="AppBundle\Repository\AccountRepository")
  */
-class Account
+class Account implements \JsonSerializable
 {
     /**
      * @var int
@@ -50,11 +51,24 @@ class Account
     private $balance;
 
     /**
-     * @var User
+     * @var int
      *
      * @ORM\ManyToOne(targetEntity="User", inversedBy="accounts")
+     * @ORM\JoinColumn(name="user_id", referencedColumnName="id")
      */
     private $user;
+
+    /**
+     * @var Operation[]
+     *
+     * @ORM\OneToMany(targetEntity="Operation", mappedBy="account", cascade={"remove","persist"})
+     */
+    private $operations;
+
+    public function __construct()
+    {
+        $this->operations = new ArrayCollection();
+    }
 
     /**
      * Get id
@@ -170,10 +184,66 @@ class Account
     /**
      * Get user
      *
-     * @return User
+     * @return int
      */
     public function getUser()
     {
         return $this->user;
+    }
+
+    /**
+     * Add operation
+     *
+     * @param Operation $operation
+     *
+     * @return Account
+     */
+    public function addAccount(Operation $operation)
+    {
+        $this->operations->add($operation);
+
+        return $this;
+    }
+
+    /**
+     * Remove operation
+     *
+     * @param Operation $operation
+     */
+    public function removeAccount(Operation $operation)
+    {
+        $this->operations->removeElement($operation);
+    }
+
+    /**
+     * Get operations
+     *
+     * @return Operation[]
+     */
+    public function getOperations()
+    {
+        return $this->operations;
+    }
+
+    /**
+     * @param Operation[] $operations
+     */
+    public function setOperations($operations)
+    {
+        $this->operations = $operations;
+    }
+
+    //TODO
+    function jsonSerialize()
+    {
+        return [
+            'id' => $this->getId(),
+            'name' => $this->getName(),
+            'description' => $this->getDescription(),
+            'currency' => $this->getCurrency(),
+            'balance' => $this->getBalance(),
+            'userId' => $this->getUser()->getId(),
+            'operations' => $this->getOperations()
+        ];
     }
 }

@@ -102,4 +102,9 @@ class Currency implements \JsonSerializable
             'symbol' => $this->getSymbol(),
         ];
     }
+
+    public function __toString()
+    {
+        return $this->name;
+    }
 }

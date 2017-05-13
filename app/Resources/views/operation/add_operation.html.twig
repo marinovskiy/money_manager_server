@@ -3,7 +3,7 @@
     <div class="container">
         <div class="row">
             <div class="col-md-6 container-centered">
-                <div class="panel-heading">Add new account</div>
+                {#<div class="panel-heading">Add new operation for {{ account.name }} account</div>#}
 
                 <div class="panel-body">
 
@@ -11,7 +11,7 @@
 
                     <div class="container-form">
                         <div class="col-md-12">
-                            {{ form_row(form.name, {'attr': {'class': 'form-control'}}) }}
+                            {{ form_row(form.type, {'attr': {'class': 'form-control'}}) }}
                         </div>
                     </div>
 
@@ -23,7 +23,13 @@
 
                     <div class="container-form">
                         <div class="col-md-12">
-                            {{ form_row(form.currency, {'attr': {'class': 'form-control'}}) }}
+                            {{ form_row(form.sum, {'attr': {'class': 'form-control'}}) }}
+                        </div>
+                    </div>
+
+                    <div class="container-form">
+                        <div class="col-md-12">
+                            {{ form_row(form.category, {'attr': {'class': 'form-control'}}) }}
                         </div>
                     </div>
 

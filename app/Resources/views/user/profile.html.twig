@@ -1,21 +1,43 @@
 {% extends "::base.html.twig" %}
 {% block body %}
-    <div class="div-horizontal">
-        <div class="card card-inverse card-primary card-container text-right" style="width: 32rem;">
-            <img class="card-img-top image-profile" src="https://goo.gl/gW3khP" alt="Card image cap">
-            <div class="card-block">
-                {{ app.user.firstName }}
-                {{ app.user.lastName }}
-                {{ app.user.email }}
-            </div>
+
+    <div class="div-round bg-primary">
+        <div class="div-profile-avatar">
+            <img class="div-image-profile" src="https://goo.gl/gW3khP" alt="Card image cap">
         </div>
-        <div class="card card-inverse card-primary card-container text-right" style="width: 32rem;">
-            <img class="card-img-top image-profile" src="https://goo.gl/gW3khP" alt="Card image cap">
-            <div class="card-block">
-                {{ app.user.firstName }}
-                {{ app.user.lastName }}
-                {{ app.user.email }}
-            </div>
+        <div class="div-profile-content">
+            <p class="card-text-text">{{ app.user.firstName }}</p>
+            <p class="card-text-text">{{ app.user.lastName }}</p>
+            <p class="card-text-text">{{ app.user.email }}</p>
+        </div>
+    </div>
+
+    <div class="card card-inverse card-primary card-container" style="width: 32rem;">
+
+        <h5 class="card-title card-text-title" align="center">Your accounts:</h5>
+
+        <div class="card-block">
+            {% if accounts is empty %}
+                <p class="card-text-text" align="center">There are no accounts yet. Do you want to create one?</p>
+            {% else %}
+                <ul>
+                    {% for account in accounts %}
+                        <li>
+                            <a href="{{ path('accounts_details', {'id': account.id}) }}" class="card-text-text">
+                                {{ account.name }}
+                                {{ account.description }}
+                                {{ account.currency }}
+                                {{ account.balance }}
+                            </a>
+                        </li>
+                    {% endfor %}
+                </ul>
+            {% endif %}
+
+            <form action="{{ path('accounts_add') }}">
+                <button class="btn btn-secondary" type="submit">Add account</button>
+            </form>
+
         </div>
     </div>
 {% endblock %}

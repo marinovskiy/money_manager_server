@@ -8,6 +8,7 @@
 
 namespace AppBundle\Controller;
 
+use AppBundle\Entity\Account;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -20,6 +21,10 @@ class UserController extends Controller
      */
     public function profileMeAction(Request $request)
     {
-        return $this->render('user/profile.html.twig');
+        $accounts = $this->getDoctrine()->getManager()->getRepository(Account::class)->loadAllUserAccounts($this->getUser());
+
+        return $this->render('user/profile.html.twig', [
+            'accounts' => $accounts
+        ]);
     }
 }

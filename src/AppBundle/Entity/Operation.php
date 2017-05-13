@@ -10,8 +10,13 @@ use Doctrine\ORM\Mapping as ORM;
  * @ORM\Table(name="operation")
  * @ORM\Entity(repositoryClass="AppBundle\Repository\OperationRepository")
  */
-class Operation
+class Operation implements \JsonSerializable
 {
+    const TYPE_INCOME = 'income';
+    const TYPE_EXPENSE = 'expense';
+
+    const TYPES_TITLES = ['Income' => self::TYPE_INCOME, 'Expense' => self::TYPE_EXPENSE];
+
     /**
      * @var int
      *
@@ -20,6 +25,13 @@ class Operation
      * @ORM\GeneratedValue(strategy="AUTO")
      */
     private $id;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="type", type="string", length=255)
+     */
+    private $type;
 
     /**
      * @var string
@@ -40,9 +52,16 @@ class Operation
      *
      * @ORM\OneToOne(targetEntity="Category")
      * @ORM\JoinColumn(name="category_id", referencedColumnName="id")
-     * @ORM\Column(name="category", type="object")
      */
     protected $category;
+
+    /**
+     * @var int
+     *
+     * @ORM\ManyToOne(targetEntity="Account", inversedBy="operations")
+     * @ORM\JoinColumn(name="account_id", referencedColumnName="id")
+     */
+    protected $account;
 
     /**
      * Get id
@@ -52,6 +71,28 @@ class Operation
     public function getId()
     {
         return $this->id;
+    }
+
+    /**
+     * @return string
+     *
+     * @return string
+     */
+    public function getType()
+    {
+        return $this->type;
+    }
+
+    /**
+     * @param string $type
+     *
+     * @return Operation
+     */
+    public function setType($type)
+    {
+        $this->type = $type;
+
+        return $this;
     }
 
     /**
@@ -126,14 +167,31 @@ class Operation
         return $this->category;
     }
 
-//    /**
-//     * Get category id
-//     *
-//     * @return integer
-//     */
-//    public function getCategoryId()
-//    {
-//        return $this->category->getId();
-//    }
-}
+    /**
+     * @return mixed
+     */
+    public function getAccount()
+    {
+        return $this->account;
+    }
 
+    /**
+     * @param mixed $account
+     */
+    public function setAccount($account)
+    {
+        $this->account = $account;
+    }
+
+    function jsonSerialize()
+    {
+        return [
+            'id' => $this->getId(),
+            'type' => $this->getType(),
+            'description' => $this->getDescription(),
+            'sum' => $this->getSum(),
+            'category' => $this->getCategory(),
+            'account' => $this->getAccount()
+        ];
+    }
+}

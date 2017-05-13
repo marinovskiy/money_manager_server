@@ -1,6 +1,7 @@
 <?php
 
 namespace AppBundle\Repository;
+use AppBundle\Entity\User;
 
 /**
  * AccountRepository
@@ -10,4 +11,30 @@ namespace AppBundle\Repository;
  */
 class AccountRepository extends \Doctrine\ORM\EntityRepository
 {
+    public function loadAllAccounts()
+    {
+        return $this->findAll();
+    }
+
+    public function loadAllUserAccounts($userId)
+    {
+        return $this
+            ->createQueryBuilder('account')
+            ->where('account.user =:userId')
+            ->setParameter('userId', $userId)
+            ->getQuery()
+            ->getArrayResult();
+    }
+
+    public function loadDetailsAccount($userId, $accountId)
+    {
+        return $this
+            ->createQueryBuilder('account')
+            ->where('account.user =:userId')
+            ->andWhere('account.id =:accountId')
+            ->setParameter('userId', $userId)
+            ->setParameter('accountId', $accountId)
+            ->getQuery()
+            ->getOneOrNullResult();
+    }
 }
