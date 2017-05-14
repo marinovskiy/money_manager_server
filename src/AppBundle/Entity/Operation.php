@@ -56,10 +56,9 @@ class Operation implements \JsonSerializable
     protected $category;
 
     /**
-     * @var Account
+     * @var int
      *
      * @ORM\ManyToOne(targetEntity="Account", inversedBy="operations")
-     * @ORM\JoinColumn(name="account_id", referencedColumnName="id")
      */
     protected $account;
 
@@ -178,7 +177,7 @@ class Operation implements \JsonSerializable
     /**
      * @param Account $account
      */
-    public function setAccount($account)
+    public function setAccount(Account $account = null)
     {
         $this->account = $account;
     }
@@ -190,8 +189,8 @@ class Operation implements \JsonSerializable
             'type' => $this->getType(),
             'description' => $this->getDescription(),
             'sum' => $this->getSum(),
-            'category' => $this->getCategory(),
-            'account' => $this->getAccount()
+            'category' => $this->getCategory()->getName(),
+            'accountId' => $this->getAccount()->getId()
         ];
     }
 }

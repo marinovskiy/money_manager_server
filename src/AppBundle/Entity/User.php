@@ -99,10 +99,25 @@ class User implements UserInterface, \JsonSerializable
      */
     private $accounts;
 
+    /**
+     * @var ArrayCollection|$createdOrganizations[]
+     *
+     * @ORM\OneToMany(targetEntity="Organization", mappedBy="creator")
+     */
+    private $createdOrganizations;
+
+    /**
+     * @var ArrayCollection|$organizations[]
+     *
+     * @ORM\ManyToMany(targetEntity="Organization", mappedBy="members")
+     */
+    private $organizations;
+
     public function __construct()
     {
         $this->devices = new ArrayCollection();
         $this->accounts = new ArrayCollection();
+        $this->organizations = new ArrayCollection();
     }
 
     /**
@@ -366,7 +381,7 @@ class User implements UserInterface, \JsonSerializable
      */
     public function removeAccount(Account $account)
     {
-        $this->devices->removeElement($account);
+        $this->accounts->removeElement($account);
     }
 
     /**
@@ -385,6 +400,90 @@ class User implements UserInterface, \JsonSerializable
     public function setAccounts($accounts)
     {
         $this->accounts = $accounts;
+    }
+
+    /**
+     * Add createdOrganization
+     *
+     * @param Organization $createdOrganization
+     *
+     * @return User
+     */
+    public function addCreatedOrganization(Organization $createdOrganization)
+    {
+        $this->createdOrganizations->add($createdOrganization);
+
+        return $this;
+    }
+
+    /**
+     * Remove createdOrganization
+     *
+     * @param Organization $createdOrganization
+     */
+    public function removeCreatedOrganization(Organization $createdOrganization)
+    {
+        $this->createdOrganizations->removeElement($createdOrganization);
+    }
+
+    /**
+     * Get createdOrganizations
+     *
+     * @return ArrayCollection|$createdOrganizations[]
+     */
+    public function getCreatedOrganizations()
+    {
+        return $this->createdOrganizations;
+    }
+
+    /**
+     * @param Organization[] $createdOrganizations
+     */
+    public function setCreatedOrganizations($createdOrganizations)
+    {
+        $this->createdOrganizations = $createdOrganizations;
+    }
+
+    /**
+     * Add organization
+     *
+     * @param Organization $organization
+     *
+     * @return User
+     */
+    public function addOrganization(Organization $organization)
+    {
+        $this->organizations->add($organization);
+
+        return $this;
+    }
+
+    /**
+     * Remove organization
+     *
+     * @param Organization $organization
+     */
+    public function removeOrganization(Organization $organization)
+    {
+        $this->organizations->removeElement($organization);
+    }
+
+    /**
+     * Get organizations
+     *
+     * @return ArrayCollection|$organizations[]
+     */
+    public function getOrganizations()
+    {
+        return $this->organizations;
+    }
+
+    /**
+     * @param Organization[] $organizations
+     */
+    public function setOrganizations($organizations)
+    {
+        $this->organizations = $organizations;
     }
 
     public function getRoles()
