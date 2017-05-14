@@ -9,11 +9,13 @@
 namespace AppBundle\Controller;
 
 use AppBundle\Entity\Account;
+use AppBundle\Entity\Operation;
 use AppBundle\Form\Account\AddAccountType;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+use Symfony\Component\HttpFoundation\Response;
 
 ///**
 // * @Route("/user")
@@ -44,12 +46,22 @@ class AccountController extends Controller
     }
 
     /**
-     * @Route("/accounts/all", name="accounts_all")
+     * @Route("/accounts/all/test", name="accounts_all_test")
      */
     public function allAccountAction(Request $request)
     {
-        $accounts = $this->getDoctrine()->getManager()->getRepository(Account::class)->loadAllAccounts();
-        return new JsonResponse($accounts);
+//        $accounts = $this->getDoctrine()->getManager()->getRepository(Account::class)->loadAllUserAccounts(3);
+//        return $this->json($accounts);
+
+//        $account = $this->getDoctrine()->getRepository(Account::class)->find(1);
+//        return new JsonResponse($account->getOperations());
+//        return $this->json($account->getOperations());
+
+//        $account = $this->getDoctrine()->getRepository(Account::class)->find(1);
+//        return new JsonResponse($account->getOperations()->toArray());
+
+        $operation = $this->getDoctrine()->getRepository(Operation::class)->find(1);
+        return new JsonResponse($operation);
     }
 
     //TODO move to api directory

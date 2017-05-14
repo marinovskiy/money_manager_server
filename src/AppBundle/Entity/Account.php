@@ -54,12 +54,11 @@ class Account implements \JsonSerializable
      * @var int
      *
      * @ORM\ManyToOne(targetEntity="User", inversedBy="accounts")
-     * @ORM\JoinColumn(name="user_id", referencedColumnName="id")
      */
     private $user;
 
     /**
-     * @var Operation[]
+     * @var ArrayCollection|$operations[]
      *
      * @ORM\OneToMany(targetEntity="Operation", mappedBy="account", cascade={"remove","persist"})
      */
@@ -198,7 +197,7 @@ class Account implements \JsonSerializable
      *
      * @return Account
      */
-    public function addAccount(Operation $operation)
+    public function addOperation(Operation $operation)
     {
         $this->operations->add($operation);
 
@@ -210,7 +209,7 @@ class Account implements \JsonSerializable
      *
      * @param Operation $operation
      */
-    public function removeAccount(Operation $operation)
+    public function removeOperation(Operation $operation)
     {
         $this->operations->removeElement($operation);
     }
@@ -218,7 +217,7 @@ class Account implements \JsonSerializable
     /**
      * Get operations
      *
-     * @return Operation[]
+     * @return ArrayCollection|$operations[]
      */
     public function getOperations()
     {
@@ -226,7 +225,7 @@ class Account implements \JsonSerializable
     }
 
     /**
-     * @param Operation[] $operations
+     * @param ArrayCollection|$operations[] $operations
      */
     public function setOperations($operations)
     {
@@ -242,7 +241,6 @@ class Account implements \JsonSerializable
             'description' => $this->getDescription(),
             'currency' => $this->getCurrency(),
             'balance' => $this->getBalance(),
-            'userId' => $this->getUser()->getId(),
             'operations' => $this->getOperations()
         ];
     }

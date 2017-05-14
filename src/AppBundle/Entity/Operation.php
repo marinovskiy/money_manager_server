@@ -56,7 +56,7 @@ class Operation implements \JsonSerializable
     protected $category;
 
     /**
-     * @var int
+     * @var Account
      *
      * @ORM\ManyToOne(targetEntity="Account", inversedBy="operations")
      * @ORM\JoinColumn(name="account_id", referencedColumnName="id")
@@ -168,7 +168,7 @@ class Operation implements \JsonSerializable
     }
 
     /**
-     * @return mixed
+     * @return Account
      */
     public function getAccount()
     {
@@ -176,7 +176,7 @@ class Operation implements \JsonSerializable
     }
 
     /**
-     * @param mixed $account
+     * @param Account $account
      */
     public function setAccount($account)
     {

@@ -93,7 +93,7 @@ class User implements UserInterface, \JsonSerializable
     private $gender;
 
     /**
-     * @var Account[]
+     * @var ArrayCollection|$accounts[]
      *
      * @ORM\OneToMany(targetEntity="Account", mappedBy="user", cascade={"remove","persist"})
      */
@@ -372,7 +372,7 @@ class User implements UserInterface, \JsonSerializable
     /**
      * Get accounts
      *
-     * @return Account[]
+     * @return ArrayCollection|$accounts[]
      */
     public function getAccounts()
     {
