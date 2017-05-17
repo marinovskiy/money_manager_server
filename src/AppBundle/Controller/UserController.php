@@ -9,6 +9,7 @@
 namespace AppBundle\Controller;
 
 use AppBundle\Entity\Account;
+use AppBundle\Entity\Organization;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -23,9 +24,11 @@ class UserController extends Controller
     public function profileMeAction(Request $request)
     {
         $accounts = $this->getDoctrine()->getManager()->getRepository(Account::class)->loadAllUserAccounts($this->getUser());
+        $organizations = $this->getDoctrine()->getManager()->getRepository(Organization::class)->loadAllOrganizations();
 
         return $this->render('user/profile.html.twig', [
-            'accounts' => $accounts
+            'accounts' => $accounts,
+            'organizations' => $organizations
         ]);
     }
 

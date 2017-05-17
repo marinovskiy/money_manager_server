@@ -3,7 +3,7 @@
 namespace AppBundle\Controller;
 
 use AppBundle\Entity\User;
-use AppBundle\Form\RegistrationType;
+use AppBundle\Form\Auth\RegistrationType;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
@@ -42,7 +42,9 @@ class AuthController extends Controller
             return $this->redirectToRoute('login');
         }
 
-        return $this->render('auth/registration.html.twig', array('form' => $form->createView())
+        return $this->render(
+            'auth/registration.html.twig',
+            array('form' => $form->createView())
         );
     }
 

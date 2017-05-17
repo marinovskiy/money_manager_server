@@ -1,0 +1,69 @@
+{% extends "::base.html.twig" %}
+{% block body %}
+
+    {{ organization.name }}
+    {{ organization.description }}
+    {{ organization.type }}
+
+    Members:
+    {% for member in organization.members %}
+        <li>
+            <p class="card-text-text">
+                {{ member.firstName }}
+                {{ member.lastName }}
+            </p>
+        </li>
+    {% endfor %}
+
+    <button class="btn btn-secondary" onclick="test123()">Add members</button>
+
+    <div id="add_new_members" style="display: none;">
+        <div class="form-group row">
+            <label for="example-search-input" class="col-2 col-form-label">Search users</label>
+            <div class="col-10">
+                <input class="form-control" type="search" value="" id="example-search-input">
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function myFunction() {
+            var x = document.getElementById('add_new_members');
+            if (x.style.display === 'none') {
+                x.style.display = 'block';
+            } else {
+                x.style.display = 'none';
+            }
+        }
+
+        function test() {
+            jQuery.ajax({
+                type: "GET",
+                url: "{{ path('org_test') }}",
+                success: function (data, dataType) {
+                    alert(data);
+                },
+                error: function (XMLHttpRequest, textStatus, errorThrown) {
+                    alert('Error : ' + errorThrown);
+                }
+            })
+        }
+
+        function test123() {
+            $.ajax({
+                type: "POST",
+                dataType: 'json',
+                url: "{{ path('org_test') }}",
+                async: false //you won't need that if nothing in your following code is dependend of the result
+            })
+                .done(function (response) {
+                    template = response;
+                    $('#your_div').html(template.html); //Change the html of the div with the id = "your_div"
+                })
+                .fail(function (jqXHR, textStatus, errorThrown) {
+                    alert('Error : ' + errorThrown);
+                });
+        }
+    </script>
+
+{% endblock %}

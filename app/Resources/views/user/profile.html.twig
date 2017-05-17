@@ -12,6 +12,32 @@
         </div>
     </div>
 
+    <div class="div-round bg-primary">
+        <div class="div-profile-content">
+            <h5 class="card-text-text">Your groups:</h5>
+            {% if organizations is empty %}
+                <p class="card-text-text" align="center">There are no groups yet. Do you want to create one?</p>
+            {% else %}
+                <ul>
+                    <li>
+                        {% for organization in organizations %}
+                            <a href="{{ path('organization_details', {'id': organization.id}) }}" class="card-text-text">
+                                {{ organization.name }}
+                                {{ organization.type }}
+                                {{ organization.description }}
+                                Has public access: {{ organization.publicAccess ? 'Yes':'No' }}
+                            </a>
+                        {% endfor %}
+                    </li>
+                </ul>
+            {% endif %}
+
+            <form action="{{ path('organization_create') }}">
+                <button class="btn btn-secondary" type="submit">Add group</button>
+            </form>
+        </div>
+    </div>
+
     <div class="card card-inverse card-primary card-container" style="width: 32rem;">
 
         <h5 class="card-title card-text-title" align="center">Your accounts:</h5>

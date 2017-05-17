@@ -1,0 +1,46 @@
+{% extends 'base.html.twig' %}
+{% block body %}
+    <div class="container">
+        <div class="row">
+            <div class="col-md-6 container-centered">
+                {#<div class="panel-heading">Add new operation for {{ account.name }} account</div>#}
+
+                <div class="panel-body">
+
+                    {{ form_start(form) }}
+
+                    <div class="container-form">
+                        <div class="col-md-12">
+                            {{ form_row(form.name, {'attr': {'class': 'form-control'}}) }}
+                        </div>
+                    </div>
+
+                    <div class="container-form">
+                        <div class="col-md-12">
+                            {{ form_row(form.description, {'attr': {'class': 'form-control'}}) }}
+                        </div>
+                    </div>
+
+                    <div class="container-form">
+                        <div class="col-md-12">
+                            {{ form_row(form.type, {'attr': {'class': 'form-control'}}) }}
+                        </div>
+                    </div>
+
+                    <div class="container-form">
+                        <div class="col-md-12">
+                            {{ form_row(form.publicAccess, {'attr': {'class': 'form-control'}}) }}
+                        </div>
+                    </div>
+
+                    <div class="text-center">
+                        <button class="btn btn-block btn-primary" type="submit">Create</button>
+                    </div>
+
+                    {{ form_end(form) }}
+
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

@@ -43,6 +43,13 @@ class Organization
     /**
      * @var string
      *
+     * @ORM\Column(name="description", type="string", length=255)
+     */
+    private $description;
+
+    /**
+     * @var string
+     *
      * @ORM\Column(name="type", type="string", length=255)
      */
     private $type;
@@ -108,6 +115,30 @@ class Organization
     }
 
     /**
+     * Set description
+     *
+     * @param string $description
+     *
+     * @return Organization
+     */
+    public function setDescription($description)
+    {
+        $this->description = $description;
+
+        return $this;
+    }
+
+    /**
+     * Get description
+     *
+     * @return string
+     */
+    public function getDescription()
+    {
+        return $this->description;
+    }
+
+    /**
      * Set type
      *
      * @param string $type
@@ -144,7 +175,7 @@ class Organization
      */
     public function setPublicAccess($publicAccess)
     {
-        if (strcmp($this->type, self::TYPE_ORGANIZATION) !== 0) {
+        if ($publicAccess == true && strcmp($this->type, self::TYPE_ORGANIZATION) !== 0) {
             throw new Exception('Only organizations can have public access');
         } else {
             $this->publicAccess = $publicAccess;
@@ -157,7 +188,7 @@ class Organization
      * @param User $creator
      * @return Organization
      */
-    public function setUser(User $creator = null)
+    public function setCreator(User $creator = null)
     {
         $this->creator = $creator;
 
@@ -169,7 +200,7 @@ class Organization
      *
      * @return int
      */
-    public function getUser()
+    public function getCreator()
     {
         return $this->creator;
     }
