@@ -6,13 +6,13 @@ app:
 #    resource: "@AppBundle/Controller/Auth/"
 #    type:     annotation
 
-api:
-    resource: "@AppBundle/Controller/Api/"
-    type:     annotation
-
-admin:
-    resource: "@AppBundle/Controller/Admin/"
-    type:     annotation
+#api:
+#    resource: "@AppBundle/Controller/Api/"
+#    type:     annotation
+#
+#admin:
+#    resource: "@AppBundle/Controller/Admin/"
+#    type:     annotation
 
 #default:
 #    path:     /

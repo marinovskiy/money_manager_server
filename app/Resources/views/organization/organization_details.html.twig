@@ -1,27 +1,77 @@
 {% extends "::base.html.twig" %}
 {% block body %}
 
-    {{ organization.name }}
-    {{ organization.description }}
-    {{ organization.type }}
-
-    Members:
-    {% for member in organization.members %}
-        <li>
+    <div class="div-round bg-primary" style="width: 25%;">
+        <div class="div-round-content">
+            <h5 class="card-text-title"><b>Group info:</b></h5>
             <p class="card-text-text">
-                {{ member.firstName }}
-                {{ member.lastName }}
+                <b>Name:</b> {{ organization.name }}
             </p>
-        </li>
-    {% endfor %}
+            <p class="card-text-text">
+                <b>Type:</b> {{ organization.type }}
+            </p>
+            <p class="card-text-text">
+                <b>Description:</b> {{ organization.description }}
+            </p>
+        </div>
+    </div>
 
-    <button class="btn btn-secondary" onclick="test123()">Add members</button>
+    <div class="div-round bg-primary" style="width: 25%;">
+        <div class="div-round-content">
+            <h5 class="card-text-text">{{ organization.name }} accounts:</h5>
+            <ul>
+                <li>
+                    {#{% for account in organization.accounts %}#}
+                    {#<p class="card-text-text">#}
+                    {#{{ account.type }}#}
+                    {#{{ account.description }}#}
+                    {#{{ account.sum }}#}
+                    {#{{ account.category }}#}
+                    {#</p>#}
+                    {#{% endfor %}#}
+                </li>
+            </ul>
+        </div>
+    </div>
 
-    <div id="add_new_members" style="display: none;">
-        <div class="form-group row">
-            <label for="example-search-input" class="col-2 col-form-label">Search users</label>
-            <div class="col-10">
-                <input class="form-control" type="search" value="" id="example-search-input">
+    <div class="div-round bg-primary" style="width: 25%;">
+        <div class="div-round-content">
+            <h5 class="card-text-text">{{ organization.name }} members:</h5>
+            <ul>
+                {% for member in organization.members %}
+                    <li>
+                        <p class="card-text-text">
+                            {{ member.firstName }}
+                            {{ member.lastName }}
+                        </p>
+                    </li>
+                {% endfor %}
+            </ul>
+
+            <button class="btn btn-secondary" onclick="myFunction()">Add members</button>
+        </div>
+    </div>
+
+    <div class="div-round bg-primary" style="width: 25%;">
+        <div class="div-round-content">
+            <h5 class="card-text-text">Last {{ organization.name }} operations:</h5>
+            <ul>
+
+            </ul>
+
+            <button class="btn btn-secondary" onclick="">Add operation</button>
+        </div>
+    </div>
+
+    <div id="add_new_members" class="div-round bg-primary" style="display: none; width: 50%;">
+        <div class="div-round-content">
+            <h5 class="card-text-text">Search for new members:</h5>
+
+            <div class="form-group row">
+                <label for="example-search-input" class="col-form-label">Search users</label>
+                <div class="col-10">
+                    <input class="form-control" type="search" value="" id="example-search-input">
+                </div>
             </div>
         </div>
     </div>
@@ -34,35 +84,6 @@
             } else {
                 x.style.display = 'none';
             }
-        }
-
-        function test() {
-            jQuery.ajax({
-                type: "GET",
-                url: "{{ path('org_test') }}",
-                success: function (data, dataType) {
-                    alert(data);
-                },
-                error: function (XMLHttpRequest, textStatus, errorThrown) {
-                    alert('Error : ' + errorThrown);
-                }
-            })
-        }
-
-        function test123() {
-            $.ajax({
-                type: "POST",
-                dataType: 'json',
-                url: "{{ path('org_test') }}",
-                async: false //you won't need that if nothing in your following code is dependend of the result
-            })
-                .done(function (response) {
-                    template = response;
-                    $('#your_div').html(template.html); //Change the html of the div with the id = "your_div"
-                })
-                .fail(function (jqXHR, textStatus, errorThrown) {
-                    alert('Error : ' + errorThrown);
-                });
         }
     </script>
 

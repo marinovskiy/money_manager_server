@@ -47,9 +47,14 @@ button {
     float: left;
 }
 
+/*.card-text-title {*/
+    /*margin-top: 12px;*/
+    /*font-weight: 500;*/
+/*}*/
+
 .card-text-title {
-    margin-top: 12px;
-    font-weight: 500;
+    color: white;
+    padding-bottom: 16px;
 }
 
 .card-text-text {
@@ -62,6 +67,7 @@ button {
     margin: 48px 24px 48px 48px;
     overflow: auto;
     display: inline-block;
+    vertical-align: top;
 }
 
 .div-round-content {

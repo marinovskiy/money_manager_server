@@ -40,26 +40,7 @@ class OrganizationController extends Controller
     }
 
     /**
-     * @Route("/{userId}")
-     * @param $userId
-     * @return \Symfony\Component\HttpFoundation\Response
-     */
-    public function getDataAction($userId)
-    {
-        $logger = $this->get('logger');
-        $logger->info('get data');
-        // get some data
-        $em = $this->getDoctrine()->getManager();
-
-        // this example shows retrieving user data
-        // implement your logic for retrieving projecty by user id here
-        $userData = $em->getRepository('AppBundle:User')->findOneBy(array('id' => $userId));
-
-        return $this->render('test123user.html.twig', array('user' => $userData));
-    }
-
-    /**
-     * @Route("/{id}", name="organization_details")
+     * @Route("/{id}", name="organization_details", requirements={"id": "\d+"})
      */
     public function organizationDetailsAction(Request $request, $id)
     {
@@ -95,5 +76,13 @@ class OrganizationController extends Controller
         return $this->render('account/account_details.html.twig', array(
             'account' => $account
         ));
+    }
+
+    /**
+     * @Route("/qwerty123", name="qwerty123")
+     */
+    public function qwerty123Action()
+    {
+        return $this->json(['key' => 'hello']);
     }
 }

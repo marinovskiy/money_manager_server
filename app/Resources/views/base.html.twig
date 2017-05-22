@@ -10,6 +10,7 @@
     <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}"/>
 </head>
 
+<body>
 
 <nav class="navbar navbar-toggleable-md navbar-inverse bg-primary">
     <a class="navbar-brand" href="{{ path('homepage') }}">Main</a>
@@ -27,16 +28,9 @@
 </nav>
 
 {% block body %}{% endblock %}
-{% block javascripts %}
-    <script>
-//        function myFunction() {
-//            var x = document.getElementById('myDIV');
-//            if (x.style.display === 'none') {
-//                x.style.display = 'block';
-//            } else {
-//                x.style.display = 'none';
-//            }
-//        }
-    </script>
-{% endblock %}
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+<script src="{{ asset('bootstrap/js/bootstrap.min.js') }}"></script>
+{% block javascripts %}{% endblock %}
+
+</body>
 </html>

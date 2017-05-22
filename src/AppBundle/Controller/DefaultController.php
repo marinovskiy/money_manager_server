@@ -34,4 +34,14 @@ class DefaultController extends Controller
     {
         return $this->render('default/faq.html.twig');
     }
+
+
+
+    /**
+     * @Route("/qwerty123", name="qwerty123")
+     */
+    public function qwerty123Action()
+    {
+        return $this->json(['key' => 'hello']);
+    }
 }
