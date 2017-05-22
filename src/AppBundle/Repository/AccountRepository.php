@@ -37,4 +37,14 @@ class AccountRepository extends \Doctrine\ORM\EntityRepository
             ->getQuery()
             ->getOneOrNullResult();
     }
+
+    public function loadAllOrganizationAccounts($organizationId)
+    {
+        return $this
+            ->createQueryBuilder('account')
+            ->where('account.organization =:organizationId')
+            ->setParameter('organizationId', $organizationId)
+            ->getQuery()
+            ->getArrayResult();
+    }
 }

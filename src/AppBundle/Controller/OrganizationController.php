@@ -48,8 +48,10 @@ class OrganizationController extends Controller
     public function organizationDetailsAction(Request $request, $id)
     {
         $organization = $this->getDoctrine()->getManager()->getRepository(Organization::class)->find($id);
+        $accounts = $this->getDoctrine()->getManager()->getRepository(Account::class)->loadAllOrganizationAccounts($id);
         return $this->render('organization/organization_details.html.twig', [
-            'organization' => $organization
+            'organization' => $organization,
+            'accounts' => $accounts
         ]);
     }
 
