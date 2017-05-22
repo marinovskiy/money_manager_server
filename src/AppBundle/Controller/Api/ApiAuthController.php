@@ -1,18 +1,12 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: alex
- * Date: 5/8/17
- * Time: 9:23 AM
- */
 
 namespace AppBundle\Controller\Api;
 
 use AppBundle\AppBundle;
 use AppBundle\Entity\Device;
 use AppBundle\Entity\User;
+use AppBundle\Form\Auth\RegistrationType;
 use AppBundle\Form\LoginType;
-use AppBundle\Form\RegistrationType;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;

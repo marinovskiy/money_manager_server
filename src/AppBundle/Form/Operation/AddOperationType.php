@@ -14,6 +14,7 @@ use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\IntegerType;
+use Symfony\Component\Form\Extension\Core\Type\MoneyType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -26,6 +27,7 @@ class AddOperationType extends AbstractType
             ->add('type', ChoiceType::class, ['choices' => Operation::TYPES_TITLES])
             ->add('description', TextareaType::class)
             ->add('sum', IntegerType::class, ['attr' => ['step' => 0.01]])
+//            ->add('sum', MoneyType::class, ['scale' => 2])
             ->add('category', EntityType::class, ['class' => Category::class]);
     }
 

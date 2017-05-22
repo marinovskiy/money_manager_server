@@ -41,16 +41,16 @@ class Operation implements \JsonSerializable
     private $description;
 
     /**
-     * @var string
+     * @var float
      *
-     * @ORM\Column(name="sum", type="decimal", precision=7, scale=2)
+     * @ORM\Column(name="sum", type="decimal", precision=10, scale=2)
      */
     private $sum;
 
     /**
      * @var Category
      *
-     * @ORM\OneToOne(targetEntity="Category")
+     * @ORM\ManyToOne(targetEntity="Category")
      * @ORM\JoinColumn(name="category_id", referencedColumnName="id")
      */
     protected $category;
@@ -121,7 +121,7 @@ class Operation implements \JsonSerializable
     /**
      * Set sum
      *
-     * @param string $sum
+     * @param float $sum
      *
      * @return Operation
      */
@@ -135,7 +135,7 @@ class Operation implements \JsonSerializable
     /**
      * Get sum
      *
-     * @return string
+     * @return float
      */
     public function getSum()
     {

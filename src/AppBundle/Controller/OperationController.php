@@ -9,11 +9,12 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+use Symfony\Component\HttpFoundation\Response;
 
 class OperationController extends Controller
 {
     /**
-     * @Route("/accounts/{id}/operations/add", name="operations_add")
+     * @Route("/accounts/{id}/operations/add", name="operations_add", requirements={"id": "\d+"})
      */
     public function addOperationAction(Request $request, $id)
     {
@@ -24,8 +25,18 @@ class OperationController extends Controller
         if ($form->isSubmitted() && $form->isValid()) {
             $em = $this->getDoctrine()->getManager();
 
-            $operation->setAccount($em->getRepository(Account::class)->find($id));
+            $account = $em->getRepository(Account::class)->find($id);
+            $operation->setAccount($account);
 
+            $balance = $account->getBalance();
+            $sum = $operation->getSum();
+            if ($operation->getType() == Operation::TYPE_INCOME) {
+                $account->setBalance($balance + $sum);
+            } else if ($operation->getType() == Operation::TYPE_EXPENSE) {
+                $account->setBalance($balance - $sum);
+            }
+
+            $em->persist($account);
             $em->persist($operation);
             $em->flush();
 

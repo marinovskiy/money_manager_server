@@ -13,24 +13,37 @@
             <p class="card-text-text">
                 <b>Description:</b> {{ organization.description }}
             </p>
+            <p class="card-text-text">
+                <b>Access:</b> {{ organization.publicAccess ? 'public':'private' }}
+            </p>
+
+            <button class="btn btn-secondary" onclick="">Make public</button>
         </div>
     </div>
 
     <div class="div-round bg-primary" style="width: 25%;">
         <div class="div-round-content">
             <h5 class="card-text-text">{{ organization.name }} accounts:</h5>
-            <ul>
-                <li>
-                    {#{% for account in organization.accounts %}#}
-                    {#<p class="card-text-text">#}
-                    {#{{ account.type }}#}
-                    {#{{ account.description }}#}
-                    {#{{ account.sum }}#}
-                    {#{{ account.category }}#}
-                    {#</p>#}
-                    {#{% endfor %}#}
-                </li>
-            </ul>
+            {% if organization.accounts is empty %}
+                <p class="card-text-text" align="center">There are no accounts yet. Do you want to create one?</p>
+            {% else %}
+                <ul>
+                    <li>
+                        {#{% for account in organization.accounts %}#}
+                        {#<p class="card-text-text">#}
+                        {#{{ account.type }}#}
+                        {#{{ account.description }}#}
+                        {#{{ account.sum }}#}
+                        {#{{ account.category }}#}
+                        {#</p>#}
+                        {#{% endfor %}#}
+                    </li>
+                </ul>
+            {% endif %}
+
+            <form action="{{ path('organization_create_account', {'id': organization.id}) }}">
+                <button class="btn btn-secondary" type="submit">Add account</button>
+            </form>
         </div>
     </div>
 
@@ -49,6 +62,7 @@
             </ul>
 
             <button class="btn btn-secondary" onclick="myFunction()">Add members</button>
+            <button class="btn btn-secondary" onclick="asd123()">Add members</button>
         </div>
     </div>
 
@@ -76,6 +90,15 @@
         </div>
     </div>
 
+    <div id="test1230">
+        qwerty
+        {#{% for cat in category %}#}
+        {#{{ category.name }}#}
+        {#{% endfor %}#}
+        <ul class="nav nav-second-level" id="entitiesNav">
+        </ul>
+    </div>
+
     <script>
         function myFunction() {
             var x = document.getElementById('add_new_members');
@@ -84,6 +107,41 @@
             } else {
                 x.style.display = 'none';
             }
+        }
+    </script>
+
+{% endblock %}
+{% block javascripts %}
+    {{ parent() }}
+    <script>
+        //        $(document).ready(function () {
+        //            $.get("/organization/qwerty123",
+        ////            {
+        ////                name: "Donald Duck",
+        ////                city: "Duckburg"
+        ////            },
+        //                function (data, status) {
+        ////                    console.log(data);
+        //                    alert("Data: " + data + "\nStatus: " + status);
+        //                });
+        //        });
+
+        function asd123() {
+            $.ajax({
+                type: "GET",
+                url: "/organization/qwerty123",
+                success: function (msg) {
+                    console.log('success');
+                    console.log(typeof msg);
+                    console.log(Object.values(msg));
+                    console.log(Object.values(msg)[0]);
+                    console.log(typeof Object.values(msg)[0]);
+                    console.log(Object.values(Object.values(msg)[0])[0]);
+                },
+                error: function (msg) {
+                    console.log("failed");
+                }
+            })
         }
     </script>
 

@@ -1,27 +1,65 @@
 {% extends "::base.html.twig" %}
 {% block body %}
 
-    <div class="div-round bg-primary">
-        <div class="div-profile-avatar">
-            <img class="div-image-profile" src="https://goo.gl/gW3khP" alt="Card image cap">
+    <div class="div-round bg-primary" style="width: 35%;">
+        {#<div class="div-profile-avatar">#}
+        <img class="div-image-profile" width="150px" height="150px" src="https://goo.gl/gW3khP"
+             style="vertical-align: middle; display: inline;">
+        {#</div>#}
+        {#<div class="div-profile-content">#}
+        <div class="card-text-text" style="vertical-align: middle; display: inline;">
+            {{ app.user.firstName }}
+
+            <br>
+
+            {{ app.user.lastName }}
+
+            <br>
+
+            {{ app.user.email }}
+
+            <br>
         </div>
-        <div class="div-profile-content">
-            <p class="card-text-text">{{ app.user.firstName }}</p>
-            <p class="card-text-text">{{ app.user.lastName }}</p>
-            <p class="card-text-text">{{ app.user.email }}</p>
+        {#</div>#}
+    </div>
+
+    <div class="div-round bg-primary" style="width: 45%;">
+        <div class="div-round-content">
+            <h5 class="card-text-title">Your accounts:</h5>
+            {% if accounts is empty %}
+                <p class="card-text-text" align="center">There are no accounts yet. Do you want to create one?</p>
+            {% else %}
+                <ul>
+                    {% for account in accounts %}
+                        <li>
+                            <a href="{{ path('accounts_details', {'id': account.id}) }}" class="card-text-text">
+                                {{ account.name }}
+                                {#{{ account.description }}#}
+                                {{ account.balance }}
+                                {{ account.currency }}
+                            </a>
+                        </li>
+                    {% endfor %}
+                </ul>
+            {% endif %}
+
+            <form action="{{ path('accounts_add') }}">
+                <button class="btn btn-secondary" type="submit">Add account</button>
+            </form>
         </div>
     </div>
 
-    <div class="div-round bg-primary">
-        <div class="div-profile-content">
-            <h5 class="card-text-text">Your groups:</h5>
+    <div class="div-round bg-primary" style="width: 45%;">
+        <div class="div-round-content">
+            <h5 class="card-text-title">Your groups:</h5>
             {% if organizations is empty %}
                 <p class="card-text-text" align="center">There are no groups yet. Do you want to create one?</p>
             {% else %}
                 <ul>
                     <li>
                         {% for organization in organizations %}
-                            <a href="{{ path('organization_details', {'id': organization.id}) }}" class="card-text-text">
+                            <a href="{{ path('organization_details', {'id': organization.id}) }}"
+                               class="card-text-text">
                                 {{ organization.name }}
                                 {{ organization.type }}
                                 {{ organization.description }}
@@ -38,37 +76,9 @@
         </div>
     </div>
 
-    <div class="card card-inverse card-primary card-container" style="width: 32rem;">
-
-        <h5 class="card-title card-text-title" align="center">Your accounts:</h5>
-
-        <div class="card-block">
-            {% if accounts is empty %}
-                <p class="card-text-text" align="center">There are no accounts yet. Do you want to create one?</p>
-            {% else %}
-                <ul>
-                    {% for account in accounts %}
-                        <li>
-                            <a href="{{ path('accounts_details', {'id': account.id}) }}" class="card-text-text">
-                                {{ account.name }}
-                                {{ account.description }}
-                                {{ account.currency }}
-                                {{ account.balance }}
-                            </a>
-                        </li>
-                    {% endfor %}
-                </ul>
-            {% endif %}
-
-            <form action="{{ path('accounts_add') }}">
-                <button class="btn btn-secondary" type="submit">Add account</button>
-            </form>
-
-        </div>
-    </div>
 {% endblock %}
 {% block javascripts %}
-{{ parent() }}
+    {{ parent() }}
     <script>
         $(document).ready(function () {
             $.get("/organization/qwerty123",
@@ -80,16 +90,6 @@
                     console.log(data);
 //                alert("Data: " + data + "\nStatus: " + status);
                 });
-
-            //        function myFunction() {
-            //            var x = document.getElementById('myDIV');
-            //            if (x.style.display === 'none') {
-            //                x.style.display = 'block';
-            //            } else {
-            //                x.style.display = 'none';
-            //            }
-            //        }
-
         })
     </script>
 

@@ -2,18 +2,18 @@
 {% block body %}
     <div class="div-round bg-primary" style="width: 25%;">
         <div class="div-round-content">
-            <h5 class="card-text-title">Account info:</h5>
+            <h5 class="card-text-title"><b>Account info:</b></h5>
             <p class="card-text-text">
-                Name: {{ account.name }}
+                <b>Name:</b> {{ account.name }}
             </p>
             <p class="card-text-text">
-                Description: {{ account.description }}
+                <b>Description:</b> {{ account.description }}
             </p>
             <p class="card-text-text">
-                Currency: {{ account.currency }}
+                <b>Currency:</b> {{ account.currency }}
             </p>
             <p class="card-text-text">
-                Balance: {{ account.balance }}
+                <b>Balance:</b> {{ account.balance }}
             </p>
 
             <form action="{{ path('operations_add', {'id': account.id}) }}">

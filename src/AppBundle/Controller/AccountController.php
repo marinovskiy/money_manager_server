@@ -1,10 +1,4 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: alex
- * Date: 5/11/17
- * Time: 8:58 PM
- */
 
 namespace AppBundle\Controller;
 
@@ -17,9 +11,6 @@ use Symfony\Component\HttpFoundation\Request;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Component\HttpFoundation\Response;
 
-///**
-// * @Route("/user")
-// */
 class AccountController extends Controller
 {
     /**
@@ -46,38 +37,6 @@ class AccountController extends Controller
     }
 
     /**
-     * @Route("/accounts/all/test", name="accounts_all_test")
-     */
-    public function allAccountAction(Request $request)
-    {
-//        $accounts = $this->getDoctrine()->getManager()->getRepository(Account::class)->loadAllUserAccounts(3);
-//        return $this->json($accounts);
-
-//        $account = $this->getDoctrine()->getRepository(Account::class)->find(1);
-//        return new JsonResponse($account->getOperations());
-//        return $this->json($account->getOperations());
-
-//        $account = $this->getDoctrine()->getRepository(Account::class)->find(2);
-//        return new JsonResponse($account->getOperations()->toArray());
-
-        $operation = $this->getDoctrine()->getRepository(Operation::class)->find(2);
-        return new JsonResponse($operation);
-    }
-
-    //TODO move to api directory
-    /**
-     * @Route("/accounts/all1", name="accounts_all1")
-     */
-    public function all1AccountAction(Request $request)
-    {
-        $accounts = $this->getDoctrine()->getManager()->getRepository(Account::class)->loadAllAccounts();
-
-        return $this->render('account/all_accounts.html.twig', [
-            'accounts' => $accounts
-        ]);
-    }
-
-    /**
      * @Route("/accounts/{id}", name="accounts_details")
      */
     public function accountDetailsAction($id)
@@ -91,7 +50,5 @@ class AccountController extends Controller
         return $this->render('account/account_details.html.twig', array(
             'account' => $account
         ));
-
-//        return new JsonResponse($account);
     }
 }

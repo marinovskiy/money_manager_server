@@ -3,16 +3,19 @@
 namespace AppBundle\Controller;
 
 use AppBundle\Entity\Account;
+use AppBundle\Entity\Category;
 use AppBundle\Entity\Organization;
+use AppBundle\Form\Account\AddAccountType;
 use AppBundle\Form\CreateOrganizationType;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Symfony\Component\HttpFoundation\Response;
 
 /**
- * @Route("/organization")
+ * @Route("/organizations")
  */
 class OrganizationController extends Controller
 {
@@ -51,38 +54,54 @@ class OrganizationController extends Controller
     }
 
     /**
-     * @Route("/accounts/all1", name="accounts_all1")
+     * @Route("/{id}/accounts/new", name="organization_create_account")
      */
-    public function all1AccountAction(Request $request)
+    public function qAction(Request $request, $id)
     {
-        $accounts = $this->getDoctrine()->getManager()->getRepository(Account::class)->loadAllAccounts();
+        $account = new Account();
+        $form = $this->createForm(AddAccountType::class, $account);
 
-        return $this->render('account/all_accounts.html.twig', [
-            'accounts' => $accounts
-        ]);
+        $form->handleRequest($request);
+        if ($form->isSubmitted() && $form->isValid()) {
+            $em = $this->getDoctrine()->getManager();
+
+            $organization = $em->getRepository(Organization::class)->find($id);
+
+            $account->setOrganization($organization);
+            $account->setBalance(0);
+
+            $em = $this->getDoctrine()->getManager();
+            $em->persist($account);
+            $em->flush();
+
+            return $this->redirectToRoute('profile_me');
+        }
+
+        return $this->render('account/add_account.html.twig', array('form' => $form->createView()));
     }
 
-    /**
-     * @Route("/accounts/{id}", name="accounts_details")
-     */
-    public function accountDetailsAction($id)
-    {
-        $account = $this
-            ->getDoctrine()
-            ->getManager()
-            ->getRepository(Account::class)
-            ->loadDetailsAccount($this->getUser()->getId(), $id);
+    // AJAX
 
-        return $this->render('account/account_details.html.twig', array(
-            'account' => $account
-        ));
-    }
+//    /**
+//     * @Route("/qwerty123", name="qwerty123")
+//     */
+//    public function qwerty123Action()
+//    {
+//        return $this->json(['key' => 'hello']);
+//    }
 
-    /**
-     * @Route("/qwerty123", name="qwerty123")
-     */
-    public function qwerty123Action()
-    {
-        return $this->json(['key' => 'hello']);
-    }
+//    /**
+//     * @Route("/qwerty123", name="qwerty123")
+//     */
+//    public function qwerty123Action()
+//    {
+//        $category = $this
+//            ->getDoctrine()
+//            ->getManager()
+//            ->getRepository(Category::class)
+//            ->find(1);
+//
+//        return $this->json(['category' => $category]);
+////        return new Response(json_encode($category));
+//    }
 }

@@ -41,17 +41,6 @@ button {
     background: #e74c3c;
 }
 
-.div-image-profile {
-    width: 12%;
-    margin: 12px;
-    float: left;
-}
-
-/*.card-text-title {*/
-    /*margin-top: 12px;*/
-    /*font-weight: 500;*/
-/*}*/
-
 .card-text-title {
     color: white;
     padding-bottom: 16px;
@@ -94,6 +83,7 @@ textarea {
 
 ul {
     list-style-type: none;
+    padding: 0;
 }
 
 /*Login*/

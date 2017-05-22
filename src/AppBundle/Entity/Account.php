@@ -32,7 +32,7 @@ class Account implements \JsonSerializable
     /**
      * @var string
      *
-     * @ORM\Column(name="description", type="string", length=255)
+     * @ORM\Column(name="description", type="string", length=255, nullable=true)
      */
     private $description;
 
@@ -44,7 +44,7 @@ class Account implements \JsonSerializable
     private $currency;
 
     /**
-     * @var string
+     * @var float
      *
      * @ORM\Column(name="balance", type="decimal", precision=10, scale=0)
      */
@@ -63,6 +63,13 @@ class Account implements \JsonSerializable
      * @ORM\OneToMany(targetEntity="Operation", mappedBy="account", cascade={"remove","persist"})
      */
     private $operations;
+
+    /**
+     * @var int
+     *
+     * @ORM\ManyToOne(targetEntity="Organization", inversedBy="accounts")
+     */
+    private $organization;
 
     public function __construct()
     {
@@ -146,7 +153,7 @@ class Account implements \JsonSerializable
     /**
      * Set balance
      *
-     * @param string $balance
+     * @param float $balance
      *
      * @return Account
      */
@@ -160,7 +167,7 @@ class Account implements \JsonSerializable
     /**
      * Get balance
      *
-     * @return string
+     * @return float
      */
     public function getBalance()
     {
@@ -230,6 +237,29 @@ class Account implements \JsonSerializable
     public function setOperations($operations)
     {
         $this->operations = $operations;
+    }
+
+    /**
+     * Set organization
+     *
+     * @param Organization $organization
+     * @return Account
+     */
+    public function setOrganization(Organization $organization = null)
+    {
+        $this->organization = $organization;
+
+        return $this;
+    }
+
+    /**
+     * Get organization
+     *
+     * @return int
+     */
+    public function getOrganization()
+    {
+        return $this->organization;
     }
 
     //TODO

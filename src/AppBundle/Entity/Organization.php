@@ -75,6 +75,13 @@ class Organization
      */
     private $members;
 
+    /**
+     * @var ArrayCollection|$accounts[]
+     *
+     * @ORM\OneToMany(targetEntity="Account", mappedBy="user", cascade={"remove","persist"})
+     */
+    private $accounts;
+
     public function __construct()
     {
         $this->members = new ArrayCollection();
@@ -245,6 +252,48 @@ class Organization
     public function setMembers($members)
     {
         $this->members = $members;
+    }
+
+    /**
+     * Add account
+     *
+     * @param Account $account
+     *
+     * @return Organization
+     */
+    public function addAccount(Account $account)
+    {
+        $this->accounts->add($account);
+
+        return $this;
+    }
+
+    /**
+     * Remove account
+     *
+     * @param Account $account
+     */
+    public function removeAccount(Account $account)
+    {
+        $this->accounts->removeElement($account);
+    }
+
+    /**
+     * Get accounts
+     *
+     * @return ArrayCollection|$accounts[]
+     */
+    public function getAccounts()
+    {
+        return $this->accounts;
+    }
+
+    /**
+     * @param Account[] $accounts
+     */
+    public function setAccounts($accounts)
+    {
+        $this->accounts = $accounts;
     }
 }
 
