@@ -1,12 +1,6 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: alex
- * Date: 5/8/17
- * Time: 9:19 AM
- */
 
-namespace AppBundle\Form;
+namespace AppBundle\Form\Auth;
 
 use AppBundle\Entity\User;
 use Symfony\Component\Form\AbstractType;

@@ -36,7 +36,7 @@ security:
             security: false
 
         api_auth:
-            pattern:  ^/api/(registration|login)$
+            pattern:  ^/api/auth/(registration|login)$
             security: false
         api:
             pattern: ^/api

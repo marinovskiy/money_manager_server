@@ -6,7 +6,7 @@ use AppBundle\AppBundle;
 use AppBundle\Entity\Device;
 use AppBundle\Entity\User;
 use AppBundle\Form\Auth\RegistrationType;
-use AppBundle\Form\LoginType;
+use AppBundle\Form\Auth\LoginType;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -19,7 +19,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 
 /**
- * @Route("/api")
+ * @Route("/api/auth")
  */
 class ApiAuthController extends Controller
 {
