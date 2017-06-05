@@ -8,6 +8,7 @@ use HttpException;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Serializer\Encoder\JsonEncoder;
@@ -20,15 +21,11 @@ use Symfony\Component\Serializer\Serializer;
 class ApiAccountController extends Controller
 {
     /**
-     * @Route("/new", name="api_account_add")
+     * @Route("/new", name="api_accounts_add")
      * @Method({"POST"})
      */
     public function apiNewAccountAction(Request $request)
     {
-        $encoders = array(new JsonEncoder());
-        $normalizers = array(new ObjectNormalizer());
-        $serializer = new Serializer($normalizers, $encoders);
-
         $data = json_decode($request->getContent(), true);
 
         $account = new Account();
@@ -50,15 +47,6 @@ class ApiAccountController extends Controller
             $em->persist($account);
             $em->flush();
 
-//            $response = new Response(
-//                $serializer->serialize(
-//                    $account,
-//                    'json'
-//                ),
-//                200
-//            );
-//            $response->headers->set('Content-Type', 'application/json');
-//            return $response;
             return $this->json(['account' => $account], 200);
         }
 
@@ -71,14 +59,58 @@ class ApiAccountController extends Controller
      */
     public function apiAllAccountsAction()
     {
+
+        $encoders = array(new JsonEncoder());
+        $normalizers = array(new ObjectNormalizer());
+        $serializer = new Serializer($normalizers, $encoders);
+
         $userId = $this->getUser()->getId();
 
+//        $accounts = $this
+//            ->getDoctrine()
+//            ->getManager()
+//            ->find('AppBundle:User', $userId);
         $accounts = $this
             ->getDoctrine()
             ->getManager()
             ->getRepository(Account::class)
             ->loadAllUserAccounts($userId);
+//        $accounts = $this
+//            ->getDoctrine()
+//            ->getManager()
+//            ->getRepository(Account::class)
+//            ->find(1);
+//
+//        return new JsonResponse($accounts, 200);
 
-        return $this->json(['accounts' => $accounts], 200);
+//        return $this->json(['accounts' => $accounts], 200);
+
+        $response = new Response(
+            $serializer->serialize(
+                $accounts,
+                'json'
+            ),
+            200
+        );
+        $response->headers->set('Content-Type', 'application/json');
+        return $response;
+    }
+
+    /**
+     * @Route("/{id}/edit", name="api_accounts_edit")
+     * @Method({"PUT"})
+     */
+    public function apiEditAccountAction(Request $request, $id)
+    {
+
+    }
+
+    /**
+     * @Route("/{id}/delete", name="api_accounts_delete")
+     * @Method({"DELETE"})
+     */
+    public function apiDeleteAccountAction(Request $request, $id)
+    {
+
     }
 }

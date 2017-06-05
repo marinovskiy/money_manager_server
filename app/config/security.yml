@@ -35,6 +35,9 @@ security:
             pattern: ^/(_(profiler|wdt)|css|images|js)/
             security: false
 
+        api_unsecured_lists:
+            pattern:  ^/api/(currencies|categories)$
+            security: false
         api_auth:
             pattern:  ^/api/auth/(registration|login)$
             security: false

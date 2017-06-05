@@ -9,11 +9,23 @@ class OrganizationRepository extends \Doctrine\ORM\EntityRepository
         return $this->findAll();
     }
 
-    public function loadAllUserOrganizations($userId)
+    public function loadAllUserCreatorOrganizations($userId)
     {
         return $this
             ->createQueryBuilder('organization')
-            ->where('organization.user =:userId')
+            ->where('organization.creator =:userId')
+            ->setParameter('userId', $userId)
+            ->getQuery()
+            ->getArrayResult();
+    }
+
+    public function loadAllUserMemberOrganizations($userId)
+    {
+        $qb = $this->createQueryBuilder('organization');
+        return $qb
+            ->where(
+                $qb->expr()->in('organization.members', ':userId')
+            )
             ->setParameter('userId', $userId)
             ->getQuery()
             ->getArrayResult();

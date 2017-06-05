@@ -103,8 +103,8 @@ class Currency implements \JsonSerializable
         ];
     }
 
-    public function __toString()
+    function __toString()
     {
-        return $this->name;
+        return $this->getName();
     }
 }

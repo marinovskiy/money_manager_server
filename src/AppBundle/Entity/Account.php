@@ -37,9 +37,10 @@ class Account implements \JsonSerializable
     private $description;
 
     /**
-     * @var string
+     * @var Currency
      *
-     * @ORM\Column(name="currency", type="string", length=255)
+     * @ORM\ManyToOne(targetEntity="Currency")
+     * @ORM\JoinColumn(name="currency_id", referencedColumnName="id")
      */
     private $currency;
 
@@ -135,7 +136,7 @@ class Account implements \JsonSerializable
     }
 
     /**
-     * @return string
+     * @return Currency
      */
     public function getCurrency()
     {
@@ -143,7 +144,7 @@ class Account implements \JsonSerializable
     }
 
     /**
-     * @param string $currency
+     * @param Currency $currency
      */
     public function setCurrency($currency)
     {
@@ -262,16 +263,21 @@ class Account implements \JsonSerializable
         return $this->organization;
     }
 
-    //TODO
     function jsonSerialize()
     {
         return [
             'id' => $this->getId(),
             'name' => $this->getName(),
             'description' => $this->getDescription(),
+//            'currency' => $this->getCurrency(),
             'currency' => $this->getCurrency()->getId(),
             'balance' => $this->getBalance(),
             'operations' => $this->getOperations()
         ];
+    }
+
+    function __toString()
+    {
+        return $this->getName();
     }
 }

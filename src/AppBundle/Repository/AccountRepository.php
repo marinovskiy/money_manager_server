@@ -23,6 +23,7 @@ class AccountRepository extends \Doctrine\ORM\EntityRepository
             ->where('account.user =:userId')
             ->setParameter('userId', $userId)
             ->getQuery()
+//            ->getResult(\Doctrine\ORM\Query::HYDRATE_ARRAY);
             ->getArrayResult();
     }
 
