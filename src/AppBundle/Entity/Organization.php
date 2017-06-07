@@ -75,10 +75,11 @@ class Organization implements \JsonSerializable
      */
     private $members;
 
+//ORM\OneToMany(targetEntity="Account", mappedBy="user", cascade={"remove","persist"})
     /**
      * @var ArrayCollection|$accounts[]
      *
-     * @ORM\OneToMany(targetEntity="Account", mappedBy="user", cascade={"remove","persist"})
+     * @ORM\OneToMany(targetEntity="Account", mappedBy="organization", cascade={"remove","persist"})
      */
     private $accounts;
 

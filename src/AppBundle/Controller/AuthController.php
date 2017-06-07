@@ -3,8 +3,11 @@
 namespace AppBundle\Controller;
 
 use AppBundle\Entity\User;
+use AppBundle\Form\Auth\LoginType;
 use AppBundle\Form\Auth\RegistrationType;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\Form\Extension\Core\Type\SubmitType;
+use Symfony\Component\Form\SubmitButton;
 use Symfony\Component\HttpFoundation\Request;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Component\Security\Core\Authentication\Token\UsernamePasswordToken;
@@ -58,10 +61,13 @@ class AuthController extends Controller
         }
 
         $helper = $this->get('security.authentication_utils');
+//        $loginForm = $this->createForm(LoginType::class);
+//        $loginForm->add('save', SubmitType::class);
 
         return $this->render('auth/login.html.twig', [
             'last_username' => $helper->getLastUsername(),
-            'error' => $helper->getLastAuthenticationError(),
+            'error' => $helper->getLastAuthenticationError()
+//            'loginForm' => $loginForm->createView()
         ]);
     }
 

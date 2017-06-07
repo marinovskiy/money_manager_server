@@ -1,9 +1,13 @@
 {% extends 'base.html.twig' %}
+{% block title %}Новий аккаунт{% endblock %}
 {% block body %}
     <div class="container">
         <div class="row">
-            <div class="col-md-6 container-centered">
-                <div class="panel-heading">Add new account</div>
+            <div class="col-md-5 container-centered">
+                <div class="panel-heading"><p class="text-title">Створення нового аккаунта</p></div>
+
+                <div class="panel-heading"><p class="text-subtitle">Укажіть назву, опис (по бажанню) та грошову
+                        одиницю</p></div>
 
                 <div class="panel-body">
 
@@ -27,8 +31,10 @@
                         </div>
                     </div>
 
-                    <div class="text-center">
-                        <button class="btn btn-block btn-primary" type="submit">Add</button>
+                    <div align="center">
+                        <div class="col-md-6">
+                            <button class="btn btn-block btn-primary" type="submit">Створити</button>
+                        </div>
                     </div>
 
                     {{ form_end(form) }}

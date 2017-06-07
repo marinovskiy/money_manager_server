@@ -2,12 +2,12 @@ html, body {
     background-color: #f8f8f8;
 }
 
-.headerDiv {
-    height: 60px;
-    /*background-color: #832af7;*/
-    background-color: greenyellow;
-    margin: 0 auto;
-}
+/*.headerDiv {*/
+    /*height: 60px;*/
+    /*!*background-color: #832af7;*!*/
+    /*background-color: greenyellow;*/
+    /*margin: 0 auto;*/
+/*}*/
 
 .container-centered {
     float: none;
@@ -26,20 +26,20 @@ button {
     margin: 48px;
 }
 
-.clearfix::after {
-    content: "";
-    display: table;
-    clear: both;
-}
+/*.clearfix::after {*/
+    /*content: "";*/
+    /*display: table;*/
+    /*clear: both;*/
+/*}*/
 
-.clearfix-visible:after {
-    content: "";
-    display: table;
-    clear: both;
-    width: 100%;
-    height: 10px;
-    background: #e74c3c;
-}
+/*.clearfix-visible:after {*/
+    /*content: "";*/
+    /*display: table;*/
+    /*clear: both;*/
+    /*width: 100%;*/
+    /*height: 10px;*/
+    /*background: #e74c3c;*/
+/*}*/
 
 .card-text-title {
     color: white;
@@ -48,6 +48,14 @@ button {
 
 .card-text-text {
     color: white;
+}
+
+.search-text-selected {
+    color: white;
+}
+
+.search-text-unselected {
+    color: darkgray;
 }
 
 .div-round {
@@ -79,6 +87,7 @@ button {
 
 textarea {
     resize: none;
+    rows: 2;
 }
 
 ul {
@@ -106,4 +115,18 @@ ul {
     width: 400px;
     margin: 0 auto;
     text-align: left;
+}
+
+.text-title {
+    font-size: 22px;
+    text-align: center;
+    color: black;
+    margin: 24px 0 0 0;
+}
+
+.text-subtitle {
+    font-size: 18px;
+    text-align: center;
+    color: black;
+    margin: 12px 0 24px 0;
 }

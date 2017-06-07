@@ -13,23 +13,23 @@
 <body>
 
 <nav class="navbar navbar-toggleable-md navbar-inverse bg-primary">
-    <a class="navbar-brand" href="{{ path('homepage') }}">Main</a>
+    <a class="navbar-brand" href="{{ path('homepage') }}">Головна</a>
     {% if app.user %}
-        <a class="navbar-brand" href="{{ path('profile_me') }}">Profile</a>
+        <a class="navbar-brand" href="{{ path('profile_me') }}">Профіль</a>
     {% endif %}
     <a class="navbar-brand" href="{{ path('faq') }}">FAQ</a>
-    <a class="navbar-brand" href="{{ path('about') }}">About</a>
+    <a class="navbar-brand" href="{{ path('about') }}">Про сайт</a>
     {% if app.user %}
-        <a class="navbar-brand" href="{{ path('logout') }}">Sign out</a>
+        <a class="navbar-brand" href="{{ path('logout') }}">Вихід</a>
     {% else %}
-        <a class="navbar-brand" href="{{ path('login') }}">Login</a>
-        <a class="navbar-brand" href="{{ path('registration') }}">Registration</a>
+        <a class="navbar-brand" href="{{ path('login') }}">Увійти</a>
+        <a class="navbar-brand" href="{{ path('registration') }}">Зареєстрвуватися</a>
     {% endif %}
 </nav>
 
 {% block body %}{% endblock %}
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
-<script src="{{ asset('bootstrap/js/bootstrap.min.js') }}"></script>
+{#<script src="{{ asset('bootstrap/js/bootstrap.min.js') }}"></script>#}
 {% block javascripts %}{% endblock %}
 
 </body>

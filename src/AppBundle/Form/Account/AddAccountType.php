@@ -23,9 +23,9 @@ class AddAccountType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('name', TextType::class)
-            ->add('description', TextareaType::class, ['required' => false])
-            ->add('currency', EntityType::class, ['class' => Currency::class]);
+            ->add('name', TextType::class, ['label' => 'Назва'])
+            ->add('description', TextareaType::class, ['required' => false, 'label' => 'Опис'])
+            ->add('currency', EntityType::class, ['label' => 'Грошова одиниця', 'class' => Currency::class]);
     }
 
     public function configureOptions(OptionsResolver $resolver)

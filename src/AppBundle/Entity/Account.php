@@ -269,8 +269,8 @@ class Account implements \JsonSerializable
             'id' => $this->getId(),
             'name' => $this->getName(),
             'description' => $this->getDescription(),
-//            'currency' => $this->getCurrency(),
-            'currency' => $this->getCurrency()->getId(),
+            'currency' => $this->getCurrency(),
+//            'currency' => $this->getCurrency()->getId(),
             'balance' => $this->getBalance(),
             'operations' => $this->getOperations()
         ];

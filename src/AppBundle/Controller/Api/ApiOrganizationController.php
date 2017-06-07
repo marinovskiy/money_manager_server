@@ -134,7 +134,7 @@ class ApiOrganizationController extends Controller
      */
     public function apiOrganizationAddMemberAction(Request $request, $id)
     {
-        
+
     }
 
     /**

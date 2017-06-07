@@ -1,30 +1,31 @@
 {% extends "::base.html.twig" %}
+{% block title %}Ваш аккаунт{% endblock %}
 {% block body %}
     <div class="div-round bg-primary" style="width: 25%;">
         <div class="div-round-content">
-            <h5 class="card-text-title"><b>Account info:</b></h5>
+            <h5 class="card-text-title"><b>Інформація про аккаунт:</b></h5>
             <p class="card-text-text">
-                <b>Name:</b> {{ account.name }}
+                <b>Назва:</b> {{ account.name }}
             </p>
             <p class="card-text-text">
-                <b>Description:</b> {{ account.description }}
+                <b>Опис:</b> {{ account.description }}
             </p>
             <p class="card-text-text">
-                <b>Currency:</b> {{ account.currency }}
+                <b>Грошова одиниця:</b> {{ account.currency }}
             </p>
             <p class="card-text-text">
-                <b>Balance:</b> {{ account.balance }}
+                <b>Поточний баланс:</b> {{ account.balance }}
             </p>
 
             <form action="{{ path('operations_add', {'id': account.id}) }}">
-                <button class="btn btn-secondary" type="submit">Add operation</button>
+                <button class="btn btn-secondary" type="submit">Додати операцію</button>
             </form>
         </div>
     </div>
 
     <div class="div-round bg-primary" style="width: 25%;">
         <div class="div-round-content">
-            <h5 class="card-text-text">{{ account.name }} operations:</h5>
+            <h5 class="card-text-text">Операції аккаунту "{{ account.name }}":</h5>
             <ul>
                 <li>
                     {% for operation in account.operations %}

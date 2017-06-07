@@ -48,6 +48,17 @@
 
     <div class="div-round bg-primary" style="width: 25%;">
         <div class="div-round-content">
+            <h5 class="card-text-text">Last {{ organization.name }} operations:</h5>
+            <ul>
+
+            </ul>
+
+            <button class="btn btn-secondary" onclick="">Add operation</button>
+        </div>
+    </div>
+
+    <div class="div-round bg-primary" style="width: 25%;">
+        <div class="div-round-content">
             <h5 class="card-text-title">{{ organization.name }} members:</h5>
             <ul>
                 {% for member in organization.members %}
@@ -60,88 +71,97 @@
                 {% endfor %}
             </ul>
 
-            <button class="btn btn-secondary" onclick="myFunction()">Add members</button>
-            <button class="btn btn-secondary" onclick="asd123()">Add members</button>
+            <button id="add_member_btn" class="btn btn-secondary">Add member</button>
         </div>
     </div>
+    <div id="view"></div>
 
-    <div class="div-round bg-primary" style="width: 25%;">
-        <div class="div-round-content">
-            <h5 class="card-text-text">Last {{ organization.name }} operations:</h5>
-            <ul>
-
-            </ul>
-
-            <button class="btn btn-secondary" onclick="">Add operation</button>
-        </div>
-    </div>
-
-    <div id="add_new_members" class="div-round bg-primary" style="display: none; width: 50%;">
+    <div id="add_member_div" class="div-round bg-primary" style="display: none; width: 50%;">
         <div class="div-round-content">
             <h5 class="card-text-text">Search for new members:</h5>
 
             <div class="form-group row">
-                <label for="example-search-input" class="col-form-label">Search users</label>
+                <label for="example-search-input" class="col-form-label">Search users by email:</label>
                 <div class="col-10">
                     <input class="form-control" type="search" value="" id="example-search-input">
+                    <button id="search_users_btn" class="btn btn-secondary">Search</button>
                 </div>
             </div>
+
+            <div id="users_div"></div>
         </div>
     </div>
 
-    <div id="test1230">
-        qwerty
-        {#{% for cat in category %}#}
-        {#{{ category.name }}#}
-        {#{% endfor %}#}
-        <ul class="nav nav-second-level" id="entitiesNav">
-        </ul>
-    </div>
-
-    <script>
-        function myFunction() {
-            var x = document.getElementById('add_new_members');
-            if (x.style.display === 'none') {
-                x.style.display = 'block';
-            } else {
-                x.style.display = 'none';
-            }
-        }
-    </script>
+        {#<script>#}
+            {#function myFunction() {#}
+                {#var x = document.getElementById('add_new_members');#}
+                {#if (x.style.display === 'none') {#}
+                    {#x.style.display = 'block';#}
+                {#} else {#}
+                    {#x.style.display = 'none';#}
+                {#}#}
+            {#}#}
+        {#</script>#}
 
 {% endblock %}
 {% block javascripts %}
     {{ parent() }}
     <script>
-        //        $(document).ready(function () {
-        //            $.get("/organization/qwerty123",
-        ////            {
-        ////                name: "Donald Duck",
-        ////                city: "Duckburg"
-        ////            },
-        //                function (data, status) {
-        ////                    console.log(data);
-        //                    alert("Data: " + data + "\nStatus: " + status);
-        //                });
-        //        });
+        $('#add_member_btn').click(function () {
+            $('#add_member_div').show();
+        });
 
-        function asd123() {
+        $('#asd123').click(function () {
             $.ajax({
                 type: "GET",
-                url: "/organization/qwerty123",
+                url: "/organizations/qwerty123",
                 success: function (msg) {
-                    console.log('success');
-                    console.log(typeof msg);
-                    console.log(Object.values(msg));
-                    console.log(Object.values(msg)[0]);
-                    console.log(typeof Object.values(msg)[0]);
-                    console.log(Object.values(Object.values(msg)[0])[0]);
+                    console.log(msg);
+                    $('#view').html(msg.user.email + '<br/>' + msg.user.firstName);
                 },
                 error: function (msg) {
                     console.log("failed");
                 }
             })
-        }
+        });
+
+        $('#search_users_btn').click(function () {
+            $.ajax({
+                type: "GET",
+                url: "/users/search",
+                data: {
+                    email: "john"
+                },
+                success: function (msg) {
+                    console.log(msg);
+                    $('#users_div').html(msg);
+
+                    $.each(msg.users, function(index, value) {
+//                       console.log(value.email);
+//                        $('#users_div').append(value.email + '<br/>');
+                        $('#users_div').append(
+                            '<a class="search-text-unselected" href="' + '{{ path('profile_me') }}' + '">'
+                            + value.email
+                            + ' '
+                            + value.firstName
+                            + ' '
+                            + value.lastName
+                            + ' '
+                            + '</a>'
+                            + '</br>'
+                        );
+                    });
+
+//                    for () {
+//
+//                    }
+//                    $('#view').html(msg.user.email + '<br/>' + msg.user.firstName);
+                },
+                error: function (msg) {
+                    console.log("failed");
+                }
+            })
+        });
     </script>
 
 {% endblock %}

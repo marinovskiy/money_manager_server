@@ -5,6 +5,7 @@ namespace AppBundle\Controller;
 use AppBundle\Entity\Account;
 use AppBundle\Entity\Category;
 use AppBundle\Entity\Organization;
+use AppBundle\Entity\User;
 use AppBundle\Form\Account\AddAccountType;
 use AppBundle\Form\CreateOrganizationType;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
@@ -84,13 +85,13 @@ class OrganizationController extends Controller
 
     // AJAX
 
-//    /**
-//     * @Route("/qwerty123", name="qwerty123")
-//     */
-//    public function qwerty123Action()
-//    {
-//        return $this->json(['key' => 'hello']);
-//    }
+    /**
+     * @Route("/qwerty123", name="qwerty123")
+     */
+    public function qwerty123Action()
+    {
+        return $this->json(['user' => $this->getUser()]);
+    }
 
 //    /**
 //     * @Route("/qwerty123", name="qwerty123")

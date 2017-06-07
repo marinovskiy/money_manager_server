@@ -1,6 +1,7 @@
 <?php
 
 namespace AppBundle\Repository;
+use AppBundle\Entity\Account;
 use AppBundle\Entity\User;
 
 /**
@@ -18,6 +19,13 @@ class AccountRepository extends \Doctrine\ORM\EntityRepository
 
     public function loadAllUserAccounts($userId)
     {
+//        return $this
+//            ->createQueryBuilder('account')
+//            ->where('account.user =:userId')
+//            ->setParameter('userId', $userId)
+//            ->getQuery()
+////            ->getResult(\Doctrine\ORM\Query::HYDRATE_ARRAY);
+//            ->getArrayResult();
         return $this
             ->createQueryBuilder('account')
             ->where('account.user =:userId')

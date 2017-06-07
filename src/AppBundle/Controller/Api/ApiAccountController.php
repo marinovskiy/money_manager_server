@@ -35,7 +35,6 @@ class ApiAccountController extends Controller
         $logger = $this->get('logger');
         $logger->info('I just got the logger');
         foreach ($form->getErrors() as $err) {
-            echo $err->getMessage();
             $logger->info($err->getMessage());
         }
 
@@ -59,41 +58,17 @@ class ApiAccountController extends Controller
      */
     public function apiAllAccountsAction()
     {
-
-        $encoders = array(new JsonEncoder());
-        $normalizers = array(new ObjectNormalizer());
-        $serializer = new Serializer($normalizers, $encoders);
-
-        $userId = $this->getUser()->getId();
-
-//        $accounts = $this
-//            ->getDoctrine()
-//            ->getManager()
-//            ->find('AppBundle:User', $userId);
-        $accounts = $this
-            ->getDoctrine()
-            ->getManager()
-            ->getRepository(Account::class)
-            ->loadAllUserAccounts($userId);
 //        $accounts = $this
 //            ->getDoctrine()
 //            ->getManager()
 //            ->getRepository(Account::class)
-//            ->find(1);
-//
-//        return new JsonResponse($accounts, 200);
-
-//        return $this->json(['accounts' => $accounts], 200);
-
-        $response = new Response(
-            $serializer->serialize(
-                $accounts,
-                'json'
-            ),
-            200
-        );
-        $response->headers->set('Content-Type', 'application/json');
-        return $response;
+//            ->loadAllUserAccounts($this->getUser()->getId());
+//        $accounts = $this->getDoctrine()->getManager()->getRepository(Account::class)->findAll();
+        $accounts = $this
+            ->getDoctrine()
+            ->getRepository('AppBundle:Account')
+            ->findBy(['user' => $this->getUser()->getId()]);
+        return $this->json(['accounts' => $accounts], 200);
     }
 
     /**

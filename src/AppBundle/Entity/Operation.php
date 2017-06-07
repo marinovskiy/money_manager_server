@@ -2,6 +2,7 @@
 
 namespace AppBundle\Entity;
 
+use DateTime;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -46,6 +47,13 @@ class Operation implements \JsonSerializable
      * @ORM\Column(name="sum", type="decimal", precision=10, scale=2)
      */
     private $sum;
+
+    /**
+     * @var datetime
+     *
+     * @ORM\Column(name="sum", type="datetime")
+     */
+    private $createdAt;
 
     /**
      * @var Category
@@ -140,6 +148,22 @@ class Operation implements \JsonSerializable
     public function getSum()
     {
         return $this->sum;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getCreatedAt()
+    {
+        return $this->createdAt;
+    }
+
+    /**
+     * @param mixed $createdAt
+     */
+    public function setCreatedAt($createdAt)
+    {
+        $this->createdAt = $createdAt;
     }
 
     /**
