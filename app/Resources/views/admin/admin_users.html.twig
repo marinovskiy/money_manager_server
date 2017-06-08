@@ -1,0 +1,50 @@
+{% extends "::base_admin.html.twig" %}
+{% block title %}Адмін-панель - користувачі{% endblock %}
+{% block body %}
+
+    <div id="my-div-content-child" class="my-div-round my-div-single bg-primary" style="width: 97%; height: 78px;">
+        <div class="my-div-round-content-block-top">
+            <p class="my-text-title-white"><b>Користувачі:</b></p>
+        </div>
+
+        <div class="my-div-round-content-block-middle" style="margin: 12px 0 0 0;">
+            <div>
+                {#<p>id firstName lastName email</p>#}
+                {% for user in users %}
+                    <a class="card-text-text" style="vertical-align: middle;">
+                        {{ user.id }}
+                        {{ user.firstName }}
+                        {{ user.lastName }}
+
+                        {% if user.enabled %}
+                            <form action="{{ path('profile_user_block', {'id': user.id}) }}">
+                                <button class="btn btn-outline-danger" type="submit"
+                                        style="float: right; font-weight: 600;">
+                                    Заблокувати
+                                </button>
+                            </form>
+                        {% else %}
+                            <form action="{{ path('profile_user_unblock', {'id': user.id}) }}">
+                                <button class="btn btn-outline-success" type="submit"
+                                        style="float: right; font-weight: 600;">
+                                    Розблокувати
+                                </button>
+                            </form>
+                        {% endif %}
+                        <form action="{{ path('profile_user_update', {'id': user.id}) }}">
+                            <button class="btn btn-outline-warning" type="submit"
+                                    style="float: right; font-weight: 600; margin-left: 12px; margin-right: 4px;">
+                                Редагувати
+                            </button>
+                        </form>
+
+                        <a style="float: right;">{{ user.email }}</a>
+                    </a>
+                    <br>
+                    <br>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+
+{% endblock %}

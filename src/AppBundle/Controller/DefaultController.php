@@ -2,6 +2,7 @@
 
 namespace AppBundle\Controller;
 
+use AppBundle\Entity\News;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
@@ -16,7 +17,14 @@ class DefaultController extends Controller
         if (!$this->getUser()) {
             return $this->redirectToRoute('login');
         }
-        return $this->render('default/main.html.twig');
+
+        $newses = $this
+            ->getDoctrine()
+            ->getManager()
+            ->getRepository(News::class)
+            ->findBy(['enabled' => true]);
+
+        return $this->render('default/main.html.twig', ['newses' =>$newses]);
     }
 
     /**

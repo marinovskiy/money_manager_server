@@ -1,0 +1,56 @@
+{% extends "::base_admin.html.twig" %}
+{% block title %}Адмін-панель - новини{% endblock %}
+{% block body %}
+
+    <div id="my-div-content-child" class="my-div-round my-div-single bg-primary" style="width: 97%; height: 78px;">
+        <div class="my-div-round-content-block-top" style="display: inline-block;">
+            <div>
+                <p class="my-text-title-white"><b>Новини:</b></p>
+            </div>
+
+            {#<div>#}
+            <form action="{{ path('news_add') }}">
+                <button class="btn btn-secondary" type="submit" style="float: right;">Додати новину</button>
+            </form>
+            {#</div>#}
+        </div>
+
+        <div class="my-div-round-content-block-middle" style="margin: 12px 0 0 0;">
+            <div>
+                {#<p>id firstName lastName email</p>#}
+                {% for news in newses %}
+                    <a class="card-text-text" style="vertical-align: middle;">
+                        {{ news.id }}
+                        {{ news.title }}
+                        {{ news.updatedAt|date('d.m.y') }}
+
+                        {% if news.enabled %}
+                            <form action="{{ path('news_hide', {'id': news.id}) }}">
+                                <button class="btn btn-outline-danger" type="submit"
+                                        style="float: right; font-weight: 600;">
+                                    Приховати
+                                </button>
+                            </form>
+                        {% else %}
+                            <form action="{{ path('news_show', {'id': news.id}) }}">
+                                <button class="btn btn-outline-success" type="submit"
+                                        style="float: right; font-weight: 600;">
+                                    Показати
+                                </button>
+                            </form>
+                        {% endif %}
+                        <form action="{{ path('news_edit', {'id': news.id}) }}">
+                            <button class="btn btn-outline-warning" type="submit"
+                                    style="float: right; font-weight: 600; margin-left: 12px; margin-right: 4px;">
+                                Редагувати
+                            </button>
+                        </form>
+                    </a>
+                    <br>
+                    <br>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+
+{% endblock %}

@@ -113,11 +113,20 @@ class User implements UserInterface, \JsonSerializable
      */
     private $organizations;
 
+    /**
+     * @var News[]|ArrayCollection
+     *
+     * @ORM\OneToMany(targetEntity="News", mappedBy="author")
+     * @ORM\JoinColumn(name="news_id", referencedColumnName="id")
+     */
+    private $newses;
+
     public function __construct()
     {
         $this->devices = new ArrayCollection();
         $this->accounts = new ArrayCollection();
         $this->organizations = new ArrayCollection();
+        $this->newses = new ArrayCollection();
     }
 
     /**
@@ -484,6 +493,40 @@ class User implements UserInterface, \JsonSerializable
     public function setOrganizations($organizations)
     {
         $this->organizations = $organizations;
+    }
+
+    /**
+     * Add news
+     *
+     * @param News $news
+     *
+     * @return User
+     */
+    public function addNews(News $news)
+    {
+        $this->newses->add($news);
+
+        return $this;
+    }
+
+    /**
+     * Remove news
+     *
+     * @param News $news
+     */
+    public function removeNews(News $news)
+    {
+        $this->newses->removeElement($news);
+    }
+
+    /**
+     * Get newses
+     *
+     * @return News[]|ArrayCollection
+     */
+    public function getNewses()
+    {
+        return $this->newses;
     }
 
     public function getRoles()

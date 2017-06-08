@@ -27,7 +27,7 @@ class UserController extends Controller
             ->getRepository('AppBundle:Account')
             ->findBy(['user' => $this->getUser()->getId()]);
 
-        return $this->render('user/profile.html.twig', [
+        return $this->render('profile_me.html.twig', [
             'accounts' => $accounts,
             'organizations' => $organizations
         ]);
@@ -61,7 +61,7 @@ class UserController extends Controller
     }
 
     /**
-     * @Route("/profile/update", name="profile_user_update")
+     * @Route("/profile/update", name="profile_me_user_update")
      */
     public function profileMeUpdateAction(Request $request)
     {
@@ -80,5 +80,69 @@ class UserController extends Controller
             'user/update_profile.html.twig',
             ['form' => $form->createView(), 'user' => $user]
         );
+    }
+
+    /**
+     * @Route("/profile/{id}/update", name="profile_user_update")
+     */
+    public function profileUpdateAction(Request $request, $id)
+    {
+        $em = $this->getDoctrine()->getManager();
+
+        $user = $em->getRepository(User::class)->find($id);
+
+        $form = $this->createForm(UpdateProfileType::class, $user);
+
+        $form->handleRequest($request);
+        if ($form->isSubmitted() && $form->isValid()) {
+            $em->flush();
+
+            return $this->redirectToRoute('admin_users');
+        }
+
+        return $this->render(
+            'user/update_profile.html.twig',
+            ['form' => $form->createView(), 'user' => $user]
+        );
+    }
+
+    /**
+     * @Route("/profile/{id}/block", name="profile_user_block")
+     */
+    public function profileBlockAction(Request $request, $id)
+    {
+        $em = $this->getDoctrine()->getManager();
+
+        $user = $em->getRepository(User::class)->find($id);
+
+        if ($user && $user->getEnabled()) {
+            $user->setEnabled(false);
+            $em = $this->getDoctrine()->getManager();
+            $em->flush();
+
+            return $this->redirectToRoute('admin_users');
+        }
+
+        return $this->redirectToRoute('admin_users');
+    }
+
+    /**
+     * @Route("/profile/{id}/unblock", name="profile_user_unblock")
+     */
+    public function profileUnBlockAction(Request $request, $id)
+    {
+        $em = $this->getDoctrine()->getManager();
+
+        $user = $em->getRepository(User::class)->find($id);
+
+        if ($user && !$user->getEnabled()) {
+            $user->setEnabled(true);
+            $em = $this->getDoctrine()->getManager();
+            $em->flush();
+
+            return $this->redirectToRoute('admin_users');
+        }
+
+        return $this->redirectToRoute('admin_users');
     }
 }

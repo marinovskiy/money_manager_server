@@ -24,7 +24,7 @@
                style="color: white; text-decoration:none;">Головна</a>
             {% if app.user %}
                 {% if app.user.role is constant('ROLE_ADMIN', app.user) %}
-                    <a class="my-nav-bar-menu-item-selected" href="{{ path('profile_me') }}"
+                    <a class="my-nav-bar-menu-item-selected" href="{{ path('admin_users') }}"
                        style="color: white; text-decoration:none;">Адмін-панель</a>
                 {% else %}
                     <a class="my-nav-bar-menu-item-selected" href="{{ path('profile_me') }}"

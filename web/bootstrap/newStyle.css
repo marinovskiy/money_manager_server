@@ -91,6 +91,10 @@ a:active {
     margin: 12px 12px 12px 32px;
 }
 
+.my-div-single {
+    margin: 24px 24px 24px 24px;
+}
+
 .my-div-left {
     margin: 24px 12px 24px 24px;
 }
@@ -108,6 +112,12 @@ a:active {
     border-radius: 4px;
     vertical-align: top;
     padding: 24px;
+}
+
+.my-div-round-news {
+    border-radius: 4px;
+    vertical-align: top;
+    /*padding: 24px;*/
 }
 
 .my-div-round-content-block-top {

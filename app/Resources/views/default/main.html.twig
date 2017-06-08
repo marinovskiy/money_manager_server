@@ -1,22 +1,27 @@
 {% extends "::base.html.twig" %}
+{% block title %}MoneyManager - головна{% endblock %}
 {% block body %}
 
-    {#<div class="navbar navbar-inverse bg-success">#}
-        {#{% if app.user %}#}
-            {#<a href="{{ path('profile_me') }}">My profile</a>#}
-            {#<a href="{{ path('logout') }}">Logout</a>#}
-        {#{% else %}#}
-            {#<a href="{{ path('login') }}">Login</a>#}
-            {#<a href="{{ path('registration') }}">Registration</a>#}
-        {#{% endif %}#}
-    {#</div>#}
-    {#<div class="container-full">#}
-        {#<div class="row">#}
-            {#<div class="col-md-12">#}
-                    {#<div class="headerDiv">#}
+    <div id="my-div-content-child" class="my-div-single" style="width: 97%; height: 78px;">
+        <div class="my-div-round-content-block-top my-div-round bg-primary" style="width: 100%; margin-bottom: 32px;">
+            <p class="my-text-title-white"><b>Новини MoneyManager:</b></p>
+        </div>
 
-                {#</div>#}
-            {#</div>#}
-        {#</div>#}
-    {#</div>#}
+        <div>
+            {% for news in newses %}
+                <div class="my-div-round bg-primary" style="width: 100%; margin-top: 16px;">
+                    <p class="my-text-title-white">
+                        {{ news.title }}
+                        <a class="my-text-white"
+                           style="float: right; font-size: 16px; font-weight: 500;">{{ news.updatedAt|date('d.m.y') }}</a>
+                    </p>
+                    <p class="my-text-white">
+                        {{ news.text }}
+                    </p>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+
+
 {% endblock %}
