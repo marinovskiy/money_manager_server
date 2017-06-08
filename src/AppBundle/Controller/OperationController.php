@@ -50,14 +50,14 @@ class OperationController extends Controller
         return $this->render('operation/add_operation.html.twig', ['form' => $form->createView()]);
     }
 
-    /**
-     * @Route("/accounts/{id}/", name="accounts_all")
-     */
-    public function accountOperationsAction(Request $request, $id)
-    {
-        $accounts = $this->getDoctrine()->getManager()->getRepository(Account::class)->loadAllAccounts();
-        return new JsonResponse($accounts);
-    }
+//    /**
+//     * @Route("/accounts/{id}/", name="accounts_all")
+//     */
+//    public function accountOperationsAction(Request $request, $id)
+//    {
+//        $accounts = $this->getDoctrine()->getManager()->getRepository(Account::class)->loadAllAccounts();
+//        return new JsonResponse($accounts);
+//    }
 
     //TODO balance
     /**

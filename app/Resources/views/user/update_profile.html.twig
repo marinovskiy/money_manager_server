@@ -1,0 +1,37 @@
+{% extends 'base.html.twig' %}
+{% block title %}Редагування профілю{% endblock %}
+{% block body %}
+    <div style="text-align: center;">
+        <div style="width: 45%; display: inline-block;">
+            <p class="text-title">Редагування профілю</p>
+            <p class="text-subtitle">Вкажіть ім'я, прізвище та стать</p>
+
+            <div class="col-md-9" style="margin: 0 auto;">
+                <div class="panel-body">
+
+                    {{ form_start(form) }}
+
+                    <div class="container-form">
+                        {{ form_row(form.firstName, {'attr': {'class': 'form-control'}}) }}
+                    </div>
+
+                    <div class="container-form">
+                        {{ form_row(form.lastName, {'attr': {'class': 'form-control'}}) }}
+                    </div>
+                    <div class="container-form">
+                        {{ form_row(form.gender, {'attr': {'class': 'form-control'}}) }}
+                    </div>
+
+                    <div class="container-form-center" align="center">
+                        <div class="col-md-6">
+                            <button class="btn btn-block btn-primary" type="submit">Оновити</button>
+                        </div>
+                    </div>
+
+                    {{ form_end(form) }}
+
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

@@ -18,6 +18,22 @@ li {
     margin: 0;
 }
 
+a:link {
+    color: #0274D5;
+}
+
+a:visited {
+    color: #0274D5;
+}
+
+a:hover {
+    color: #64B5F6;
+}
+
+a:active {
+
+}
+
 .my-btn-action {
     height: 24px;
     font-size: 12px;
@@ -69,7 +85,7 @@ li {
 }
 
 .my-div-round-content-block-middle {
-    padding: 24px 0 24px 0;
+    padding: 24px 0 16px 0;
 }
 
 .my-div-round-content-block-bottom {

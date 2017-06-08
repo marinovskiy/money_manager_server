@@ -1,20 +1,13 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: alex
- * Date: 5/9/17
- * Time: 5:46 PM
- */
 
 namespace AppBundle\Controller;
 
 use AppBundle\Entity\Account;
 use AppBundle\Entity\Organization;
 use AppBundle\Entity\User;
+use AppBundle\Form\UpdateProfileType;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
-use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpFoundation\Response;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 
@@ -47,8 +40,6 @@ class UserController extends Controller
     {
         $accounts = $this->getDoctrine()->getManager()->getRepository(Account::class)->loadAllUserAccounts($this->getUser());
 
-
-
         return $this->json(['accounts' => $accounts], 200);
     }
 
@@ -67,5 +58,27 @@ class UserController extends Controller
             ->searchUserByEmail($email);
 
         return $this->json(['users' => $users], 200);
+    }
+
+    /**
+     * @Route("/profile/update", name="profile_user_update")
+     */
+    public function profileMeUpdateAction(Request $request)
+    {
+        $user = $this->getUser();
+        $form = $this->createForm(UpdateProfileType::class, $user);
+
+        $form->handleRequest($request);
+        if ($form->isSubmitted() && $form->isValid()) {
+            $em = $this->getDoctrine()->getManager();
+            $em->flush();
+
+            return $this->redirectToRoute('profile_me');
+        }
+
+        return $this->render(
+            'user/update_profile.html.twig',
+            ['form' => $form->createView(), 'user' => $user]
+        );
     }
 }
