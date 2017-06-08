@@ -45,6 +45,33 @@ a:active {
     padding: 4px 4px 4px 4px;
 }
 
+.my-nav-bar-menu-header {
+    text-decoration: none;
+    vertical-align: middle;
+    margin-left: 8px;
+    margin-right: 8px;
+    font-size: 24px;
+    font-weight: bold;
+}
+
+.my-nav-bar-menu-item {
+    text-decoration: none;
+    vertical-align: middle;
+    margin-left: 8px;
+    margin-right: 8px;
+    font-size: 20px;
+    /*font-weight: 500;*/
+}
+
+.my-nav-bar-menu-item-selected {
+    text-decoration: none;
+    vertical-align: middle;
+    margin-left: 8px;
+    margin-right: 8px;
+    font-size: 20px;
+    font-weight: 500;
+}
+
 /*inline divs*/
 #my-div-content-parent {
     width: 100%;

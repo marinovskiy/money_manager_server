@@ -13,30 +13,73 @@
 
 <body>
 
-{#<nav class="navbar navbar-toggleable-md navbar-inverse bg-primary">#}
-<nav class="navbar navbar-toggleable-md navbar-inverse bg-primary">
-    <div class="navbar-header">
-        MoneyManager
+<div id="my-div-content-parent" class="bg-primary" style="height: 68px; padding: 16px;">
+    <div id="my-div-content-child">
+        <a class="my-nav-bar-menu-header" style="color: white;">MoneyManager</a>
     </div>
-    <ul class="nav navbar-nav navbar-right">
-        <a class="navbar-brand" href="{{ path('homepage') }}">Головна</a>
-        {% if app.user %}
-            <a class="navbar-brand" href="{{ path('profile_me') }}">Профіль</a>
-        {% endif %}
-        <a class="navbar-brand" href="{{ path('faq') }}">FAQ</a>
-        <a class="navbar-brand" href="{{ path('about') }}">Про сайт</a>
-        {% if app.user %}
-            <a class="navbar-brand" href="{{ path('logout') }}">Вихід</a>
-        {% else %}
-            <a class="navbar-brand" href="{{ path('login') }}">Увійти</a>
-            <a class="navbar-brand" href="{{ path('registration') }}">Зареєстрвуватися</a>
-        {% endif %}
-    </ul>
-</nav>
+
+    <div id="my-div-content-child" style="float: right;">
+        <ul>
+            <a class="my-nav-bar-menu-item" href="{{ path('homepage') }}"
+               style="color: white; text-decoration:none;">Головна</a>
+            {% if app.user %}
+                <a class="my-nav-bar-menu-item-selected" href="{{ path('profile_me') }}" style="color: white; text-decoration:none;">Профіль</a>
+            {% endif %}
+            <a class="my-nav-bar-menu-item" href="{{ path('faq') }}" style="color: white; text-decoration:none;">FAQ</a>
+            <a class="my-nav-bar-menu-item" href="{{ path('about') }}" style="color: white; text-decoration:none;">Про сайт</a>
+            {% if app.user %}
+                <a class="my-nav-bar-menu-item" href="{{ path('logout') }}" style="color: white; text-decoration:none;">Вихід</a>
+            {% else %}
+                <a class="my-nav-bar-menu-item" href="{{ path('login') }}" style="color: white; text-decoration:none;">Увійти</a>
+                <a class="my-nav-bar-menu-item" href="{{ path('registration') }}" style="color: white; text-decoration:none;">Зареєструватися</a>
+            {% endif %}
+        </ul>
+    </div>
+</div>
+
+{#<div class="bg-primary" style="color: white;">#}
+{#<a class="navbar-brand" href="{{ path('homepage') }}">MoneyManager</a>#}
+{#<ul class="nav navbar-nav navbar-right">#}
+{#<a class="navbar-brand" href="{{ path('homepage') }}" style="font-weight: 500;">Головна</a>#}
+{#{% if app.user %}#}
+{#<a class="navbar-brand" href="{{ path('profile_me') }}">Профіль</a>#}
+{#{% endif %}#}
+{#<a class="navbar-brand" href="{{ path('faq') }}">FAQ</a>#}
+{#<a class="navbar-brand" href="{{ path('about') }}">Про сайт</a>#}
+{#{% if app.user %}#}
+{#<a class="navbar-brand" href="{{ path('logout') }}">Вихід</a>#}
+{#{% else %}#}
+{#<a class="navbar-brand" href="{{ path('login') }}">Увійти</a>#}
+{#<a class="navbar-brand" href="{{ path('registration') }}">Зареєстрвуватися</a>#}
+{#{% endif %}#}
+{#</ul>#}
+{#</div>#}
+
+{#<nav class="navbar navbar-default" role="navigation">#}
+{#<nav class="navbar navbar-default bg-primary" role="navigation">#}
+{#<div class="navbar-header" style="color: white;">#}
+{#<button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">#}
+{#<span class="icon-bar"></span>#}
+{#<span class="icon-bar"></span>#}
+{#<span class="icon-bar"></span>#}
+{#</button>#}
+{#<a class="navbar-brand" href="#">Brand</a>#}
+{#</div>#}
+{#<div class="navbar-collapse collapse">#}
+{#<ul class="nav navbar-nav navbar-left">#}
+{#<li><a href="#">Left</a></li>#}
+{#<li><a href="#about">Left</a></li>#}
+{#</ul>#}
+{#<ul class="nav navbar-nav navbar-right">#}
+{#<li><a href="#about">Right</a></li>#}
+{#<li><a href="#contact">Right</a></li>#}
+{#</ul>#}
+{#</div>#}
+{#</nav>#}
 
 {% block body %}{% endblock %}
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
-{#<script src="{{ asset('bootstrap/js/bootstrap.min.js') }}"></script>#}
+<script src="{{ asset('bootstrap/js/bootstrap.min.js') }}"></script>
 {% block javascripts %}{% endblock %}
 
 </body>
