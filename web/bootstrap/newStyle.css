@@ -34,6 +34,10 @@ a:active {
 
 }
 
+#search_panel {
+    text-align: center;
+}
+
 .my-btn-action {
     height: 24px;
     font-size: 12px;
@@ -137,7 +141,7 @@ a:active {
 
 .text-title {
     font-size: 22px;
-    text-align: center;
+    /*text-align: center;*/
     color: black;
     margin: 24px 0 0 0;
 }

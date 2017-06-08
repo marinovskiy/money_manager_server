@@ -83,26 +83,9 @@
                 </div>
             </div>
 
-            {#<div class="my-div-content">#}
-            {#<div>#}
-            {#<ol>#}
-            {#{% for account in accounts %}#}
-            {#<li class="my-text-black">#}
-            {#{{ account.name }}#}
-            {#{{ account.balance }}#}
-            {#{{ account.currency }}#}
-
-            {#<br>#}
-            {#</li>#}
-            {#{% endfor %}#}
-            {#</ol>#}
-            {#</div>#}
-            {#</div>#}
-            {#{% endif %}#}
-
             <div class="my-div-round-content-block-bottom">
                 <form action="{{ path('organization_create_account', {'id': organization.id}) }}">
-                    <button id="add_member_btn" class="btn btn-secondary" type="submit">Додати аккаунт</button>
+                    <button id="add_member_btn" class="btn btn-outline-primary" type="submit">Додати аккаунт</button>
                 </form>
             </div>
         </div>
@@ -126,7 +109,7 @@
                     </ul>
                 </div>
 
-                <div class="my-div-round-content-block-bottom">
+                <div class="my-div-round-content-block-bottom" style="margin-top: 12px;">
                     <form action="{{ path('organization_members_search', {'id': organization.id}) }}">
                         <button id="add_member_btn" class="btn btn-secondary" type="submit">Додати нового члена</button>
                     </form>

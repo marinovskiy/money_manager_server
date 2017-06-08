@@ -49,6 +49,19 @@
                                 <li>
                                     {{ account.name }}
 
+                                    <form action="{{ path('account_remove', {'accountId': account.id}) }}">
+                                        <button class="btn btn-outline-danger my-btn-action" type="submit"
+                                                style="float: right; font-weight: 600;">
+                                            Видалити
+                                        </button>
+                                    </form>
+                                    <form action="{{ path('account_edit', {'accountId': account.id}) }}">
+                                        <button class="btn btn-outline-warning my-btn-action" type="submit"
+                                                style="float: right; font-weight: 600; margin-left: 12px; margin-right: 4px;">
+                                            Редагувати
+                                        </button>
+                                    </form>
+
                                     {% if account.balance >= 0 %}
                                         <a style="color: #8BC34A; float: right; margin-right: 6px;">{{ account.balance }} {{ account.currency.symbol }}</a>
                                     {% else %}
@@ -63,7 +76,7 @@
 
             <div class="my-div-round-content-block-bottom" style="margin: 8px 0 0 0;">
                 <form action="{{ path('accounts_add') }}">
-                    <button class="btn btn-outline-primary" type="submit">Додати</button>
+                    <button class="btn btn-outline-primary" type="submit">Додати аккаунт</button>
                 </form>
             </div>
         </div>
@@ -98,7 +111,7 @@
 
                 <div class="my-div-round-content-block-bottom" style="margin: 8px 0 0 24px;">
                     <form action="{{ path('organization_create') }}">
-                        <button class="btn btn-outline-primary" type="submit">Додати</button>
+                        <button class="btn btn-outline-primary" type="submit">Створити групу</button>
                     </form>
                 </div>
             </div>
