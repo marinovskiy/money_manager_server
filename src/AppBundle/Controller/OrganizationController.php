@@ -3,16 +3,14 @@
 namespace AppBundle\Controller;
 
 use AppBundle\Entity\Account;
-use AppBundle\Entity\Category;
 use AppBundle\Entity\Organization;
 use AppBundle\Entity\User;
 use AppBundle\Form\Account\AddAccountType;
 use AppBundle\Form\CreateOrganizationType;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
-use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Symfony\Component\HttpFoundation\Response;
 
 /**
@@ -81,6 +79,50 @@ class OrganizationController extends Controller
         }
 
         return $this->render('account/add_account.html.twig', array('form' => $form->createView()));
+    }
+
+    /**
+     * @Route("/{id}/members/search", name="organization_members_search")
+     */
+    public function organizationSearchMembersAction(Request $request, $id)
+    {
+        $em = $this->getDoctrine()->getManager();
+        $organization = $em->getRepository(Organization::class)->find($id);
+
+        return $this->render('organization/add_member.html.twig', [
+            'organization' => $organization
+        ]);
+    }
+
+    /**
+     * @Route("/{id}/members/add", name="organization_member_add")
+     */
+    public function organizationAddMemberAction(Request $request, $id)
+    {
+        $userId = $request->request->get('userId');
+
+        $em = $this->getDoctrine()->getManager();
+//        $organization = new Organization();
+        $organization = $em->getRepository(Organization::class)->find($id);
+        $user = $em->getRepository(User::class)->find($userId);
+
+        $logger = $this->get('logger');
+        $logger->info('I just got the logger');
+        foreach ($organization->getMembers() as $member) {
+            $logger->info($member->getId());
+        }
+
+        if (!$organization->getMembers()->contains($user)) {
+            $logger->info('200');
+            $organization->addMember($user);
+            $em->flush();
+
+            $logger->info('200');
+            return new Response(null, 200);
+        }
+
+        $logger->info('409');
+        return new Response(null, 409);
     }
 
     // AJAX

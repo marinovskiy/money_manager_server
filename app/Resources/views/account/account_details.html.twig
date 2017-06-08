@@ -28,27 +28,32 @@
 
         {#<div id="my-div-content-child" style="width: 67%; height: 78px;">#}
         <div id="my-div-content-child" class="my-div-center" style="width: 40%; height: 78px;">
+            {% if account.operations is empty %}<div class="my-div-round my-div-round-content-block-top bg-primary" style="width: 100%; height: 100%;">
+                <p class="my-div-round-text-title">Аккаунт "{{ account.name }}" ще не має операцій</p>
+            </div>
+            {% else %}
             <div class="my-div-round my-div-round-content-block-top bg-primary" style="width: 100%; height: 100%;">
                 <p class="my-div-round-text-title">Операції аккаунту "{{ account.name }}":</p>
             </div>
 
             <div class="my-div-content">
                 <div>
-                    <ol>
-                        {% for operation in account.operations %}
-                            <li class="my-text-black">
-                                {{ operation.category }}
-                                {{ operation.description }}
-                                {% if operation.type is constant('TYPE_INCOME', operation) %}
-                                    <a style="color: #8BC34A; float: right;">{{ operation.sum }} {{ account.currency.symbol }}</a>
-                                {% else %}
-                                    <a style="color: #F44336; float: right;">-{{ operation.sum }} {{ account.currency.symbol }}</a>
-                                {% endif %}
+                        <ol>
+                            {% for operation in account.operations %}
+                                <li class="my-text-black">
+                                    {{ operation.category }}
+                                    {{ operation.description }}
+                                    {% if operation.type is constant('TYPE_INCOME', operation) %}
+                                        <a style="color: #8BC34A; float: right;">{{ operation.sum }} {{ account.currency.symbol }}</a>
+                                    {% else %}
+                                        <a style="color: #F44336; float: right;">-{{ operation.sum }} {{ account.currency.symbol }}</a>
+                                    {% endif %}
 
-                                <br>
-                            </li>
-                        {% endfor %}
-                    </ol>
+                                    <br>
+                                </li>
+                            {% endfor %}
+                        </ol>
+                    {% endif %}
                 </div>
             </div>
         </div>

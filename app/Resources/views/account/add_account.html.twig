@@ -1,37 +1,29 @@
 {% extends 'base.html.twig' %}
 {% block title %}Новий аккаунт{% endblock %}
 {% block body %}
-    <div class="container div-content">
-        <div class="row">
-            <div class="col-md-5 container-centered">
-                <div class="panel-heading"><p class="text-title">Створення нового аккаунта</p></div>
+    <div style="text-align: center;">
+        <div style="width: 45%; display: inline-block;">
+            <p class="text-title">Створення нового аккаунта</p>
+            <p class="text-subtitle">Укажіть назву, опис (по бажанню) та<br>грошову одиницю</p>
 
-                <div class="panel-heading"><p class="text-subtitle">Укажіть назву, опис (по бажанню) та грошову
-                        одиницю</p></div>
-
+            <div class="col-md-9" style="margin: 0 auto;">
                 <div class="panel-body">
 
                     {{ form_start(form) }}
 
                     <div class="container-form">
-                        <div class="col-md-12">
-                            {{ form_row(form.name, {'attr': {'class': 'form-control'}}) }}
-                        </div>
+                        {{ form_row(form.name, {'attr': {'class': 'form-control'}}) }}
                     </div>
 
                     <div class="container-form">
-                        <div class="col-md-12">
-                            {{ form_row(form.description, {'attr': {'class': 'form-control'}}) }}
-                        </div>
+                        {{ form_row(form.description, {'attr': {'class': 'form-control'}}) }}
                     </div>
 
                     <div class="container-form">
-                        <div class="col-md-12">
-                            {{ form_row(form.currency, {'attr': {'class': 'form-control'}}) }}
-                        </div>
+                        {{ form_row(form.currency, {'attr': {'class': 'form-control'}}) }}
                     </div>
 
-                    <div align="center">
+                    <div class="container-form-center" align="center">
                         <div class="col-md-6">
                             <button class="btn btn-block btn-primary" type="submit">Створити</button>
                         </div>

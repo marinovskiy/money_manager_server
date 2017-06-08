@@ -1,167 +1,127 @@
 {% extends "::base.html.twig" %}
+{% block title %}Ваша група{% endblock %}
 {% block body %}
+    <div id="my-div-content-parent" class="div-content">
 
-    <div class="div-round bg-primary" style="width: 25%;">
-        <div class="div-round-content">
-            <h5 class="card-text-title"><b>Group info:</b></h5>
-            <p class="card-text-text">
-                <b>Name:</b> {{ organization.name }}
-            </p>
-            <p class="card-text-text">
-                <b>Type:</b> {{ organization.type }}
-            </p>
-            <p class="card-text-text">
-                <b>Description:</b> {{ organization.description }}
-            </p>
-            <p class="card-text-text">
-                <b>Access:</b> {{ organization.publicAccess ? 'public':'private' }}
-            </p>
+        <div id="my-div-content-child" class="my-div-left " style="width: 24%;">
+            <div class="my-div-round bg-primary">
+                <div class="my-div-round-content-block-top">
+                    <p class="my-text-title-white"><b>Інформація про групу:</b></p>
+                </div>
 
-            <button class="btn btn-secondary" onclick="">Make public</button>
-        </div>
-    </div>
+                <div class="my-div-round-content-block-middle">
+                    <p class="my-text-white">
+                        <b>Назва:</b> {{ organization.name }}
+                    </p>
+                    <p class="my-text-white">
+                        <b>Створив:</b> {{ organization.creator.firstName }} {{ organization.creator.lastName }}
+                    </p>
+                    <p class="my-text-white">
+                        <b>Тип:</b> {{ organization.type }}
+                    </p>
+                    <p class="my-text-white">
+                        <b>Опис:</b> {{ organization.description }}
+                    </p>
+                    <p class="my-text-white">
+                        <b>Access:</b> {{ organization.publicAccess ? 'public':'private' }}
+                    </p>
+                </div>
 
-    <div class="div-round bg-primary" style="width: 25%;">
-        <div class="div-round-content">
-            <h5 class="card-text-title">{{ organization.name }} accounts:</h5>
-            {% if accounts is empty %}
-                <p class="card-text-text" align="center">There are no accounts yet. Do you want to create one?</p>
-            {% else %}
-                <ul>
-                    <li>
-                        {% for account in accounts %}
-                            <p class="card-text-text">
-                                {{ account.name }}
-                                {{ account.balance }}
-                                {{ account.currency }}
-                            </p>
-                        {% endfor %}
-                    </li>
-                </ul>
-            {% endif %}
-
-            <form action="{{ path('organization_create_account', {'id': organization.id}) }}">
-                <button class="btn btn-secondary" type="submit">Add account</button>
-            </form>
-        </div>
-    </div>
-
-    <div class="div-round bg-primary" style="width: 25%;">
-        <div class="div-round-content">
-            <h5 class="card-text-text">Last {{ organization.name }} operations:</h5>
-            <ul>
-
-            </ul>
-
-            <button class="btn btn-secondary" onclick="">Add operation</button>
-        </div>
-    </div>
-
-    <div class="div-round bg-primary" style="width: 25%;">
-        <div class="div-round-content">
-            <h5 class="card-text-title">{{ organization.name }} members:</h5>
-            <ul>
-                {% for member in organization.members %}
-                    <li>
-                        <p class="card-text-text">
-                            {{ member.firstName }}
-                            {{ member.lastName }}
-                        </p>
-                    </li>
-                {% endfor %}
-            </ul>
-
-            <button id="add_member_btn" class="btn btn-secondary">Add member</button>
-        </div>
-    </div>
-    <div id="view"></div>
-
-    <div id="add_member_div" class="div-round bg-primary" style="display: none; width: 50%;">
-        <div class="div-round-content">
-            <h5 class="card-text-text">Search for new members:</h5>
-
-            <div class="form-group row">
-                <label for="example-search-input" class="col-form-label">Search users by email:</label>
-                <div class="col-10">
-                    <input class="form-control" type="search" value="" id="example-search-input">
-                    <button id="search_users_btn" class="btn btn-secondary">Search</button>
+                <div class="my-div-round-content-block-bottom">
+                    {#<form action="{{ path('organization_members_add', {'id': organization.id}) }}">#}
+                    <button class="btn btn-secondary" onclick="">Make public</button>
+                    {#</form>#}
                 </div>
             </div>
 
-            <div id="users_div"></div>
-        </div>
-    </div>
+            <div class="my-div-round bg-primary" style="margin-top: 24px; width: 100%;">
+                <div class="my-div-round-content-block-top">
+                    <p class="my-text-title-white"><b>Члени {{ organization.name }}:</b></p>
+                </div>
 
-        {#<script>#}
-            {#function myFunction() {#}
-                {#var x = document.getElementById('add_new_members');#}
-                {#if (x.style.display === 'none') {#}
-                    {#x.style.display = 'block';#}
-                {#} else {#}
-                    {#x.style.display = 'none';#}
-                {#}#}
-            {#}#}
-        {#</script>#}
+                <div class="my-div-round-content-block-middle">
+                    <ul style="list-style-type: none;">
+                        {% for member in organization.members %}
+                            <li class="my-text-white">
+                                {{ member.firstName }}
+                                {{ member.lastName }}
+                                {#<a style="float: right;">{{ member.email }}</a>#}
+                                <br>
+                            </li>
+                        {% endfor %}
+                    </ul>
+                </div>
+
+                <div class="my-div-round-content-block-bottom">
+                    <form action="{{ path('organization_members_search', {'id': organization.id}) }}">
+                        <button id="add_member_btn" class="btn btn-secondary" type="submit">Додати нового члена</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+        <div id="my-div-content-child" class="my-div-center" style="width: 34%; height: 78px;">
+            {% if accounts is empty %}
+            <div class="my-div-round my-div-round-content-block-top bg-primary" style="width: 100%; height: 100%;">
+                <p class="my-div-round-text-title">Група "{{ organization.name }}" ще не має аккаунтів</p>
+            </div>
+            {% else %}
+            <div class="my-div-round my-div-round-content-block-top bg-primary" style="width: 100%; height: 100%;">
+                <p class="my-div-round-text-title">{{ organization.name }} accounts:</p>
+            </div>
+
+            <div class="my-div-content">
+                <div>
+                    <ol>
+                        {% for account in accounts %}
+                            <li class="my-text-black">
+                                {{ account.name }}
+                                {{ account.balance }}
+                                {{ account.currency }}
+
+                                <br>
+                            </li>
+                        {% endfor %}
+                    </ol>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+
+        <div id="my-div-content-child" class="my-div-center" style="width: 34%; height: 78px;">
+            {% if accounts is empty %}
+            <div class="my-div-round my-div-round-content-block-top bg-primary" style="width: 100%; height: 100%;">
+                <p class="my-div-round-text-title">Група "{{ organization.name }}" ще не має аккаунтів</p>
+            </div>
+            {% else %}
+            <div class="my-div-round my-div-round-content-block-top bg-primary" style="width: 100%; height: 100%;">
+                <p class="my-div-round-text-title">{{ organization.name }} accounts:</p>
+            </div>
+
+            <div class="my-div-content">
+                <div>
+                    <ol>
+                        {% for account in accounts %}
+                            <li class="my-text-black">
+                                {{ account.name }}
+                                {{ account.balance }}
+                                {{ account.currency }}
+
+                                <br>
+                            </li>
+                        {% endfor %}
+                    </ol>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+
+    </div>
 
 {% endblock %}
 {% block javascripts %}
     {{ parent() }}
     <script>
-        $('#add_member_btn').click(function () {
-            $('#add_member_div').show();
-        });
-
-        $('#asd123').click(function () {
-            $.ajax({
-                type: "GET",
-                url: "/organizations/qwerty123",
-                success: function (msg) {
-                    console.log(msg);
-                    $('#view').html(msg.user.email + '<br/>' + msg.user.firstName);
-                },
-                error: function (msg) {
-                    console.log("failed");
-                }
-            })
-        });
-
-        $('#search_users_btn').click(function () {
-            $.ajax({
-                type: "GET",
-                url: "/users/search",
-                data: {
-                    email: "john"
-                },
-                success: function (msg) {
-                    console.log(msg);
-                    $('#users_div').html(msg);
-
-                    $.each(msg.users, function(index, value) {
-//                       console.log(value.email);
-//                        $('#users_div').append(value.email + '<br/>');
-                        $('#users_div').append(
-                            '<a class="search-text-unselected" href="' + '{{ path('profile_me') }}' + '">'
-                            + value.email
-                            + ' '
-                            + value.firstName
-                            + ' '
-                            + value.lastName
-                            + ' '
-                            + '</a>'
-                            + '</br>'
-                        );
-                    });
-
-//                    for () {
-//
-//                    }
-//                    $('#view').html(msg.user.email + '<br/>' + msg.user.firstName);
-                },
-                error: function (msg) {
-                    console.log("failed");
-                }
-            })
-        });
     </script>
 
 {% endblock %}

@@ -3,6 +3,11 @@ html, body {
     background-color: #f8f8f8;
 }
 
+ul {
+    padding: 0;
+    margin: 0;
+}
+
 ol {
     padding: 0;
     margin: 0;
@@ -25,7 +30,7 @@ li {
 
 /*divs*/
 /*.my-div-content {*/
-    /*margin: 12px 12px 0 0;*/
+/*margin: 12px 12px 0 0;*/
 /*}*/
 
 .my-div-content {
@@ -95,4 +100,28 @@ li {
 
 .my-text-black {
     color: black;
+}
+
+/*titles*/
+.container-form {
+    text-align: left;
+    margin-top: 24px;
+}
+
+.container-form-center {
+    margin-top: 40px;
+}
+
+.text-title {
+    font-size: 22px;
+    text-align: center;
+    color: black;
+    margin: 24px 0 0 0;
+}
+
+.text-subtitle {
+    font-size: 18px;
+    text-align: center;
+    color: black;
+    margin: 12px 0 24px 0;
 }

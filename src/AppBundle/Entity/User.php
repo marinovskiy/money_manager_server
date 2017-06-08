@@ -107,7 +107,7 @@ class User implements UserInterface, \JsonSerializable
     private $createdOrganizations;
 
     /**
-     * @var ArrayCollection|$organizations[]
+     * @var Organization[]|ArrayCollection
      *
      * @ORM\ManyToMany(targetEntity="Organization", mappedBy="members")
      */
@@ -429,7 +429,7 @@ class User implements UserInterface, \JsonSerializable
     /**
      * Get createdOrganizations
      *
-     * @return ArrayCollection|$createdOrganizations[]
+     * @return Organization[]|ArrayCollection
      */
     public function getCreatedOrganizations()
     {

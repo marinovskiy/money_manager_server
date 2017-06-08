@@ -13,19 +13,25 @@
 
 <body>
 
+{#<nav class="navbar navbar-toggleable-md navbar-inverse bg-primary">#}
 <nav class="navbar navbar-toggleable-md navbar-inverse bg-primary">
-    <a class="navbar-brand" href="{{ path('homepage') }}">Головна</a>
-    {% if app.user %}
-        <a class="navbar-brand" href="{{ path('profile_me') }}">Профіль</a>
-    {% endif %}
-    <a class="navbar-brand" href="{{ path('faq') }}">FAQ</a>
-    <a class="navbar-brand" href="{{ path('about') }}">Про сайт</a>
-    {% if app.user %}
-        <a class="navbar-brand" href="{{ path('logout') }}">Вихід</a>
-    {% else %}
-        <a class="navbar-brand" href="{{ path('login') }}">Увійти</a>
-        <a class="navbar-brand" href="{{ path('registration') }}">Зареєстрвуватися</a>
-    {% endif %}
+    <div class="navbar-header">
+        MoneyManager
+    </div>
+    <ul class="nav navbar-nav navbar-right">
+        <a class="navbar-brand" href="{{ path('homepage') }}">Головна</a>
+        {% if app.user %}
+            <a class="navbar-brand" href="{{ path('profile_me') }}">Профіль</a>
+        {% endif %}
+        <a class="navbar-brand" href="{{ path('faq') }}">FAQ</a>
+        <a class="navbar-brand" href="{{ path('about') }}">Про сайт</a>
+        {% if app.user %}
+            <a class="navbar-brand" href="{{ path('logout') }}">Вихід</a>
+        {% else %}
+            <a class="navbar-brand" href="{{ path('login') }}">Увійти</a>
+            <a class="navbar-brand" href="{{ path('registration') }}">Зареєстрвуватися</a>
+        {% endif %}
+    </ul>
 </nav>
 
 {% block body %}{% endblock %}

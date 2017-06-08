@@ -68,14 +68,15 @@ class Organization implements \JsonSerializable
      */
     private $creator;
 
+//ORM\ManyToMany(targetEntity="User", inversedBy="organizations")
+//ORM\JoinColumn(name="member_id", referencedColumnName="id")
     /**
-     * @var ArrayCollection|$members[]
+     * @var User[]|ArrayCollection
      *
      * @ORM\ManyToMany(targetEntity="User", inversedBy="organizations")
      */
     private $members;
 
-//ORM\OneToMany(targetEntity="Account", mappedBy="user", cascade={"remove","persist"})
     /**
      * @var ArrayCollection|$accounts[]
      *
@@ -86,6 +87,7 @@ class Organization implements \JsonSerializable
     public function __construct()
     {
         $this->members = new ArrayCollection();
+        $this->accounts = new ArrayCollection();
     }
 
     /**
@@ -231,29 +233,33 @@ class Organization implements \JsonSerializable
      * Remove member
      *
      * @param User $member
+     *
+     * @return Organization
      */
     public function removeMember(User $member)
     {
         $this->members->removeElement($member);
+
+        return $this;
     }
 
     /**
      * Get members
      *
-     * @return ArrayCollection|$members[]
+     * @return ArrayCollection
      */
     public function getMembers()
     {
         return $this->members;
     }
 
-    /**
-     * @param User[] $members
-     */
-    public function setMembers($members)
-    {
-        $this->members = $members;
-    }
+//    /**
+//     * @param User[] $members
+//     */
+//    public function setMembers($members)
+//    {
+//        $this->members = $members;
+//    }
 
     /**
      * Add account
