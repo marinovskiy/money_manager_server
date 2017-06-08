@@ -48,12 +48,19 @@ class Operation implements \JsonSerializable
      */
     private $sum;
 
-//    /**
-//     * @var datetime
-//     *
-//     * @ORM\Column(name="sum", type="datetime")
-//     */
-//    private $createdAt;
+    /**
+     * @var \DateTime
+     *
+     * @ORM\Column(name="createdAt", type="datetime")
+     */
+    private $createdAt;
+
+    /**
+     * @var \DateTime
+     *
+     * @ORM\Column(name="updatedAt", type="datetime")
+     */
+    private $updatedAt;
 
     /**
      * @var Category
@@ -150,21 +157,53 @@ class Operation implements \JsonSerializable
         return $this->sum;
     }
 
-//    /**
-//     * @return mixed
-//     */
-//    public function getCreatedAt()
-//    {
-//        return $this->createdAt;
-//    }
-//
-//    /**
-//     * @param mixed $createdAt
-//     */
-//    public function setCreatedAt($createdAt)
-//    {
-//        $this->createdAt = $createdAt;
-//    }
+    /**
+     * Set createdAt
+     *
+     * @param \DateTime $createdAt
+     *
+     * @return Operation
+     */
+    public function setCreatedAt($createdAt)
+    {
+        $this->createdAt = $createdAt;
+
+        return $this;
+    }
+
+    /**
+     * Get createdAt
+     *
+     * @return \DateTime
+     */
+    public function getCreatedAt()
+    {
+        return $this->createdAt;
+    }
+
+    /**
+     * Set updatedAt
+     *
+     * @param \DateTime $updatedAt
+     *
+     * @return Operation
+     */
+    public function setUpdatedAt($updatedAt)
+    {
+        $this->updatedAt = $updatedAt;
+
+        return $this;
+    }
+
+    /**
+     * Get updatedAt
+     *
+     * @return \DateTime
+     */
+    public function getUpdatedAt()
+    {
+        return $this->updatedAt;
+    }
 
     /**
      * Set category

@@ -85,11 +85,9 @@ class OrganizationController extends Controller
             $account->setBalance(0);
 
             $em = $this->getDoctrine()->getManager();
-//            $em->persist($organization);
             $em->persist($account);
             $em->flush();
 
-//            return $this->redirectToRoute('profile_me');
             return $this->redirect($this->generateUrl('organization_details', array('id' => $id)));
         }
 
