@@ -27,7 +27,7 @@ class UserController extends Controller
             ->getRepository('AppBundle:Account')
             ->findBy(['user' => $this->getUser()->getId()]);
 
-        return $this->render('profile_me.html.twig', [
+        return $this->render('user/profile_me.html.twig', [
             'accounts' => $accounts,
             'organizations' => $organizations
         ]);

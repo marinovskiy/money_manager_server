@@ -2,23 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="50450105-c440-4cf7-a61e-8dd9ab973a7c" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/app/Resources/views/admin/admin_newses.html.twig" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/app/Resources/views/news/add_news.html.twig" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/app/Resources/views/user/profile_me.html.twig" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/AppBundle/Controller/AdminController.php" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/AppBundle/Controller/NewsController.php" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/AppBundle/Form/AddNewsType.php" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/app/Resources/views/user/profile.html.twig" afterPath="$PROJECT_DIR$/app/Resources/views/admin/admin_users.html.twig" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/Resources/views/base.html.twig" afterPath="$PROJECT_DIR$/app/Resources/views/base.html.twig" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/Resources/views/base_admin.html.twig" afterPath="$PROJECT_DIR$/app/Resources/views/base_admin.html.twig" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/Resources/views/default/main.html.twig" afterPath="$PROJECT_DIR$/app/Resources/views/default/main.html.twig" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/config/security.yml" afterPath="$PROJECT_DIR$/app/config/security.yml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/AppBundle/Controller/DefaultController.php" afterPath="$PROJECT_DIR$/src/AppBundle/Controller/DefaultController.php" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/AppBundle/Controller/UserController.php" afterPath="$PROJECT_DIR$/src/AppBundle/Controller/UserController.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/AppBundle/Entity/News.php" afterPath="$PROJECT_DIR$/src/AppBundle/Entity/News.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/AppBundle/Entity/User.php" afterPath="$PROJECT_DIR$/src/AppBundle/Entity/User.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/web/bootstrap/newStyle.css" afterPath="$PROJECT_DIR$/web/bootstrap/newStyle.css" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
@@ -94,21 +78,22 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="UserController.php" pinned="false" current-in-tab="false">
+      <file leaf-file-name="UserController.php" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/AppBundle/Controller/UserController.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="332">
-              <caret line="135" column="59" lean-forward="false" selection-start-line="135" selection-start-column="59" selection-end-line="145" selection-end-column="53" />
+            <state relative-caret-position="135">
+              <caret line="15" column="7" lean-forward="false" selection-start-line="15" selection-start-column="7" selection-end-line="15" selection-end-column="7" />
               <folding>
                 <element signature="e#40#69#0#PHP" expanded="true" />
-                <element signature="e#2360#2372#1#PHP" expanded="true" />
-                <element signature="e#2428#2459#0#PHP" expanded="true" />
-                <element signature="e#3037#3050#1#PHP" expanded="true" />
-                <element signature="e#3106#3137#0#PHP" expanded="true" />
-                <element signature="e#3683#3696#1#PHP" expanded="true" />
-                <element signature="e#3748#3761#1#PHP" expanded="true" />
-                <element signature="e#4242#4255#1#PHP" expanded="true" />
-                <element signature="e#4307#4320#1#PHP" expanded="true" />
+                <element signature="e#1005#1032#0#PHP" expanded="true" />
+                <element signature="e#2365#2377#1#PHP" expanded="true" />
+                <element signature="e#2433#2464#0#PHP" expanded="true" />
+                <element signature="e#3042#3055#1#PHP" expanded="true" />
+                <element signature="e#3111#3142#0#PHP" expanded="true" />
+                <element signature="e#3688#3701#1#PHP" expanded="true" />
+                <element signature="e#3753#3766#1#PHP" expanded="true" />
+                <element signature="e#4247#4260#1#PHP" expanded="true" />
+                <element signature="e#4312#4325#1#PHP" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -131,11 +116,11 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="main.html.twig" pinned="false" current-in-tab="true">
+      <file leaf-file-name="main.html.twig" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/Resources/views/default/main.html.twig">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="300">
-              <caret line="20" column="22" lean-forward="false" selection-start-line="20" selection-start-column="22" selection-end-line="20" selection-end-column="22" />
+            <state relative-caret-position="375">
+              <caret line="25" column="0" lean-forward="false" selection-start-line="25" selection-start-column="0" selection-end-line="25" selection-end-column="0" />
               <folding>
                 <element signature="e#12#28#0#Twig" expanded="true" />
                 <element signature="e#162#195#0#HTML" expanded="true" />
@@ -283,7 +268,6 @@
         <option value="$PROJECT_DIR$/app/Resources/views/base.html.twig" />
         <option value="$PROJECT_DIR$/app/config/security.yml" />
         <option value="$PROJECT_DIR$/app/Resources/views/user/profile.html.twig" />
-        <option value="$PROJECT_DIR$/src/AppBundle/Controller/UserController.php" />
         <option value="$PROJECT_DIR$/app/Resources/views/admin/admin_users.html.twig" />
         <option value="$PROJECT_DIR$/src/AppBundle/Entity/User.php" />
         <option value="$PROJECT_DIR$/src/AppBundle/Controller/AdminController.php" />
@@ -297,6 +281,7 @@
         <option value="$PROJECT_DIR$/web/bootstrap/newStyle.css" />
         <option value="$PROJECT_DIR$/src/AppBundle/Controller/NewsController.php" />
         <option value="$PROJECT_DIR$/app/Resources/views/default/main.html.twig" />
+        <option value="$PROJECT_DIR$/src/AppBundle/Controller/UserController.php" />
       </list>
     </option>
   </component>
@@ -1003,7 +988,7 @@
     <property name="nodejs_interpreter_path" value="/usr/bin/node" />
     <property name="js.eslint.eslintPackage" value="" />
     <property name="js-jscs-nodeInterpreter" value="/usr/bin/node" />
-    <property name="SearchEverywhereHistoryKey" value="Defa&#9;FILE&#9;file:///home/alex/PhpstormProjects/money_manager/src/AppBundle/Controller/DefaultController.php&#10;UserC&#9;FILE&#9;file:///home/alex/PhpstormProjects/money_manager/src/AppBundle/Controller/UserController.php&#10;User&#9;FILE&#9;file:///home/alex/PhpstormProjects/money_manager/src/AppBundle/Entity/User.php&#10;News&#9;FILE&#9;file:///home/alex/PhpstormProjects/money_manager/src/AppBundle/Entity/News.php&#10;Orga&#9;FILE&#9;file:///home/alex/PhpstormProjects/money_manager/src/AppBundle/Entity/Organization.php&#10;Organi&#9;FILE&#9;file:///home/alex/PhpstormProjects/money_manager/src/AppBundle/Controller/OrganizationController.php&#10;Organiza&#9;FILE&#9;file:///home/alex/PhpstormProjects/money_manager/src/AppBundle/Controller/OrganizationController.php&#10;Operat&#9;FILE&#9;file:///home/alex/PhpstormProjects/money_manager/src/AppBundle/Controller/OperationController.php&#10;Acc&#9;FILE&#9;file:///home/alex/PhpstormProjects/money_manager/src/AppBundle/Entity/Account.php&#10;OperationC&#9;FILE&#9;file:///home/alex/PhpstormProjects/money_manager/src/AppBundle/Controller/OperationController.php&#10;Secu&#9;FILE&#9;file:///home/alex/PhpstormProjects/money_manager/app/config/security.yml&#10;ORganiza&#9;FILE&#9;file:///home/alex/PhpstormProjects/money_manager/src/AppBundle/Entity/Organization.php&#10;profile&#9;FILE&#9;file:///home/alex/PhpstormProjects/money_manager/app/Resources/views/user/profile.html.twig&#10;Acco&#9;FILE&#9;file:///home/alex/PhpstormProjects/money_manager/src/AppBundle/Entity/Account.php&#10;Operation&#9;FILE&#9;file:///home/alex/PhpstormProjects/money_manager/src/AppBundle/Entity/Operation.php&#10;Opera&#9;FILE&#9;file:///home/alex/PhpstormProjects/money_manager/src/AppBundle/Entity/Operation.php&#10;styles&#9;FILE&#9;file:///home/alex/PhpstormProjects/money_manager/vendor/symfony/symfony/src/Symfony/Component/Console/Formatter/OutputFormatterStyleStack.php&#10;Categ&#9;FILE&#9;file:///home/alex/PhpstormProjects/money_manager/src/AppBundle/Entity/Category.php&#10;Account&#9;FILE&#9;file:///home/alex/PhpstormProjects/money_manager/src/AppBundle/Entity/Account.php&#10;s&#9;FILE&#9;file:///home/alex/PhpstormProjects/money_manager/src/AppBundle/Entity/User.php&#10;defa&#9;FILE&#9;file:///home/alex/PhpstormProjects/money_manager/src/AppBundle/Controller/DefaultController.php&#10;sty&#9;FILE&#9;file:///home/alex/PhpstormProjects/money_manager/web/bootstrap/style.css&#10;AuthCo&#9;FILE&#9;file:///home/alex/PhpstormProjects/money_manager/src/AppBundle/Controller/AuthController.php&#10;style&#9;FILE&#9;file:///home/alex/PhpstormProjects/money_manager/web/bootstrap/style.css&#10;Auth&#9;FILE&#9;file:///home/alex/PhpstormProjects/money_manager/src/AppBundle/Controller/AuthController.php&#10;login&#9;FILE&#9;file:///home/alex/PhpstormProjects/money_manager/app/Resources/views/auth/login.html.twig&#10;se&#9;FILE&#9;file:///home/alex/PhpstormProjects/money_manager/app/config/security.yml&#10;sec&#9;FILE&#9;file:///home/alex/PhpstormProjects/money_manager/app/config/security.yml&#10;routi&#9;FILE&#9;file:///home/alex/PhpstormProjects/money_manager/app/config/routing.yml&#10;security&#9;FILE&#9;file:///home/alex/PhpstormProjects/money_manager/app/config/security.yml&#10;routing&#9;FILE&#9;file:///home/alex/PhpstormProjects/money_manager/app/config/routing.yml&#10;services&#9;FILE&#9;file:///home/alex/PhpstormProjects/money_manager/app/config/services.yml&#10;rou&#9;FILE&#9;file:///home/alex/PhpstormProjects/money_manager/app/config/routing.yml&#10;serv&#9;FILE&#9;file:///home/alex/PhpstormProjects/money_manager/app/config/services.yml" />
+    <property name="SearchEverywhereHistoryKey" value="User&#9;FILE&#9;file:///home/alex/PhpstormProjects/money_manager/src/AppBundle/Controller/UserController.php&#10;Defa&#9;FILE&#9;file:///home/alex/PhpstormProjects/money_manager/src/AppBundle/Controller/DefaultController.php&#10;UserC&#9;FILE&#9;file:///home/alex/PhpstormProjects/money_manager/src/AppBundle/Controller/UserController.php&#10;News&#9;FILE&#9;file:///home/alex/PhpstormProjects/money_manager/src/AppBundle/Entity/News.php&#10;Orga&#9;FILE&#9;file:///home/alex/PhpstormProjects/money_manager/src/AppBundle/Entity/Organization.php&#10;Organi&#9;FILE&#9;file:///home/alex/PhpstormProjects/money_manager/src/AppBundle/Controller/OrganizationController.php&#10;Organiza&#9;FILE&#9;file:///home/alex/PhpstormProjects/money_manager/src/AppBundle/Controller/OrganizationController.php&#10;Operat&#9;FILE&#9;file:///home/alex/PhpstormProjects/money_manager/src/AppBundle/Controller/OperationController.php&#10;Acc&#9;FILE&#9;file:///home/alex/PhpstormProjects/money_manager/src/AppBundle/Entity/Account.php&#10;OperationC&#9;FILE&#9;file:///home/alex/PhpstormProjects/money_manager/src/AppBundle/Controller/OperationController.php&#10;Secu&#9;FILE&#9;file:///home/alex/PhpstormProjects/money_manager/app/config/security.yml&#10;ORganiza&#9;FILE&#9;file:///home/alex/PhpstormProjects/money_manager/src/AppBundle/Entity/Organization.php&#10;profile&#9;FILE&#9;file:///home/alex/PhpstormProjects/money_manager/app/Resources/views/user/profile.html.twig&#10;Acco&#9;FILE&#9;file:///home/alex/PhpstormProjects/money_manager/src/AppBundle/Entity/Account.php&#10;Operation&#9;FILE&#9;file:///home/alex/PhpstormProjects/money_manager/src/AppBundle/Entity/Operation.php&#10;Opera&#9;FILE&#9;file:///home/alex/PhpstormProjects/money_manager/src/AppBundle/Entity/Operation.php&#10;styles&#9;FILE&#9;file:///home/alex/PhpstormProjects/money_manager/vendor/symfony/symfony/src/Symfony/Component/Console/Formatter/OutputFormatterStyleStack.php&#10;Categ&#9;FILE&#9;file:///home/alex/PhpstormProjects/money_manager/src/AppBundle/Entity/Category.php&#10;Account&#9;FILE&#9;file:///home/alex/PhpstormProjects/money_manager/src/AppBundle/Entity/Account.php&#10;s&#9;FILE&#9;file:///home/alex/PhpstormProjects/money_manager/src/AppBundle/Entity/User.php&#10;defa&#9;FILE&#9;file:///home/alex/PhpstormProjects/money_manager/src/AppBundle/Controller/DefaultController.php&#10;sty&#9;FILE&#9;file:///home/alex/PhpstormProjects/money_manager/web/bootstrap/style.css&#10;AuthCo&#9;FILE&#9;file:///home/alex/PhpstormProjects/money_manager/src/AppBundle/Controller/AuthController.php&#10;style&#9;FILE&#9;file:///home/alex/PhpstormProjects/money_manager/web/bootstrap/style.css&#10;Auth&#9;FILE&#9;file:///home/alex/PhpstormProjects/money_manager/src/AppBundle/Controller/AuthController.php&#10;login&#9;FILE&#9;file:///home/alex/PhpstormProjects/money_manager/app/Resources/views/auth/login.html.twig&#10;se&#9;FILE&#9;file:///home/alex/PhpstormProjects/money_manager/app/config/security.yml&#10;sec&#9;FILE&#9;file:///home/alex/PhpstormProjects/money_manager/app/config/security.yml&#10;routi&#9;FILE&#9;file:///home/alex/PhpstormProjects/money_manager/app/config/routing.yml&#10;security&#9;FILE&#9;file:///home/alex/PhpstormProjects/money_manager/app/config/security.yml&#10;routing&#9;FILE&#9;file:///home/alex/PhpstormProjects/money_manager/app/config/routing.yml&#10;services&#9;FILE&#9;file:///home/alex/PhpstormProjects/money_manager/app/config/services.yml&#10;rou&#9;FILE&#9;file:///home/alex/PhpstormProjects/money_manager/app/config/routing.yml&#10;serv&#9;FILE&#9;file:///home/alex/PhpstormProjects/money_manager/app/config/services.yml" />
     <property name="list.type.of.created.stylesheet" value="CSS" />
     <property name="settings.editor.selected.configurable" value="Symfony2.SettingsForm" />
     <property name="com.intellij.database.dataSource.DataSourceTemplate" value="MySQL" />
@@ -1122,7 +1107,7 @@
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="203826000" />
+    <option name="totallyTimeSpent" value="204007000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="280" width="1366" height="744" extended-state="6" />
@@ -1602,24 +1587,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/AppBundle/Controller/UserController.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="332">
-          <caret line="135" column="59" lean-forward="false" selection-start-line="135" selection-start-column="59" selection-end-line="145" selection-end-column="53" />
-          <folding>
-            <element signature="e#40#69#0#PHP" expanded="true" />
-            <element signature="e#2360#2372#1#PHP" expanded="true" />
-            <element signature="e#2428#2459#0#PHP" expanded="true" />
-            <element signature="e#3037#3050#1#PHP" expanded="true" />
-            <element signature="e#3106#3137#0#PHP" expanded="true" />
-            <element signature="e#3683#3696#1#PHP" expanded="true" />
-            <element signature="e#3748#3761#1#PHP" expanded="true" />
-            <element signature="e#4242#4255#1#PHP" expanded="true" />
-            <element signature="e#4307#4320#1#PHP" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/AppBundle/Controller/DefaultController.php">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="345">
@@ -1674,14 +1641,33 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/app/Resources/views/default/main.html.twig">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="300">
-          <caret line="20" column="22" lean-forward="false" selection-start-line="20" selection-start-column="22" selection-end-line="20" selection-end-column="22" />
+        <state relative-caret-position="375">
+          <caret line="25" column="0" lean-forward="false" selection-start-line="25" selection-start-column="0" selection-end-line="25" selection-end-column="0" />
           <folding>
             <element signature="e#12#28#0#Twig" expanded="true" />
             <element signature="e#162#195#0#HTML" expanded="true" />
             <element signature="e#273#314#0#HTML" expanded="true" />
             <element signature="e#511#549#0#HTML" expanded="true" />
             <element signature="e#720#776#0#HTML" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/AppBundle/Controller/UserController.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="135">
+          <caret line="15" column="7" lean-forward="false" selection-start-line="15" selection-start-column="7" selection-end-line="15" selection-end-column="7" />
+          <folding>
+            <element signature="e#40#69#0#PHP" expanded="true" />
+            <element signature="e#1005#1032#0#PHP" expanded="true" />
+            <element signature="e#2365#2377#1#PHP" expanded="true" />
+            <element signature="e#2433#2464#0#PHP" expanded="true" />
+            <element signature="e#3042#3055#1#PHP" expanded="true" />
+            <element signature="e#3111#3142#0#PHP" expanded="true" />
+            <element signature="e#3688#3701#1#PHP" expanded="true" />
+            <element signature="e#3753#3766#1#PHP" expanded="true" />
+            <element signature="e#4247#4260#1#PHP" expanded="true" />
+            <element signature="e#4312#4325#1#PHP" expanded="true" />
           </folding>
         </state>
       </provider>
