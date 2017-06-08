@@ -67,7 +67,8 @@ class ApiAccountController extends Controller
         $accounts = $this
             ->getDoctrine()
             ->getRepository('AppBundle:Account')
-            ->findBy(['user' => $this->getUser()->getId()]);
+            ->findAll();
+//            ->findBy(['user' => $this->getUser()->getId()]);
         return $this->json(['accounts' => $accounts], 200);
     }
 

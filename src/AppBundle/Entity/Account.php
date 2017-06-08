@@ -52,7 +52,7 @@ class Account implements \JsonSerializable
     private $balance;
 
     /**
-     * @var int
+     * @var User
      *
      * @ORM\ManyToOne(targetEntity="User", inversedBy="accounts")
      */
@@ -66,7 +66,7 @@ class Account implements \JsonSerializable
     private $operations;
 
     /**
-     * @var int
+     * @var Organization
      *
      * @ORM\ManyToOne(targetEntity="Organization", inversedBy="accounts")
      */
@@ -191,7 +191,7 @@ class Account implements \JsonSerializable
     /**
      * Get user
      *
-     * @return int
+     * @return User
      */
     public function getUser()
     {
@@ -256,7 +256,7 @@ class Account implements \JsonSerializable
     /**
      * Get organization
      *
-     * @return int
+     * @return Organization
      */
     public function getOrganization()
     {
@@ -272,7 +272,8 @@ class Account implements \JsonSerializable
             'currency' => $this->getCurrency(),
 //            'currency' => $this->getCurrency()->getId(),
             'balance' => $this->getBalance(),
-            'operations' => $this->getOperations()
+            'operations' => $this->getOperations(),
+            'organization' => $this->getOrganization()
         ];
     }
 

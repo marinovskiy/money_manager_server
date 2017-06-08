@@ -64,7 +64,7 @@ class Operation implements \JsonSerializable
     protected $category;
 
     /**
-     * @var int
+     * @var Account
      *
      * @ORM\ManyToOne(targetEntity="Account", inversedBy="operations")
      */

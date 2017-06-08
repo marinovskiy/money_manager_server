@@ -76,11 +76,11 @@ class Organization implements \JsonSerializable
      * @ORM\ManyToMany(targetEntity="User", inversedBy="organizations")
      */
     private $members;
-
+//, cascade={"remove","persist"}
     /**
-     * @var ArrayCollection|$accounts[]
+     * @var Account[]|ArrayCollection
      *
-     * @ORM\OneToMany(targetEntity="Account", mappedBy="organization", cascade={"remove","persist"})
+     * @ORM\OneToMany(targetEntity="Account", mappedBy="organization")
      */
     private $accounts;
 
@@ -288,20 +288,20 @@ class Organization implements \JsonSerializable
     /**
      * Get accounts
      *
-     * @return ArrayCollection|$accounts[]
+     * @return Account[]|ArrayCollection
      */
     public function getAccounts()
     {
         return $this->accounts;
     }
 
-    /**
-     * @param Account[] $accounts
-     */
-    public function setAccounts($accounts)
-    {
-        $this->accounts = $accounts;
-    }
+//    /**
+//     * @param Account[] $accounts
+//     */
+//    public function setAccounts($accounts)
+//    {
+//        $this->accounts = $accounts;
+//    }
 
     function jsonSerialize()
     {

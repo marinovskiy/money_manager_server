@@ -41,13 +41,26 @@ class OrganizationController extends Controller
         return $this->render('organization/add_organization.html.twig', array('form' => $form->createView()));
     }
 
+//     Route("/{id}", name="organization_details", requirements={"id": "\d+"})
     /**
-     * @Route("/{id}", name="organization_details", requirements={"id": "\d+"})
+     * @Route("/{id}", name="organization_details")
      */
     public function organizationDetailsAction(Request $request, $id)
     {
         $organization = $this->getDoctrine()->getManager()->getRepository(Organization::class)->find($id);
-        $accounts = $this->getDoctrine()->getManager()->getRepository(Account::class)->loadAllOrganizationAccounts($id);
+//        $accounts = $this->getDoctrine()->getManager()->getRepository(Account::class)->loadAllOrganizationAccounts($id);
+
+        $accounts = $this
+            ->getDoctrine()
+            ->getRepository('AppBundle:Account')
+            ->findBy(['organization' => $id]);
+
+        $logger = $this->get('logger');
+        $logger->info('QWERTYUI');
+        foreach ($accounts as $account) {
+            $logger->info($account->getDescription());
+        }
+
         return $this->render('organization/organization_details.html.twig', [
             'organization' => $organization,
             'accounts' => $accounts
@@ -57,7 +70,7 @@ class OrganizationController extends Controller
     /**
      * @Route("/{id}/accounts/new", name="organization_create_account")
      */
-    public function qAction(Request $request, $id)
+    public function organizationAddAccountAction(Request $request, $id)
     {
         $account = new Account();
         $form = $this->createForm(AddAccountType::class, $account);
@@ -72,10 +85,12 @@ class OrganizationController extends Controller
             $account->setBalance(0);
 
             $em = $this->getDoctrine()->getManager();
+//            $em->persist($organization);
             $em->persist($account);
             $em->flush();
 
-            return $this->redirectToRoute('profile_me');
+//            return $this->redirectToRoute('profile_me');
+            return $this->redirect($this->generateUrl('organization_details', array('id' => $id)));
         }
 
         return $this->render('account/add_account.html.twig', array('form' => $form->createView()));
