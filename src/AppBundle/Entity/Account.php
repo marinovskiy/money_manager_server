@@ -47,7 +47,7 @@ class Account implements \JsonSerializable
     /**
      * @var float
      *
-     * @ORM\Column(name="balance", type="decimal", precision=10, scale=0)
+     * @ORM\Column(name="balance", type="decimal", precision=10, scale=2)
      */
     private $balance;
 

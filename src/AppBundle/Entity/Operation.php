@@ -16,7 +16,7 @@ class Operation implements \JsonSerializable
     const TYPE_INCOME = 'income';
     const TYPE_EXPENSE = 'expense';
 
-    const TYPES_TITLES = ['Income' => self::TYPE_INCOME, 'Expense' => self::TYPE_EXPENSE];
+    const TYPES_TITLES = ['Надходження' => self::TYPE_INCOME, 'Витрати' => self::TYPE_EXPENSE];
 
     /**
      * @var int
@@ -48,12 +48,12 @@ class Operation implements \JsonSerializable
      */
     private $sum;
 
-    /**
-     * @var datetime
-     *
-     * @ORM\Column(name="sum", type="datetime")
-     */
-    private $createdAt;
+//    /**
+//     * @var datetime
+//     *
+//     * @ORM\Column(name="sum", type="datetime")
+//     */
+//    private $createdAt;
 
     /**
      * @var Category
@@ -150,21 +150,21 @@ class Operation implements \JsonSerializable
         return $this->sum;
     }
 
-    /**
-     * @return mixed
-     */
-    public function getCreatedAt()
-    {
-        return $this->createdAt;
-    }
-
-    /**
-     * @param mixed $createdAt
-     */
-    public function setCreatedAt($createdAt)
-    {
-        $this->createdAt = $createdAt;
-    }
+//    /**
+//     * @return mixed
+//     */
+//    public function getCreatedAt()
+//    {
+//        return $this->createdAt;
+//    }
+//
+//    /**
+//     * @param mixed $createdAt
+//     */
+//    public function setCreatedAt($createdAt)
+//    {
+//        $this->createdAt = $createdAt;
+//    }
 
     /**
      * Set category

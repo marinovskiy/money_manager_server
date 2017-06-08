@@ -1,0 +1,98 @@
+/*base*/
+html, body {
+    background-color: #f8f8f8;
+}
+
+ol {
+    padding: 0;
+    margin: 0;
+}
+
+li {
+    padding: 0;
+    margin: 0;
+}
+
+/*inline divs*/
+#my-div-content-parent {
+    width: 100%;
+    margin: 0 auto;
+}
+
+#my-div-content-child {
+    float: left;
+}
+
+/*divs*/
+/*.my-div-content {*/
+    /*margin: 12px 12px 0 0;*/
+/*}*/
+
+.my-div-content {
+    margin: 12px 12px 12px 32px;
+}
+
+.my-div-left {
+    margin: 24px 12px 24px 24px;
+}
+
+.my-div-center {
+    margin: 24px 12px 24px 12px;
+}
+
+.my-div-right {
+    margin: 24px 24px 24px 12px;
+}
+
+/*divs round*/
+.my-div-round {
+    border-radius: 4px;
+    vertical-align: top;
+    padding: 24px;
+}
+
+.my-div-round-content-block-top {
+    border-radius: 4px;
+    vertical-align: top;
+}
+
+.my-div-round-content-block-middle {
+    padding: 24px 0 24px 0;
+}
+
+.my-div-round-content-block-bottom {
+    /*padding: 24px;*/
+}
+
+.my-div-balance-positive-block {
+    background: #9CCC65;
+}
+
+.my-div-balance-negative-block {
+    background: #E57373;
+}
+
+/*div title*/
+.my-div-round-text-title {
+    color: white;
+    font-size: 20px;
+    font-weight: bold;
+    margin: 0;
+}
+
+/*div text*/
+.my-text-title-white {
+    color: white;
+    margin-bottom: 12px;
+    font-size: 20px;
+    font-weight: bold;
+}
+
+.my-text-white {
+    color: white;
+    vertical-align: text-bottom;
+}
+
+.my-text-black {
+    color: black;
+}

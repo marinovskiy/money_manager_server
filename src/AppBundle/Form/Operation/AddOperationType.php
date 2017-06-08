@@ -24,11 +24,11 @@ class AddOperationType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('type', ChoiceType::class, ['choices' => Operation::TYPES_TITLES])
-            ->add('description', TextareaType::class)
-            ->add('sum', IntegerType::class, ['attr' => ['step' => 0.01]])
+            ->add('type', ChoiceType::class, ['choices' => Operation::TYPES_TITLES, 'label' => 'Тип'])
+            ->add('description', TextareaType::class, ['label' => 'Опис'])
+            ->add('sum', IntegerType::class, ['attr' => ['step' => 0.01],  'label' => 'Сума'])
 //            ->add('sum', MoneyType::class, ['scale' => 2])
-            ->add('category', EntityType::class, ['class' => Category::class]);
+            ->add('category', EntityType::class, ['class' => Category::class, 'label' => 'Назва']);
     }
 
     public function configureOptions(OptionsResolver $resolver)

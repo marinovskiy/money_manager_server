@@ -40,7 +40,8 @@ class OperationController extends Controller
             $em->persist($operation);
             $em->flush();
 
-            return $this->redirectToRoute('profile_me');
+//            return $this->redirectToRoute('profile_me');
+            return $this->redirect($this->generateUrl('accounts_details', array('id' => $id)));
         }
 
         return $this->render('operation/add_operation.html.twig', ['form' => $form->createView()]);
