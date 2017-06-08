@@ -17,11 +17,11 @@ class RegistrationType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('email', EmailType::class)
-            ->add('firstName', TextType::class)
-            ->add('lastName', TextType::class)
+            ->add('firstName', TextType::class, ['label' => 'Імя'])
+            ->add('lastName', TextType::class, ['label' => 'Прізвище'])
+            ->add('email', EmailType::class, ['label' => 'Електронна пошта'])
             ->add('gender', ChoiceType::class, [
-                'label' => 'Gender',
+                'label' => 'Стать',
                 'expanded' => true,
                 'choices' => [ucfirst(User::GENDER_MALE) => User::GENDER_MALE, ucfirst(User::GENDER_FEMALE) => User::GENDER_FEMALE]
             ])
@@ -30,7 +30,9 @@ class RegistrationType extends AbstractType
             ->add('plainPassword', RepeatedType::class, [
                 'type' => PasswordType::class,
                 'first_name' => 'password',
-                'second_name' => 'confirmPassword'
+                'second_name' => 'confirmPassword',
+                'first_options'  => array('label' => 'Пароль'),
+                'second_options' => array('label' => 'Повторіть пароль'),
             ]);
     }
 

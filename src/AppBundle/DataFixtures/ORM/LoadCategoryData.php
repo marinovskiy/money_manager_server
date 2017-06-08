@@ -57,17 +57,30 @@ class LoadCategoryData implements FixtureInterface, ContainerAwareInterface
         $category5->setType(Category::CATEGORY_TYPE_INCOME);
 
         // users
+        $admin = new User();
+        $admin->setEmail('admin@test.com');
+        $admin->setFirstName('admin');
+        $admin->setLastName('admin');
+        $admin->setGender(User::GENDER_MALE);
+        $admin->setEnabled(true);
+        $plainPassword = 'admin';
+        $encoder = $this->container->get('security.password_encoder');
+        $encoded = $encoder->encodePassword($admin, $plainPassword);
+        $this->container->get('app.user_manager')->registerUser($admin);
+        $admin->setRole(User::ROLE_ADMIN);
+        $admin->setPassword($encoded);
+
         $user = new User();
-        $user->setEmail('alex1@text.com');
+        $user->setEmail('alex@test.com');
         $user->setFirstName('alex');
-        $user->setLastName('m');
+        $user->setLastName('marinovskiy');
         $user->setGender(User::GENDER_MALE);
-        $user->setRole(User::ROLE_ADMIN);
         $user->setEnabled(true);
-        $plainPassword = 'qwerty';
+        $plainPassword = '111111';
         $encoder = $this->container->get('security.password_encoder');
         $encoded = $encoder->encodePassword($user, $plainPassword);
         $this->container->get('app.user_manager')->registerUser($user);
+        $user->setRole(User::ROLE_USER);
         $user->setPassword($encoded);
 
         // save
@@ -76,6 +89,7 @@ class LoadCategoryData implements FixtureInterface, ContainerAwareInterface
         $manager->persist($category3);
         $manager->persist($category4);
         $manager->persist($category5);
+        $manager->persist($admin);
         $manager->persist($user);
         $manager->persist($currency1);
         $manager->persist($currency2);

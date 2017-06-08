@@ -1,40 +1,86 @@
 {% extends 'base.html.twig' %}
-
+{% block title %}MoneyManager - реєстрація{% endblock %}
 {% block body %}
-    <div class="div-center-horizontal" style="margin-top: 64px;">
-        {{ form_start(form) }}
 
-        <div class="container-form">
-            {{ form_row(form.firstName, {'attr': {'class': 'form-control'}}) }}
-        </div>
+    <div style="width: 100%;">
+        {#<div style="display: table; margin: 0 auto; text-align: center;">#}
+            <div style="width: 35%; margin: 0 auto; text-align: center;">
+            {{ form_start(form) }}
 
-        <div class="container-form">
-            {{ form_row(form.lastName, {'attr': {'class': 'form-control'}}) }}
-        </div>
-
-        <div class="container-form">
-            {{ form_row(form.email, {'attr': {'class': 'form-control'}}) }}
-        </div>
-
-        <div class="container-form">
-            {{ form_row(form.plainPassword.password, {'attr': {'class': 'form-control'}}) }}
-        </div>
-
-        <div class="container-form">
-            {{ form_row(form.plainPassword.confirmPassword, {'attr': {'class': 'form-control'}}) }}
-        </div>
-
-        <div class="container-form">
-            {{ form_row(form.gender, {'attr': {'class': 'form-control'}}) }}
-        </div>
-
-        <div class="container-form">
-            <div class="form-check">
-                <label class="form-check-label">
-                    <input class="form-check-input" type="checkbox"> I accept terms & conditions
-                </label>
+            <div class="container-form">
+                {{ form_row(form.firstName, {'attr': {'class': 'form-control'}}) }}
             </div>
+
+            <div class="container-form">
+                {{ form_row(form.lastName, {'attr': {'class': 'form-control'}}) }}
+            </div>
+
+            <div class="container-form">
+                {{ form_row(form.email, {'attr': {'class': 'form-control'}}) }}
+            </div>
+
+            <div class="container-form">
+                {{ form_row(form.plainPassword.password, {'attr': {'class': 'form-control'}}) }}
+            </div>
+
+            <div class="container-form">
+                {{ form_row(form.plainPassword.confirmPassword, {'attr': {'class': 'form-control'}}) }}
+            </div>
+
+            <div class="container-form">
+                {{ form_row(form.gender) }}
+            </div>
+
+            {#<div class="container-form">#}
+                {#<div class="form-check">#}
+                    {#<label class="form-check-label">#}
+                        {#<input class="form-check-input" type="checkbox"> I accept terms & conditions#}
+                    {#</label>#}
+                {#</div>#}
+            {#</div>#}
+
+            <div class="container-form text-center">
+                <button class="btn btn-block btn-primary" type="submit">Зареєструватися</button>
+            </div>
+
+            {{ form_end(form) }}
         </div>
+    </div>
+
+    {#<div class="div-center-horizontal" style="margin-top: 64px;">#}
+        {#{{ form_start(form) }}#}
+
+        {#<div class="container-form">#}
+            {#{{ form_row(form.firstName, {'attr': {'class': 'form-control'}}) }}#}
+        {#</div>#}
+
+        {#<div class="container-form">#}
+            {#{{ form_row(form.lastName, {'attr': {'class': 'form-control'}}) }}#}
+        {#</div>#}
+
+        {#<div class="container-form">#}
+            {#{{ form_row(form.email, {'attr': {'class': 'form-control'}}) }}#}
+        {#</div>#}
+
+        {#<div class="container-form">#}
+            {#{{ form_row(form.plainPassword.password, {'attr': {'class': 'form-control'}}) }}#}
+        {#</div>#}
+
+        {#<div class="container-form">#}
+            {#{{ form_row(form.plainPassword.confirmPassword, {'attr': {'class': 'form-control'}}) }}#}
+        {#</div>#}
+
+        {#<div class="container-form">#}
+            {#{{ form_row(form.gender, {'attr': {'class': 'form-control'}}) }}#}
+        {#</div>#}
+
+        {#<div class="container-form">#}
+            {#<div class="form-check">#}
+                {#<label class="form-check-label">#}
+                    {#<input class="form-check-input" type="checkbox"> I accept terms & conditions#}
+                {#</label>#}
+            {#</div>#}
+        {#</div>#}
 
         {#<fieldset class="form-group">#}
         {#<div class="form-check">#}
@@ -57,10 +103,10 @@
         {#</div>#}
         {#</fieldset>#}
 
-        <div class="text-center">
-            <button class="btn btn-block btn-primary" type="submit">Register</button>
-        </div>
+        {#<div class="text-center">#}
+            {#<button class="btn btn-block btn-primary" type="submit">Register</button>#}
+        {#</div>#}
 
-        {{ form_end(form) }}
-    </div>
+        {#{{ form_end(form) }}#}
+    {#</div>#}
 {% endblock %}
