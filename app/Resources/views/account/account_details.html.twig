@@ -1,0 +1,106 @@
+{% extends "::base.html.twig" %}
+{% block title %}Ваш аккаунт{% endblock %}
+{% block body %}
+    <div id="my-div-content-parent" class="div-content">
+        <div id="my-div-content-child" class="my-div-round my-div-left bg-primary" style="width: 24%;">
+            <div class="my-div-round-content-block-top bg-primary">
+                <p class="my-text-title-white"><b>Інформація про аккаунт:</b></p>
+            </div>
+
+            <div class="my-div-round-content-block-middle">
+                <p class="my-text-white">
+                    <b>Назва:</b> {{ account.name }}
+                </p>
+                <p class="my-text-white">
+                    <b>Грошова одиниця:</b> {{ account.currency }}
+                </p>
+                <p class="my-text-white">
+                    <b>Опис:</b> {{ account.description }}
+                </p>
+            </div>
+
+            <div class="my-div-round-content-block-bottom">
+                <form action="{{ path('account_operations_add', {'id': account.id}) }}">
+                    <button class="btn btn-secondary" type="submit">Додати операцію</button>
+                </form>
+            </div>
+        </div>
+
+        <div id="my-div-content-child" class="my-div-center" style="width: 49%; height: 78px;">
+            {% if account.operations is empty %}
+            <div class="my-div-round my-div-round-content-block-top bg-primary" style="width: 100%; height: 100%;">
+                <p class="my-div-round-text-title">Аккаунт "{{ account.name }}" ще не має операцій</p>
+            </div>
+            {% else %}
+            <div class="my-div-round my-div-round-content-block-top bg-primary" style="width: 100%; height: 100%;">
+                <p class="my-div-round-text-title">Операції аккаунту "{{ account.name }}":</p>
+            </div>
+
+            <div class="my-div-content">
+                <div>
+                    <ol>
+                        {% for operation in account.operations %}
+                            <li class="my-text-black">
+                                {{ operation.category }}
+                                {{ operation.description }}
+
+                                <form action="{{ path('account_operations_remove', {'accountId': account.id, 'operationId': operation.id}) }}">
+                                    <button class="btn btn-outline-danger my-btn-action" type="submit"
+                                            style="float: right; font-weight: 600;">
+                                        Видалити
+                                    </button>
+                                </form>
+                                <form action="{{ path('account_operations_edit', {'accountId': account.id, 'operationId': operation.id}) }}">
+                                    <button class="btn btn-outline-warning my-btn-action" type="submit"
+                                            style="float: right; font-weight: 600; margin-left: 12px; margin-right: 4px;">
+                                        Редагувати
+                                    </button>
+                                </form>
+
+                                <a style="float: right; margin-left: 6px;">{{ operation.createdAt|date("d.m.y") }}</a>
+                                {% if operation.type is constant('TYPE_INCOME', operation) %}
+                                    <a style="color: #8BC34A; float: right; margin-right: 6px;">{{ operation.sum }} {{ account.currency.symbol }}</a>
+                                {% else %}
+                                    <a style="color: #F44336; float: right; margin-right: 6px;">-{{ operation.sum }} {{ account.currency.symbol }}</a>
+                                {% endif %}
+
+                                <br>
+                                <br>
+                            </li>
+                        {% endfor %}
+                    </ol>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+
+        {% if account.balance < 0 %}
+            <div id="my-div-content-child" class="my-div-round my-div-right my-div-balance-negative-block"
+                 style="width: 19%;">
+                <div class="my-div-round-content-block-top" style="text-align: left" ;>
+                    <p class="my-div-round-text-title" style="color: #FFFFFF;">
+                        <b style="font-size: 16px;">Баланс:</b> <a
+                                style="font-weight: 400; font-size: 16px;">{{ account.balance }} {{ account.currency.symbol }}</a>
+                    </p>
+                </div>
+            </div>
+        {% else %}
+            <div id="my-div-content-child" class="my-div-round my-div-right my-div-balance-positive-block"
+                 style="width: 19%;">
+                <div class="my-div-round-content-block-top" style="text-align: left" ;>
+                    <p class="my-div-round-text-title" style="color: #FFFFFF;">
+                        <b style="font-size: 16px;">Баланс:</b> <a
+                                style="font-weight: 400; font-size: 16px;">{{ account.balance }} {{ account.currency.symbol }}</a>
+                    </p>
+                </div>
+            </div>
+        {% endif %}
+
+    </div>
+{% endblock %}
+{% block javascripts %}
+    {{ parent() }}
+    <script>
+    </script>
+
+{% endblock %}

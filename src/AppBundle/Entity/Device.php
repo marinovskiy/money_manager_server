@@ -1,9 +1,7 @@
 <?php
-
 namespace AppBundle\Entity;
-
+use AppBundle\Entity\User;
 use Doctrine\ORM\Mapping as ORM;
-
 /**
  * Device
  *
@@ -12,6 +10,12 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class Device
 {
+    const PLATFORM_ANDROID = 'android';
+    const PLATFORM_WEB = 'web';
+    const PLATFORM_TYPES = [
+        self::PLATFORM_ANDROID,
+        self::PLATFORM_WEB
+    ];
     /**
      * @var int
      *
@@ -20,45 +24,30 @@ class Device
      * @ORM\GeneratedValue(strategy="AUTO")
      */
     private $id;
-
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="platformType", type="string", length=255)
+     */
+    private $platformType;
     /**
      * @var string
      *
      * @ORM\Column(name="udid", type="string", length=255, unique=true)
      */
     private $udid;
-
     /**
      * @var string
      *
-     * @ORM\Column(name="token", type="string", length=255, nullable=true)
-     */
-    private $token;
-
-    /**
-     * @var string
-     *
-     * @ORM\Column(name="apiKey", type="string", length=255, nullable=true)
+     * @ORM\Column(name="apiKey", type="string", length=255)
      */
     private $apiKey;
-
-    /**
-     * @var bool
-     *
-     * @ORM\Column(name="enabled", type="boolean")
-     */
-    private $enabled;
-
-//   ORM\Column(name="user", type="object")
     /**
      * @var User
      *
-     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\User" inversedBy="devices")
-     * @ORM\JoinColumn(onDelete="SET NULL")
+     * @ORM\ManyToOne(targetEntity="User", inversedBy="devices")
      */
     private $user;
-
-
     /**
      * Get id
      *
@@ -68,7 +57,27 @@ class Device
     {
         return $this->id;
     }
-
+    /**
+     * Set platformType
+     *
+     * @param string $platformType
+     *
+     * @return Device
+     */
+    public function setPlatformType($platformType)
+    {
+        $this->platformType = $platformType;
+        return $this;
+    }
+    /**
+     * Get platformType
+     *
+     * @return string
+     */
+    public function getPlatformType()
+    {
+        return $this->platformType;
+    }
     /**
      * Set udid
      *
@@ -79,10 +88,8 @@ class Device
     public function setUdid($udid)
     {
         $this->udid = $udid;
-
         return $this;
     }
-
     /**
      * Get udid
      *
@@ -92,31 +99,6 @@ class Device
     {
         return $this->udid;
     }
-
-    /**
-     * Set token
-     *
-     * @param string $token
-     *
-     * @return Device
-     */
-    public function setToken($token)
-    {
-        $this->token = $token;
-
-        return $this;
-    }
-
-    /**
-     * Get token
-     *
-     * @return string
-     */
-    public function getToken()
-    {
-        return $this->token;
-    }
-
     /**
      * Set apiKey
      *
@@ -131,10 +113,14 @@ class Device
         } else {
             $this->apiKey = bin2hex(random_bytes(16));
         }
-
         return $this;
     }
-
+//    public function setApiKey($apiKey)
+//    {
+//        $this->apiKey = $apiKey;
+//
+//        return $this;
+//    }
     /**
      * Get apiKey
      *
@@ -144,45 +130,15 @@ class Device
     {
         return $this->apiKey;
     }
-
-    /**
-     * Set enabled
-     *
-     * @param boolean $enabled
-     *
-     * @return Device
-     */
-    public function setEnabled($enabled)
-    {
-        $this->enabled = $enabled;
-
-        return $this;
-    }
-
-    /**
-     * Get enabled
-     *
-     * @return bool
-     */
-    public function getEnabled()
-    {
-        return $this->enabled;
-    }
-
     /**
      * Set user
      *
-     * @param \stdClass $user
-     *
+     * @param User $user
      * @return Device
      */
     public function setUser(User $user = null)
     {
         $this->user = $user;
-        if ($user) {
-            $user->addDevice($this);
-        }
-
         return $this;
     }
     /**

@@ -1,5 +1,6 @@
 <?php
 
+use Symfony\Component\Debug\Debug;
 use Symfony\Component\HttpKernel\Kernel;
 use Symfony\Component\Config\Loader\LoaderInterface;
 
@@ -18,6 +19,8 @@ class AppKernel extends Kernel
             new AppBundle\AppBundle(),
         ];
 
+        Debug::enable();
+
         if (in_array($this->getEnvironment(), ['dev', 'test'], true)) {
             $bundles[] = new Symfony\Bundle\DebugBundle\DebugBundle();
             $bundles[] = new Symfony\Bundle\WebProfilerBundle\WebProfilerBundle();
@@ -28,6 +31,13 @@ class AppKernel extends Kernel
         if (in_array($this->getEnvironment(), array('dev', 'test'))) {
             $bundles[] = new Doctrine\Bundle\FixturesBundle\DoctrineFixturesBundle();
         }
+
+//        if (in_array($this->getEnvironment(), ['dev', 'test'])) {
+//            //...
+//            $bundles[] = new Nelmio\Alice\Bridge\Symfony\NelmioAliceBundle();
+//            $bundles[] = new Fidry\AliceDataFixtures\Bridge\Symfony\FidryAliceDataFixturesBundle();
+//            $bundles[] = new Hautelook\AliceBundle\HautelookAliceBundle();
+//        }
 
         return $bundles;
     }

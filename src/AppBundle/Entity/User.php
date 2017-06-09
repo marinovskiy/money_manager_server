@@ -2,6 +2,7 @@
 
 namespace AppBundle\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Validator\Constraints as Assert;
@@ -12,7 +13,7 @@ use Symfony\Component\Validator\Constraints as Assert;
  * @ORM\Table(name="user")
  * @ORM\Entity(repositoryClass="AppBundle\Repository\UserRepository")
  */
-class User implements UserInterface
+class User implements UserInterface, \JsonSerializable
 {
     const ROLE_ADMIN = 'ROLE_ADMIN';
     const ROLE_USER = 'ROLE_USER';
@@ -38,14 +39,12 @@ class User implements UserInterface
 
     /**
      * @var string
-     * @Assert\NotBlank(message="$FirstName can not be empty")
      * @ORM\Column(name="firstName", type="string", length=50)
      */
     private $firstName;
 
     /**
      * @var string
-     * @Assert\NotBlank(message="$LastName can not be empty")
      * @ORM\Column(name="lastName", type="string", length=50)
      */
     private $lastName;
@@ -65,10 +64,12 @@ class User implements UserInterface
     private $plainPassword;
 
     /**
-     * @var string
+     * @var Device[]
      *
-     * @ORM\Column(name="apiKey", type="string", length=255, nullable=true)
+     * @ORM\OneToMany(targetEntity="Device", mappedBy="user", cascade={"remove","persist"})
      */
+    private $devices;
+
     private $apiKey;
 
     /**
@@ -87,11 +88,46 @@ class User implements UserInterface
 
     /**
      * @var string
-     * @Assert\NotBlank(message="Gender can not be empty")
      * @ORM\Column(name="gender", type="string", length=255)
      */
     private $gender;
 
+    /**
+     * @var ArrayCollection|$accounts[]
+     *
+     * @ORM\OneToMany(targetEntity="Account", mappedBy="user", cascade={"remove","persist"})
+     */
+    private $accounts;
+
+    /**
+     * @var ArrayCollection|$createdOrganizations[]
+     *
+     * @ORM\OneToMany(targetEntity="Organization", mappedBy="creator")
+     */
+    private $createdOrganizations;
+
+    /**
+     * @var Organization[]|ArrayCollection
+     *
+     * @ORM\ManyToMany(targetEntity="Organization", mappedBy="members")
+     */
+    private $organizations;
+
+    /**
+     * @var News[]|ArrayCollection
+     *
+     * @ORM\OneToMany(targetEntity="News", mappedBy="author")
+     * @ORM\JoinColumn(name="news_id", referencedColumnName="id")
+     */
+    private $newses;
+
+    public function __construct()
+    {
+        $this->devices = new ArrayCollection();
+        $this->accounts = new ArrayCollection();
+        $this->organizations = new ArrayCollection();
+        $this->newses = new ArrayCollection();
+    }
 
     /**
      * Get id
@@ -101,6 +137,16 @@ class User implements UserInterface
     public function getId()
     {
         return $this->id;
+    }
+
+    /**
+     * Get email
+     *
+     * @return string
+     */
+    public function getEmail()
+    {
+        return $this->email;
     }
 
     /**
@@ -118,13 +164,13 @@ class User implements UserInterface
     }
 
     /**
-     * Get email
+     * Get firstName
      *
      * @return string
      */
-    public function getEmail()
+    public function getFirstName()
     {
-        return $this->email;
+        return $this->firstName;
     }
 
     /**
@@ -142,13 +188,13 @@ class User implements UserInterface
     }
 
     /**
-     * Get firstName
+     * Get lastName
      *
      * @return string
      */
-    public function getFirstName()
+    public function getLastName()
     {
-        return $this->firstName;
+        return $this->lastName;
     }
 
     /**
@@ -166,13 +212,13 @@ class User implements UserInterface
     }
 
     /**
-     * Get lastName
+     * Get password
      *
      * @return string
      */
-    public function getLastName()
+    public function getPassword()
     {
-        return $this->lastName;
+        return $this->password;
     }
 
     /**
@@ -187,16 +233,6 @@ class User implements UserInterface
         $this->password = $password;
 
         return $this;
-    }
-
-    /**
-     * Get password
-     *
-     * @return string
-     */
-    public function getPassword()
-    {
-        return $this->password;
     }
 
     /**
@@ -216,31 +252,59 @@ class User implements UserInterface
     }
 
     /**
-     * Set apiKey
+     * Add devices
      *
-     * @param string $apiKey
+     * @param Device $devices
      *
      * @return User
      */
-    public function setApiKey($apiKey = null)
+    public function addDevice(Device $devices)
     {
-        if ($apiKey) {
-            $this->apiKey = $apiKey;
-        } else {
-            $this->apiKey = bin2hex(random_bytes(16));
-        }
+        $this->devices[] = $devices;
 
         return $this;
     }
 
     /**
-     * Get apiKey
+     * Remove devices
      *
-     * @return string
+     * @param Device $devices
      */
+    public function removeDevice(Device $devices)
+    {
+        $this->devices->removeElement($devices);
+    }
+
+    /**
+     * Get devices
+     *
+     * @return Device[]
+     */
+    public function getDevices()
+    {
+        return $this->devices;
+    }
+
     public function getApiKey()
     {
         return $this->apiKey;
+    }
+
+    public function setApiKey($apiKey)
+    {
+        $this->apiKey = $apiKey;
+
+        return $this;
+    }
+
+    /**
+     * Get role
+     *
+     * @return string
+     */
+    public function getRole()
+    {
+        return $this->role;
     }
 
     /**
@@ -258,13 +322,13 @@ class User implements UserInterface
     }
 
     /**
-     * Get role
+     * Get enabled
      *
-     * @return string
+     * @return bool
      */
-    public function getRole()
+    public function getEnabled()
     {
-        return $this->role;
+        return $this->enabled;
     }
 
     /**
@@ -282,13 +346,13 @@ class User implements UserInterface
     }
 
     /**
-     * Get enabled
+     * Get gender
      *
-     * @return bool
+     * @return string
      */
-    public function getEnabled()
+    public function getGender()
     {
-        return $this->enabled;
+        return $this->gender;
     }
 
     /**
@@ -306,15 +370,164 @@ class User implements UserInterface
     }
 
     /**
-     * Get gender
+     * Add account
      *
-     * @return string
+     * @param Account $account
+     *
+     * @return User
      */
-    public function getGender()
+    public function addAccount(Account $account)
     {
-        return $this->gender;
+        $this->accounts->add($account);
+
+        return $this;
     }
 
+    /**
+     * Remove account
+     *
+     * @param Account $account
+     */
+    public function removeAccount(Account $account)
+    {
+        $this->accounts->removeElement($account);
+    }
+
+    /**
+     * Get accounts
+     *
+     * @return ArrayCollection|$accounts[]
+     */
+    public function getAccounts()
+    {
+        return $this->accounts;
+    }
+
+    /**
+     * @param Account[] $accounts
+     */
+    public function setAccounts($accounts)
+    {
+        $this->accounts = $accounts;
+    }
+
+    /**
+     * Add createdOrganization
+     *
+     * @param Organization $createdOrganization
+     *
+     * @return User
+     */
+    public function addCreatedOrganization(Organization $createdOrganization)
+    {
+        $this->createdOrganizations->add($createdOrganization);
+
+        return $this;
+    }
+
+    /**
+     * Remove createdOrganization
+     *
+     * @param Organization $createdOrganization
+     */
+    public function removeCreatedOrganization(Organization $createdOrganization)
+    {
+        $this->createdOrganizations->removeElement($createdOrganization);
+    }
+
+    /**
+     * Get createdOrganizations
+     *
+     * @return Organization[]|ArrayCollection
+     */
+    public function getCreatedOrganizations()
+    {
+        return $this->createdOrganizations;
+    }
+
+    /**
+     * @param Organization[] $createdOrganizations
+     */
+    public function setCreatedOrganizations($createdOrganizations)
+    {
+        $this->createdOrganizations = $createdOrganizations;
+    }
+
+    /**
+     * Add organization
+     *
+     * @param Organization $organization
+     *
+     * @return User
+     */
+    public function addOrganization(Organization $organization)
+    {
+        $this->organizations->add($organization);
+
+        return $this;
+    }
+
+    /**
+     * Remove organization
+     *
+     * @param Organization $organization
+     */
+    public function removeOrganization(Organization $organization)
+    {
+        $this->organizations->removeElement($organization);
+    }
+
+    /**
+     * Get organizations
+     *
+     * @return ArrayCollection|$organizations[]
+     */
+    public function getOrganizations()
+    {
+        return $this->organizations;
+    }
+
+    /**
+     * @param Organization[] $organizations
+     */
+    public function setOrganizations($organizations)
+    {
+        $this->organizations = $organizations;
+    }
+
+    /**
+     * Add news
+     *
+     * @param News $news
+     *
+     * @return User
+     */
+    public function addNews(News $news)
+    {
+        $this->newses->add($news);
+
+        return $this;
+    }
+
+    /**
+     * Remove news
+     *
+     * @param News $news
+     */
+    public function removeNews(News $news)
+    {
+        $this->newses->removeElement($news);
+    }
+
+    /**
+     * Get newses
+     *
+     * @return News[]|ArrayCollection
+     */
+    public function getNewses()
+    {
+        return $this->newses;
+    }
 
     public function getRoles()
     {
@@ -333,5 +546,17 @@ class User implements UserInterface
 
     public function eraseCredentials()
     {
+    }
+
+    function jsonSerialize()
+    {
+        return [
+            'id' => $this->getId(),
+            'apiKey' => $this->getApiKey(),
+            'email' => $this->getEmail(),
+            'firstName' => $this->getFirstName(),
+            'lastName' => $this->getLastName(),
+            'gender' => $this->getGender(),
+        ];
     }
 }

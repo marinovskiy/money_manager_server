@@ -1,0 +1,17 @@
+{% extends "::base.html.twig" %}
+{% block body %}
+    <div class="card card-inverse card-primary card-container" style="width: 32rem;">
+
+        <h5 class="card-title card-text-title" align="center">Your accounts:</h5>
+
+        <div class="card-block">
+            <p class="card-text-text" align="center">There are no accounts yet. Do you want to create one?</p>
+            {% for account in accounts %}
+                <h2>{{ account.name }}</h2>
+                <p>{{ account.description }}</p>
+                <p>{{ account.currency }}</p>
+                <p>{{ account.balance }}</p>
+            {% endfor %}
+        </div>
+    </div>
+{% endblock %}

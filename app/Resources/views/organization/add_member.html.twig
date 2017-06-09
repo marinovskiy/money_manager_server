@@ -1,0 +1,114 @@
+{% extends 'base.html.twig' %}
+{% block title %}Пошук членів для групи {{ organization.name }}{% endblock %}
+{% block body %}
+    <div style="width: 100%;">
+        {#<div style="width: 100%; margin: 0 auto; text-align: center;">#}
+        <div style="display: table; margin: 0 auto; text-align: center;">
+            <p class="text-title">Пошук членів для групи "{{ organization.name }}"</p>
+            <p class="text-subtitle">Введіть email користувача та натисність<br>кнопку "Пошук"</p>
+
+            <div class="form-inline">
+                <div class="form-group">
+                    <input id="users-search-input" type="search" class="form-control" value=""
+                           placeholder="Електронна пошта" style="margin-right: 8px; width: 400px;">
+                    <input id="search_users_btn" type="submit" class="btn btn-secondary" value="Пошук"
+                           style="margin-left: 8px;">
+                </div>
+            </div>
+
+            <div id="users_div" style="margin-top: 24px;">
+                <select multiple id="users_select" class="form-control" style="display: none;">
+
+                </select>
+                <p id="users_no_results" style="display: none;">За вказаною електронною поштою користувачів не знайдено</p>
+            </div>
+
+            <div class="col-md-12" style="margin-top: 24px;">
+                <button id="add_user_btn" type="submit" class="btn btn-secondary" disabled style="width: 275px; display: none;">
+                    Додати користувача
+                </button>
+            </div>
+
+            <div id="adding_result" style="margin-top: 24px;">
+
+            </div>
+        </div>
+    </div>
+{% endblock %}
+{% block javascripts %}
+    {{ parent() }}
+    <script>
+        var users;
+
+        $('#search_users_btn').click(function () {
+            var searchQuery = $('#users-search-input').val();
+
+            if (searchQuery) {
+                $.ajax({
+                    type: "GET",
+                    url: "/users/search",
+                    data: {
+                        email: searchQuery
+                    },
+                    success: function (msg) {
+                        users = msg.users;
+
+                        console.log(msg);
+
+                        if (msg.users.length > 0) {
+                            $('#users_no_results').hide();
+                            $('#users_select').show();
+                            $('#add_user_btn').show();
+
+                            $('#users_select').empty();
+
+                            $.each(msg.users, function (index, value) {
+                                $('#users_select')
+                                    .append($("<option></option>")
+                                        .val(index)
+                                        .text(value.email));
+                            });
+                        } else {
+                            $('#add_user_btn').hide();
+                            $('#users_select').hide();
+                            $('#users_no_results').show();
+                        }
+                    },
+                    error: function (msg) {
+                        $('#add_user_btn').hide();
+                        $('#users_select').hide();
+                        $('#users_no_results').show();
+                        console.log("failed");
+                    }
+                })
+            }
+        });
+
+        $('#users_select').change(function () {
+            $('#add_user_btn').prop("disabled", false);
+        });
+
+        $('#add_user_btn').click(function () {
+            var index = $('#users_select option:selected').val();
+            var selectedUser = users[index];
+            console.log(selectedUser);
+
+            $.ajax({
+                type: "POST",
+                url: "/organizations/" + {{ organization.id }} +"/members/add",
+                data: {
+                    userId: selectedUser.id
+                },
+                success: function (msg) {
+                    $('#adding_result').html('Added');
+                    console.log("success");
+                },
+                error: function (msg, textStatus, xhr) {
+                    $('#adding_result').html("Цей користувач вже є членом даної групи");
+                    console.log("failed");
+                }
+            })
+        });
+    </script>
+
+{% endblock %}

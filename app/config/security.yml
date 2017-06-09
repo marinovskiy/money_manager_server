@@ -1,27 +1,77 @@
-# To get started with security, check out the documentation:
-# http://symfony.com/doc/current/security.html
 security:
 
     encoders:
+        Symfony\Component\Security\Core\User\User:
+                    algorithm: bcrypt
+                    cost: 12
         AppBundle\Entity\User: bcrypt
 
-    # http://symfony.com/doc/current/security.html#b-configuring-how-users-are-loaded
     providers:
+        database_users:
+                entity:
+                    class: AppBundle:User
+                    property: email
+
         in_memory:
-            memory: ~
+            memory:
+                users:
+                    admin:
+                        password: $2y$12$0G4FyrVuD.Yxw/ob804mr.e8dbUjMNelURrYmHbL.Thx4ok0IJMpS
+                        roles: 'ROLE_ADMIN'
+                    john:
+                        password: $2y$12$1ht6JXh8CcXsscT0yqBZ4uwwAbdn6eyPGH9tLXj73SYS2bLeb5y3S
+                        roles: 'ROLE_USER'
+                    john1:
+                        password: $2y$12$zgIZhlBxN0SP20cBS.8SfuyQ6uUpUDgtisI1m48h5VaydF63UEi9C
+                        roles: 'ROLE_USER'
+
+#        user_provider:
+#                  entity:
+#                      class:    AppBundle:User
+#                      property: apiKey
 
     firewalls:
-        # disables authentication for assets and the profiler, adapt it according to your needs
         dev:
             pattern: ^/(_(profiler|wdt)|css|images|js)/
             security: false
 
-        main:
-            anonymous: ~
-            # activate different ways to authenticate
+        api_unsecured_lists:
+            pattern:  ^/api/(currencies|categories)$
+            security: false
+        api_auth:
+            pattern:  ^/api/auth/(registration|login)$
+            security: false
+        api:
+            pattern: ^/api
+            guard:
+                authenticators:
+                    - api.token_authenticator
+            stateless: true
+            anonymous: false
 
-            # http://symfony.com/doc/current/security.html#a-configuring-how-your-users-will-authenticate
-            #http_basic: ~
+        secured_area:
+            pattern: ^/
+            anonymous: true
+            provider: database_users
+            form_login:
+                check_path: login
+                login_path: login
+                default_target_path: homepage
+#                csrf_token_generator: security.csrf.token_manager
+            logout:
+                path:   logout
+                target: homepage
+        admin:
+            pattern: ^/admin
+#            anonymous: ~
+            security: true
+            http_basic: ~
 
-            # http://symfony.com/doc/current/cookbook/security/form_login_setup.html
-            #form_login: ~
+    access_control:
+        - { path: ^/login, roles: IS_AUTHENTICATED_ANONYMOUSLY }
+#        - { path: '^/admin', roles: ROLE_ADMIN }
+#        - { path: '^/api/(registration|login)$', roles: IS_AUTHENTICATED_ANONYMOUSLY }
+#        - { path: '^/api', roles: ROLE_USER }
+#        - { path: ^/accounts, roles: ROLE_USER }
+#        - { path: ^/, roles: [ROLE_USER] }
+        - { path: ^/, roles: [ROLE_USER, IS_AUTHENTICATED_ANONYMOUSLY] }

@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8"/>
+    <title>{% block title %}Welcome!{% endblock %}</title>
+    {% block stylesheets %}
+        <link rel="stylesheet" href="{{ asset('bootstrap/css/bootstrap.css') }}">
+        <link rel="stylesheet" href="{{ asset('bootstrap/style.css') }}">
+        <link rel="stylesheet" href="{{ asset('bootstrap/newStyle.css') }}">
+    {% endblock %}
+    <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}"/>
+</head>
+
+<body>
+
+<div id="my-div-content-parent" class="bg-primary" style="height: 68px; padding: 16px;">
+    <div id="my-div-content-child">
+        <a class="my-nav-bar-menu-header" style="color: white;">MoneyManager</a>
+    </div>
+
+    <div id="my-div-content-child" style="float: right;">
+        <ul>
+            <a class="my-nav-bar-menu-item" href="{{ path('homepage') }}"
+               style="color: white; text-decoration:none;">Головна</a>
+            {% if app.user and app.user.role is constant('ROLE_ADMIN', app.user) %}
+                <a class="my-nav-bar-menu-item-selected" href="{{ path('homepage') }}"
+                   style="color: white; text-decoration:none;">На сайт</a>
+                <a class="my-nav-bar-menu-item-selected" href="{{ path('admin_users') }}"
+                   style="color: white; text-decoration:none;">Користувачі</a>
+                <a class="my-nav-bar-menu-item-selected" href="{{ path('admin_newses') }}"
+                   style="color: white; text-decoration:none;">Новини</a>
+                <a class="my-nav-bar-menu-item" href="{{ path('logout') }}" style="color: white; text-decoration:none;">Вихід</a>
+            {% endif %}
+            {% if app.user %}
+            {% endif %}
+        </ul>
+    </div>
+</div>
+
+{% block body %}{% endblock %}
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+<script src="{{ asset('bootstrap/js/bootstrap.min.js') }}"></script>
+{% block javascripts %}{% endblock %}
+
+</body>
+</html>

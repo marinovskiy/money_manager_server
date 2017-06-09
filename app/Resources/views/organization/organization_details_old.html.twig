@@ -1,0 +1,133 @@
+{% extends "::base.html.twig" %}
+{% block title %}Ваша група{% endblock %}
+{% block body %}
+    <div id="my-div-content-parent" class="div-content">
+
+        <div id="my-div-content-child" class="my-div-left" style="width: 24%;">
+            <div class="my-div-round bg-primary">
+                <div class="my-div-round-content-block-top">
+                    <p class="my-text-title-white"><b>Інформація про групу:</b></p>
+                </div>
+
+                <div class="my-div-round-content-block-middle">
+                    <p class="my-text-white">
+                        <b>Назва:</b> {{ organization.name }}
+                    </p>
+                    <p class="my-text-white">
+                        <b>Створив:</b> {{ organization.creator.firstName }} {{ organization.creator.lastName }}
+                    </p>
+                    <p class="my-text-white">
+                        <b>Тип:</b> {{ organization.type }}
+                    </p>
+                    <p class="my-text-white">
+                        <b>Опис:</b> {{ organization.description }}
+                    </p>
+                    <p class="my-text-white">
+                        <b>Access:</b> {{ organization.publicAccess ? 'public':'private' }}
+                    </p>
+                </div>
+
+                <div class="my-div-round-content-block-bottom">
+                    {#<form action="{{ path('organization_members_add', {'id': organization.id}) }}">#}
+                    <button class="btn btn-secondary" onclick="">Make public</button>
+                    {#</form>#}
+                </div>
+            </div>
+
+            <div class="my-div-round bg-primary" style="margin-top: 24px; width: 100%;">
+                <div class="my-div-round-content-block-top">
+                    <p class="my-text-title-white"><b>Члени "{{ organization.name }}":</b></p>
+                </div>
+
+                <div class="my-div-round-content-block-middle">
+                    <ul style="list-style-type: none;">
+                        {% for member in organization.members %}
+                            <li class="my-text-white">
+                                {{ member.firstName }}
+                                {{ member.lastName }}
+                                {#<a style="float: right;">{{ member.email }}</a>#}
+                                <br>
+                            </li>
+                        {% endfor %}
+                    </ul>
+                </div>
+
+                <div class="my-div-round-content-block-bottom">
+                    <form action="{{ path('organization_members_search', {'id': organization.id}) }}">
+                        <button id="add_member_btn" class="btn btn-secondary" type="submit">Додати нового члена</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+        <div id="my-div-content-child" class="my-div-center" style="width: 34%; height: 78px;">
+            {% if accounts is empty %}
+                <div class="my-div-round my-div-round-content-block-top bg-primary" style="width: 100%; height: 100%;">
+                    <p class="my-div-round-text-title">"{{ organization.name }}" ще не має аккаунтів</p>
+                </div>
+            {% else %}
+                <div class="my-div-round my-div-round-content-block-top bg-primary" style="width: 100%; height: 100%;">
+                    <p class="my-div-round-text-title">Аккаунти "{{ organization.name }}":</p>
+                </div>
+
+                <div class="my-div-content">
+                    <div>
+                        <ol>
+                            {% for account in accounts %}
+                                <li class="my-text-black">
+                                    {{ account.name }}
+                                    {{ account.balance }}
+                                    {{ account.currency }}
+
+                                    <br>
+                                </li>
+                            {% endfor %}
+                        </ol>
+                    </div>
+                </div>
+            {% endif %}
+
+            <div class="my-div-round-content-block-bottom">
+                <form action="{{ path('organization_create_account', {'id': organization.id}) }}">
+                    <button id="add_member_btn" class="btn btn-secondary" type="submit">Додати аккаунт</button>
+                </form>
+            </div>
+        </div>
+
+        <div id="my-div-content-child" class="my-div-center" style="width: 34%; height: 78px;">
+            {% if accounts is empty %}
+            <div class="my-div-round my-div-round-content-block-top bg-primary" style="width: 100%; height: 100%;">
+                <p class="my-div-round-text-title">Аккаунти "{{ organization.name }}" ще не має операцій</p>
+            </div>
+            {% else %}
+            <div class="my-div-round my-div-round-content-block-top bg-primary" style="width: 100%; height: 100%;">
+                <p class="my-div-round-text-title">Останні операції "{{ organization.name }}":</p>
+            </div>
+
+            <div class="my-div-content">
+                <div>
+                    <ol>
+                        {% for account in accounts %}
+                            <li class="my-text-black">
+                                {{ account.name }}
+                                {{ account.balance }}
+                                {{ account.currency }}
+
+                                <br>
+                            </li>
+                        {% endfor %}
+                    </ol>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+{% endblock %}
+{% block javascripts %}
+    {{ parent() }}
+    <script>
+    </script>
+
+{% endblock %}

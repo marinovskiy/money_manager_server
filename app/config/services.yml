@@ -4,9 +4,9 @@ parameters:
     #parameter_name: value
 
 services:
-    #service_name:
-    #    class: AppBundle\Directory\ClassName
-    #    arguments: ['@another_service_name', 'plain_value', '%parameter_name%']
+    api.token_authenticator:
+                class: AppBundle\Security\TokenAuthenticator
+                arguments: ['@doctrine.orm.entity_manager']
 
     app.user_manager:
                 class: AppBundle\Manager\UserManager
