@@ -46,16 +46,18 @@
                         {% for account in accounts %}
                             <a href="{{ path('accounts_details', {'id': account.id}) }}"
                                class="card-text-text">
-                                <li>
+                                <li class="my-li-block">
                                     {{ account.name }}
 
-                                    <form action="{{ path('account_remove', {'accountId': account.id}) }}">
+                                    <form action="{{ path('account_remove', {'accountId': account.id}) }}"
+                                          style="display: inline;">
                                         <button class="btn btn-outline-danger my-btn-action" type="submit"
                                                 style="float: right; font-weight: 600;">
                                             Видалити
                                         </button>
                                     </form>
-                                    <form action="{{ path('account_edit', {'accountId': account.id}) }}">
+                                    <form action="{{ path('account_edit', {'accountId': account.id}) }}"
+                                          style="display: inline;">
                                         <button class="btn btn-outline-warning my-btn-action" type="submit"
                                                 style="float: right; font-weight: 600; margin-left: 12px; margin-right: 4px;">
                                             Редагувати
@@ -95,7 +97,7 @@
                     <div>
                         <ol>
                             {% for organization in organizations %}
-                                <li class="my-text-black">
+                                <li class="my-text-black my-li-block">
                                     <a href="{{ path('organization_details', {'id': organization.id}) }}"
                                        class="card-text-text">
                                         {{ organization.name }}
@@ -130,7 +132,7 @@
                 <div>
                     <ol>
                         {% for organization in organizations %}
-                            <li class="my-text-black">
+                            <li class="my-text-black my-li-block">
                                 <a href="{{ path('organization_details', {'id': organization.id}) }}"
                                    class="card-text-text">
                                     {{ organization.name }}

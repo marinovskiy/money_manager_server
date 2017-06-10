@@ -40,17 +40,19 @@
                 <div>
                     <ol>
                         {% for operation in account.operations %}
-                            <li class="my-text-black">
+                            <li class="my-li-block my-text-black">
                                 {{ operation.category }}
                                 {{ operation.description }}
 
-                                <form action="{{ path('account_operations_remove', {'accountId': account.id, 'operationId': operation.id}) }}">
+                                <form action="{{ path('account_operations_remove', {'accountId': account.id, 'operationId': operation.id}) }}"
+                                      style="display: inline;">
                                     <button class="btn btn-outline-danger my-btn-action" type="submit"
                                             style="float: right; font-weight: 600;">
                                         Видалити
                                     </button>
                                 </form>
-                                <form action="{{ path('account_operations_edit', {'accountId': account.id, 'operationId': operation.id}) }}">
+                                <form action="{{ path('account_operations_edit', {'accountId': account.id, 'operationId': operation.id}) }}"
+                                      style="display: inline;">
                                     <button class="btn btn-outline-warning my-btn-action" type="submit"
                                             style="float: right; font-weight: 600; margin-left: 12px; margin-right: 4px;">
                                         Редагувати
@@ -64,8 +66,6 @@
                                     <a style="color: #F44336; float: right; margin-right: 6px;">-{{ operation.sum }} {{ account.currency.symbol }}</a>
                                 {% endif %}
 
-                                <br>
-                                <br>
                             </li>
                         {% endfor %}
                     </ol>

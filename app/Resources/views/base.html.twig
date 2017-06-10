@@ -34,6 +34,10 @@
 
             {% if (not app.user or app.user.role is constant('ROLE_USER', app.user)) %}
                 <a class="my-nav-bar-menu-item" href="{{ path('faq') }}"
+                   style="color: white; text-decoration:none;">Відгук (maybe separate page)</a>
+                <a class="my-nav-bar-menu-item" href="{{ path('faq') }}"
+                   style="color: white; text-decoration:none;">Зворотній зв'язок</a>
+                <a class="my-nav-bar-menu-item" href="{{ path('faq') }}"
                    style="color: white; text-decoration:none;">FAQ</a>
                 <a class="my-nav-bar-menu-item" href="{{ path('about') }}" style="color: white; text-decoration:none;">Про
                     сайт</a>

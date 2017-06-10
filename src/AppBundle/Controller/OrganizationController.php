@@ -30,6 +30,9 @@ class OrganizationController extends Controller
         if ($form->isSubmitted() && $form->isValid()) {
             $organization->setCreator($this->getUser());
             $organization->addMember($this->getUser());
+            $organization->setEnabled(true);
+            $organization->setCreatedAt(new \DateTime());
+            $organization->setUpdatedAt(new \DateTime());
 
             $em = $this->getDoctrine()->getManager();
             $em->persist($organization);
@@ -41,7 +44,36 @@ class OrganizationController extends Controller
         return $this->render('organization/add_organization.html.twig', array('form' => $form->createView()));
     }
 
-//     Route("/{id}", name="organization_details", requirements={"id": "\d+"})
+    /**
+     * @Route("/{id}/edit", name="organization_edit")
+     */
+    public function editOrganizationAction(Request $request, $id)
+    {
+        $em = $this->getDoctrine()->getManager();
+
+        $organization = $em->getRepository(Organization::class)->find($id);
+        if (!$organization) {
+            return new Response('Organization not found', 404);
+        }
+        if ($organization->getCreator()->getId() != $this->getUser()->getId()) {
+            return new Response('Not creator', 403);
+        }
+
+        $form = $this->createForm(CreateOrganizationType::class, $organization);
+
+        $form->handleRequest($request);
+        if ($form->isSubmitted() && $form->isValid()) {
+            $organization->setUpdatedAt(new \DateTime());
+            $em->flush();
+
+            return $this->redirectToRoute('organization_details', array(
+                'id' => $organization->getId()
+            ));
+        }
+
+        return $this->render('organization/add_organization.html.twig', array('form' => $form->createView()));
+    }
+
     /**
      * @Route("/{id}", name="organization_details")
      */
@@ -115,26 +147,47 @@ class OrganizationController extends Controller
         $userId = $request->request->get('userId');
 
         $em = $this->getDoctrine()->getManager();
-//        $organization = new Organization();
+
+        $organization = $em->getRepository(Organization::class)->find($id);
+        if (!$organization) {
+            return $this->json('Organization not found', 404);
+        }
+        if ($organization->getCreator()->getId() != $this->getUser()->getId()) {
+            return $this->json('Not creator', 403);
+        }
+
+        $user = $em->getRepository(User::class)->find($userId);
+        if (!$user) {
+            return $this->json('User not found', 404);
+        }
+
+        if ($organization->getMembers()->contains($user)) {
+            return $this->json('Already member', 409);
+        }
+
+        $organization->addMember($user);
+        $em->flush();
+        return new Response(null, 200);
+    }
+
+    /**
+     * @Route("/{id}/members/{userId}/delete", name="organization_member_delete")
+     */
+    public function organizationDeleteMemberAction(Request $request, $id, $userId)
+    {
+        $userId = $request->request->get('userId');
+
+        $em = $this->getDoctrine()->getManager();
         $organization = $em->getRepository(Organization::class)->find($id);
         $user = $em->getRepository(User::class)->find($userId);
 
-        $logger = $this->get('logger');
-        $logger->info('I just got the logger');
-        foreach ($organization->getMembers() as $member) {
-            $logger->info($member->getId());
-        }
-
         if (!$organization->getMembers()->contains($user)) {
-            $logger->info('200');
             $organization->addMember($user);
             $em->flush();
 
-            $logger->info('200');
             return new Response(null, 200);
         }
 
-        $logger->info('409');
         return new Response(null, 409);
     }
 

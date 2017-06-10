@@ -23,7 +23,8 @@ class RegistrationType extends AbstractType
             ->add('gender', ChoiceType::class, [
                 'label' => 'Стать',
                 'expanded' => true,
-                'choices' => [ucfirst(User::GENDER_MALE) => User::GENDER_MALE, ucfirst(User::GENDER_FEMALE) => User::GENDER_FEMALE]
+                'choices' => User::GENDER_TITLES,
+//                'choices' => [ucfirst(User::GENDER_MALE) => User::GENDER_MALE, ucfirst(User::GENDER_FEMALE) => User::GENDER_FEMALE]
             ])
 //            ->add('platformType', TextType::class)
 //            ->add('udid', TextType::class)

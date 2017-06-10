@@ -20,17 +20,27 @@
                 <select multiple id="users_select" class="form-control" style="display: none;">
 
                 </select>
-                <p id="users_no_results" style="display: none;">За вказаною електронною поштою користувачів не знайдено</p>
+                <p id="users_no_results" style="display: none;">За вказаною електронною поштою користувачів не
+                    знайдено</p>
             </div>
 
             <div class="col-md-12" style="margin-top: 24px;">
-                <button id="add_user_btn" type="submit" class="btn btn-secondary" disabled style="width: 275px; display: none;">
+                <button id="add_user_btn" type="submit" class="btn btn-secondary" disabled
+                        style="width: 275px; display: none;">
                     Додати користувача
                 </button>
             </div>
 
             <div id="adding_result" style="margin-top: 24px;">
 
+            </div>
+
+            <div class="col-md-12" style="margin-top: 24px;">
+                {#<form action="{{ path('organization_details', {'id': organization.id}) }}">#}
+                    <button id="go_back_btn" type="submit" class="btn btn-secondary" style="width: 275px;">
+                        Повернутися до сторінки групи
+                    </button>
+                {#</form>#}
             </div>
         </div>
     </div>
@@ -108,6 +118,10 @@
                     console.log("failed");
                 }
             })
+        });
+
+        $('#go_back_btn').click(function () {
+            window.history.back();
         });
     </script>
 

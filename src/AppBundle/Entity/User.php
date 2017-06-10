@@ -21,6 +21,8 @@ class User implements UserInterface, \JsonSerializable
     const GENDER_MALE = 'male';
     const GENDER_FEMALE = 'female';
 
+    const GENDER_TITLES = ['Чоловік' => self::GENDER_MALE, 'Жінка' => self::GENDER_FEMALE];
+
     /**
      * @var int
      *

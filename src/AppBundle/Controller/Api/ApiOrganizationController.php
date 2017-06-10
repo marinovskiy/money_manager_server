@@ -35,6 +35,8 @@ class ApiOrganizationController extends Controller
             $organization->setCreator($this->getUser());
             $organization->addMember($this->getUser());
             $organization->setEnabled(true);
+            $organization->setCreatedAt(new \DateTime());
+            $organization->setUpdatedAt(new \DateTime());
 
             $em = $this->getDoctrine()->getManager();
             $em->persist($organization);
@@ -161,6 +163,7 @@ class ApiOrganizationController extends Controller
         $form->submit($data['organization']);
 
         if ($form->isSubmitted() && $form->isValid() && $organization) {
+            $organization->setUpdatedAt(new \DateTime());
             $em->flush();
             return $this->json(['organization' => $organization], 200);
         }

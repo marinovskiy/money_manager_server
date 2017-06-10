@@ -17,13 +17,20 @@
                         <b>Створив:</b> {{ organization.creator.firstName }} {{ organization.creator.lastName }}
                     </p>
                     <p class="my-text-white">
+                        {#<b>Дата створення:</b> {{ organization.crea ? 'Розблокована':'Заблокована' }}#}
+                        <b>Дата створення:</b>
+                    </p>
+                    <p class="my-text-white">
                         <b>Тип:</b> {{ organization.type }}
                     </p>
                     <p class="my-text-white">
                         <b>Опис:</b> {{ organization.description }}
                     </p>
                     <p class="my-text-white">
-                        <b>Access:</b> {{ organization.publicAccess ? 'public':'private' }}
+                        <b>Доступ:</b> {{ organization.publicAccess ? 'публічний':'приватний' }}
+                    </p>
+                    <p class="my-text-white">
+                        <b>Статус:</b> {{ organization.enabled ? 'Розблокована':'Заблокована' }}
                     </p>
                 </div>
 
@@ -31,11 +38,17 @@
                     {#<form action="{{ path('organization_members_add', {'id': organization.id}) }}">#}
                     <button class="btn btn-secondary" onclick="">Make public</button>
                     {#</form>#}
+                    {#<form action="{{ path('organization_members_add', {'id': organization.id}) }}">#}
+                    <button class="btn btn-secondary" onclick="">Заблокувати</button>
+                    {#</form>#}
+                    <form action="{{ path('organization_edit', {'id': organization.id}) }}">
+                        <button class="btn btn-secondary" onclick="">Редагувати</button>
+                    </form>
                 </div>
             </div>
         </div>
 
-        <div id="my-div-content-child" class="my-div-center" style="width: 34%; height: 78px;">
+        <div id="my-div-content-child" class="my-div-center" style="width: 32%; height: 78px;">
             {% if accounts is empty %}
                 <div class="my-div-round my-div-round-content-block-top bg-primary" style="width: 100%; height: 100%;">
                     <p class="my-div-round-text-title">"{{ organization.name }}" ще не має аккаунтів</p>
@@ -52,16 +65,18 @@
                         {% for account in accounts %}
                             <a href="{{ path('accounts_details', {'id': account.id}) }}"
                                class="card-text-text">
-                                <li class="my-text-black">
+                                <li class="my-text-black my-li-block">
                                     {{ account.name }}
 
-                                    <form action="{{ path('account_remove', {'accountId': account.id}) }}">
+                                    <form action="{{ path('account_remove', {'accountId': account.id}) }}"
+                                          style="display: inline;">
                                         <button class="btn btn-outline-danger my-btn-action" type="submit"
                                                 style="float: right; font-weight: 600;">
                                             Видалити
                                         </button>
                                     </form>
-                                    <form action="{{ path('account_edit', {'accountId': account.id}) }}">
+                                    <form action="{{ path('account_edit', {'accountId': account.id}) }}"
+                                          style="display: inline;">
                                         <button class="btn btn-outline-warning my-btn-action" type="submit"
                                                 style="float: right; font-weight: 600; margin-left: 12px; margin-right: 4px;">
                                             Редагувати
@@ -77,7 +92,6 @@
 
                                 </li>
                             </a>
-                            <br>
                         {% endfor %}
                     </ol>
                 </div>
@@ -90,32 +104,56 @@
             </div>
         </div>
 
-        <div id="my-div-content-child" class="my-div-center" style="width: 34%; height: 78px;">
-            <div class="my-div-round bg-primary">
-                <div class="my-div-round-content-block-top">
-                    <p class="my-text-title-white"><b>Члени "{{ organization.name }}":</b></p>
-                </div>
+        <div id="my-div-content-child" class="my-div-center" style="width: 36%; height: 78px;">
+            <div class="my-div-round my-div-round-content-block-top bg-primary" style="width: 100%; height: 100%;">
+                <p class="my-text-title-white"><b>Члени "{{ organization.name }}":</b></p>
+            </div>
 
-                <div class="my-div-round-content-block-middle">
-                    <ul style="list-style-type: none;">
+            <div class="my-div-content">
+                <div>
+                    <ol>
                         {% for member in organization.members %}
-                            <li class="my-text-white">
+                            <li class="my-text-black my-li-block">
                                 {{ member.firstName }}
                                 {{ member.lastName }}
                                 {#<a style="float: right;">{{ member.email }}</a>#}
-                                <br>
+
+                                {#<form action="{{ path('account_remove', {'accountId': account.id}) }}" style="display: inline;">#}
+                                <button class="btn btn-outline-danger my-btn-action" type="submit"
+                                        style="float: right; font-weight: 600;">
+                                    Виключити
+                                </button>
+                                {#</form>#}
+                                {#<form action="{{ path('account_edit', {'accountId': account.id}) }}" style="display: inline;">#}
+                                <button class="btn btn-outline-warning my-btn-action" type="submit"
+                                        style="float: right; font-weight: 600; margin-left: 12px; margin-right: 4px;">
+                                    Редагувати
+                                </button>
+                                {#</form>#}
+
                             </li>
                         {% endfor %}
-                    </ul>
-                </div>
-
-                <div class="my-div-round-content-block-bottom" style="margin-top: 12px;">
-                    <form action="{{ path('organization_members_search', {'id': organization.id}) }}">
-                        <button id="add_member_btn" class="btn btn-secondary" type="submit">Додати нового члена</button>
-                    </form>
+                    </ol>
                 </div>
             </div>
+
+            <div class="my-div-round-content-block-bottom">
+                <form action="{{ path('organization_members_search', {'id': organization.id}) }}">
+                    <button id="add_member_btn" class="btn btn-outline-primary" type="submit">Додати нових членів
+                    </button>
+                </form>
+            </div>
         </div>
+
+        {#<dialog open>test</dialog>#}
+
+        <dialog open>
+            <p>Наши Условия предоставления услуг …</p>
+            <form method="dialog">
+                <button type="submit" value="yes">Принять</button>
+                <button type="submit" value="no">Отказаться</button>
+            </form>
+        </dialog>
 
     </div>
 
@@ -123,6 +161,16 @@
 {% block javascripts %}
     {{ parent() }}
     <script>
+        var $accountDelete = $('#delete-account'),
+            $accountDeleteDialog = $('#confirm-delete');
+
+        $accountDelete.on('click', function() {
+            $accountDeleteDialog[0].showModal();
+        });
+
+        $('#cancel').on('click', function() {
+            $accountDeleteDialog[0].close();
+        });
     </script>
 
 {% endblock %}

@@ -34,6 +34,10 @@ a:active {
 
 }
 
+.my-li-block {
+    margin-bottom: 8px;
+}
+
 #search_panel {
     text-align: center;
 }

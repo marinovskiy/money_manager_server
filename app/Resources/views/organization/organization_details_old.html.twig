@@ -33,8 +33,65 @@
                     {#</form>#}
                 </div>
             </div>
+        </div>
 
-            <div class="my-div-round bg-primary" style="margin-top: 24px; width: 100%;">
+        <div id="my-div-content-child" class="my-div-center" style="width: 34%; height: 78px;">
+            {% if accounts is empty %}
+                <div class="my-div-round my-div-round-content-block-top bg-primary" style="width: 100%; height: 100%;">
+                    <p class="my-div-round-text-title">"{{ organization.name }}" ще не має аккаунтів</p>
+                </div>
+            {% else %}
+                <div class="my-div-round my-div-round-content-block-top bg-primary" style="width: 100%; height: 100%;">
+                    <p class="my-div-round-text-title">Аккаунти "{{ organization.name }}":</p>
+                </div>
+            {% endif %}
+
+            <div class="my-div-content">
+                <div>
+                    <ol>
+                        {% for account in accounts %}
+                            <a href="{{ path('accounts_details', {'id': account.id}) }}"
+                               class="card-text-text">
+                                <li class="my-text-black">
+                                    {{ account.name }}
+
+                                    <form action="{{ path('account_remove', {'accountId': account.id}) }}">
+                                        <button class="btn btn-outline-danger my-btn-action" type="submit"
+                                                style="float: right; font-weight: 600;">
+                                            Видалити
+                                        </button>
+                                    </form>
+                                    <form action="{{ path('account_edit', {'accountId': account.id}) }}">
+                                        <button class="btn btn-outline-warning my-btn-action" type="submit"
+                                                style="float: right; font-weight: 600; margin-left: 12px; margin-right: 4px;">
+                                            Редагувати
+                                        </button>
+                                    </form>
+
+                                    {#<a style="float: right; margin-left: 6px;">{{ operation.createdAt|date("d.m.y") }}</a>#}
+                                    {% if account.balance >= 0 %}
+                                        <a style="color: #8BC34A; float: right; margin-right: 6px;">{{ account.balance }} {{ account.currency.symbol }}</a>
+                                    {% else %}
+                                        <a style="color: #F44336; float: right; margin-right: 6px;">-{{ account.balance }} {{ account.currency.symbol }}</a>
+                                    {% endif %}
+
+                                </li>
+                            </a>
+                            <br>
+                        {% endfor %}
+                    </ol>
+                </div>
+            </div>
+
+            <div class="my-div-round-content-block-bottom">
+                <form action="{{ path('organization_create_account', {'id': organization.id}) }}">
+                    <button id="add_member_btn" class="btn btn-outline-primary" type="submit">Додати аккаунт</button>
+                </form>
+            </div>
+        </div>
+
+        <div id="my-div-content-child" class="my-div-center" style="width: 34%; height: 78px;">
+            <div class="my-div-round bg-primary">
                 <div class="my-div-round-content-block-top">
                     <p class="my-text-title-white"><b>Члени "{{ organization.name }}":</b></p>
                 </div>
@@ -52,72 +109,10 @@
                     </ul>
                 </div>
 
-                <div class="my-div-round-content-block-bottom">
+                <div class="my-div-round-content-block-bottom" style="margin-top: 12px;">
                     <form action="{{ path('organization_members_search', {'id': organization.id}) }}">
                         <button id="add_member_btn" class="btn btn-secondary" type="submit">Додати нового члена</button>
                     </form>
-                </div>
-            </div>
-        </div>
-
-        <div id="my-div-content-child" class="my-div-center" style="width: 34%; height: 78px;">
-            {% if accounts is empty %}
-                <div class="my-div-round my-div-round-content-block-top bg-primary" style="width: 100%; height: 100%;">
-                    <p class="my-div-round-text-title">"{{ organization.name }}" ще не має аккаунтів</p>
-                </div>
-            {% else %}
-                <div class="my-div-round my-div-round-content-block-top bg-primary" style="width: 100%; height: 100%;">
-                    <p class="my-div-round-text-title">Аккаунти "{{ organization.name }}":</p>
-                </div>
-
-                <div class="my-div-content">
-                    <div>
-                        <ol>
-                            {% for account in accounts %}
-                                <li class="my-text-black">
-                                    {{ account.name }}
-                                    {{ account.balance }}
-                                    {{ account.currency }}
-
-                                    <br>
-                                </li>
-                            {% endfor %}
-                        </ol>
-                    </div>
-                </div>
-            {% endif %}
-
-            <div class="my-div-round-content-block-bottom">
-                <form action="{{ path('organization_create_account', {'id': organization.id}) }}">
-                    <button id="add_member_btn" class="btn btn-secondary" type="submit">Додати аккаунт</button>
-                </form>
-            </div>
-        </div>
-
-        <div id="my-div-content-child" class="my-div-center" style="width: 34%; height: 78px;">
-            {% if accounts is empty %}
-            <div class="my-div-round my-div-round-content-block-top bg-primary" style="width: 100%; height: 100%;">
-                <p class="my-div-round-text-title">Аккаунти "{{ organization.name }}" ще не має операцій</p>
-            </div>
-            {% else %}
-            <div class="my-div-round my-div-round-content-block-top bg-primary" style="width: 100%; height: 100%;">
-                <p class="my-div-round-text-title">Останні операції "{{ organization.name }}":</p>
-            </div>
-
-            <div class="my-div-content">
-                <div>
-                    <ol>
-                        {% for account in accounts %}
-                            <li class="my-text-black">
-                                {{ account.name }}
-                                {{ account.balance }}
-                                {{ account.currency }}
-
-                                <br>
-                            </li>
-                        {% endfor %}
-                    </ol>
-                    {% endif %}
                 </div>
             </div>
         </div>

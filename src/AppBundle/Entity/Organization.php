@@ -68,6 +68,20 @@ class Organization implements \JsonSerializable
      */
     private $creator;
 
+    /**
+     * @var \DateTime
+     *
+     * @ORM\Column(name="createdAt", type="datetime")
+     */
+    private $createdAt;
+
+    /**
+     * @var \DateTime
+     *
+     * @ORM\Column(name="updatedAt", type="datetime")
+     */
+    private $updatedAt;
+
 //ORM\ManyToMany(targetEntity="User", inversedBy="organizations")
 //ORM\JoinColumn(name="member_id", referencedColumnName="id")
     /**
@@ -251,6 +265,54 @@ class Organization implements \JsonSerializable
     }
 
     /**
+     * Set createdAt
+     *
+     * @param \DateTime $createdAt
+     *
+     * @return Organization
+     */
+    public function setCreatedAt($createdAt)
+    {
+        $this->createdAt = $createdAt;
+
+        return $this;
+    }
+
+    /**
+     * Get createdAt
+     *
+     * @return \DateTime
+     */
+    public function getCreatedAt()
+    {
+        return $this->createdAt;
+    }
+
+    /**
+     * Set updatedAt
+     *
+     * @param \DateTime $updatedAt
+     *
+     * @return Organization
+     */
+    public function setUpdatedAt($updatedAt)
+    {
+        $this->updatedAt = $updatedAt;
+
+        return $this;
+    }
+
+    /**
+     * Get updatedAt
+     *
+     * @return \DateTime
+     */
+    public function getUpdatedAt()
+    {
+        return $this->updatedAt;
+    }
+
+    /**
      * Get members
      *
      * @return ArrayCollection
@@ -351,7 +413,9 @@ class Organization implements \JsonSerializable
 //                $this->getMembers()
 //            ),
             'accounts' => $this->getAccounts(),
-            'enabled' => $this->getEnabled()
+            'enabled' => $this->getEnabled(),
+            'createdAt' => $this->getCreatedAt(),
+            'updatedAt' => $this->getUpdatedAt()
         ];
     }
 

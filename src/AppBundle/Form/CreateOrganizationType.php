@@ -17,7 +17,7 @@ class CreateOrganizationType extends AbstractType
     {
         $builder
             ->add('name', TextType::class)
-            ->add('description', TextareaType::class)
+            ->add('description', TextareaType::class, ['required' => false])
             ->add('type', ChoiceType::class, ['choices' => Organization::TYPES_TITLES])
             ->add('publicAccess', CheckboxType::class, [
                 'required' => false

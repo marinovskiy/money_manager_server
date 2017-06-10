@@ -24,7 +24,7 @@ class AddAccountType extends AbstractType
     {
         $builder
             ->add('name', TextType::class, ['label' => 'Назва'])
-            ->add('description', TextareaType::class, ['required' => false, 'label' => 'Опис'])
+            ->add('description', TextType::class, ['required' => false, 'label' => 'Опис'])
 //            ->add('currency');
             ->add('currency', EntityType::class, [
                 'label' => 'Грошова одиниця',

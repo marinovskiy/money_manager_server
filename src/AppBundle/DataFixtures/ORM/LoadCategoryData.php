@@ -10,6 +10,7 @@ namespace AppBundle\DataFixtures\ORM;
 
 use AppBundle\Entity\Category;
 use AppBundle\Entity\Currency;
+use AppBundle\Entity\Operation;
 use AppBundle\Entity\User;
 use Doctrine\Common\DataFixtures\FixtureInterface;
 use Doctrine\Common\Persistence\ObjectManager;
@@ -38,23 +39,23 @@ class LoadCategoryData implements FixtureInterface, ContainerAwareInterface
         // categories
         $category1 = new Category();
         $category1->setName('Food');
-        $category1->setType(Category::CATEGORY_TYPE_EXPENSE);
+        $category1->setType(Operation::TYPE_EXPENSE);
 
         $category2 = new Category();
         $category2->setName('Car');
-        $category2->setType(Category::CATEGORY_TYPE_EXPENSE);
+        $category2->setType(Operation::TYPE_EXPENSE);
 
         $category3 = new Category();
         $category3->setName('Entertainment');
-        $category3->setType(Category::CATEGORY_TYPE_EXPENSE);
+        $category3->setType(Operation::TYPE_EXPENSE);
 
         $category4 = new Category();
         $category4->setName('Salary');
-        $category4->setType(Category::CATEGORY_TYPE_INCOME);
+        $category4->setType(Operation::TYPE_INCOME);
 
         $category5 = new Category();
         $category5->setName('Stipend');
-        $category5->setType(Category::CATEGORY_TYPE_INCOME);
+        $category5->setType(Operation::TYPE_INCOME);
 
         // users
         $admin = new User();
