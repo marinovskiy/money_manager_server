@@ -51,6 +51,11 @@ class UserController extends Controller
     {
         $email = '%' . $request->query->get('email') . '%';
 
+//        $users = $this
+//            ->getDoctrine()
+//            ->getManager()
+//            ->getRepository(User::class)
+//            ->searchUserByEmail($email);
         $users = $this
             ->getDoctrine()
             ->getManager()

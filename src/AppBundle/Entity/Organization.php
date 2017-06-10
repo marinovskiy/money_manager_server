@@ -62,7 +62,7 @@ class Organization implements \JsonSerializable
     private $publicAccess;
 
     /**
-     * @var int
+     * @var User
      *
      * @ORM\ManyToOne(targetEntity="User", inversedBy="createdOrganizations")
      */
@@ -83,6 +83,13 @@ class Organization implements \JsonSerializable
      * @ORM\OneToMany(targetEntity="Account", mappedBy="organization")
      */
     private $accounts;
+
+    /**
+     * @var bool
+     *
+     * @ORM\Column(name="enabled", type="boolean")
+     */
+    private $enabled;
 
     public function __construct()
     {
@@ -208,7 +215,7 @@ class Organization implements \JsonSerializable
     /**
      * Get creator
      *
-     * @return int
+     * @return User
      */
     public function getCreator()
     {
@@ -303,6 +310,30 @@ class Organization implements \JsonSerializable
 //        $this->accounts = $accounts;
 //    }
 
+    /**
+     * Get enabled
+     *
+     * @return bool
+     */
+    public function getEnabled()
+    {
+        return $this->enabled;
+    }
+
+    /**
+     * Set enabled
+     *
+     * @param boolean $enabled
+     *
+     * @return Organization
+     */
+    public function setEnabled($enabled)
+    {
+        $this->enabled = $enabled;
+
+        return $this;
+    }
+
     function jsonSerialize()
     {
         return [
@@ -311,7 +342,7 @@ class Organization implements \JsonSerializable
             'description' => $this->getDescription(),
             'type' => $this->getType(),
             'publicAccess' => $this->getPublicAccess(),
-            'creator' => $this->getCreator()->getId(),
+            'creator' => $this->getCreator(),
             'members' => $this->getMembers(),
 //            'members' => array(
 //                function (User $member) {
@@ -319,7 +350,8 @@ class Organization implements \JsonSerializable
 //                },
 //                $this->getMembers()
 //            ),
-            'accounts' => $this->getAccounts()
+            'accounts' => $this->getAccounts(),
+            'enabled' => $this->getEnabled()
         ];
     }
 

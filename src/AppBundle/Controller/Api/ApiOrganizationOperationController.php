@@ -10,6 +10,7 @@ namespace AppBundle\Controller\Api;
 
 use AppBundle\Entity\Account;
 use AppBundle\Entity\Operation;
+use AppBundle\Entity\Organization;
 use AppBundle\Form\Operation\AddOperationType;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
@@ -18,23 +19,33 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
 /**
- * @Route("/api/accounts")
+ * @Route("/api/organizations")
  */
-class ApiOperationController extends Controller
+class ApiOrganizationOperationController extends Controller
 {
     /**
-     * @Route("/{accountId}/operations/add", name="api_account_operations_add")
+     * @Route("/{id}/accounts/{accountId}/operations/add", name="api_organizations_account_operations_add")
      */
-    public function apiAccountOperationsAddAction(Request $request, $accountId)
+    public function apiOrganizationAccountOperationsAddAction(Request $request, $id, $accountId)
     {
         $em = $this->getDoctrine()->getManager();
+
+        $organization = $em->getRepository(Organization::class)->find($id);
+        if (!$organization) {
+            return $this->json('Organization not found', 404);
+        }
+
+        $membersIds = array();
+        foreach ($organization->getMembers() as $member) {
+            array_push($membersIds, $member->getId());
+        }
+        if (!in_array($this->getUser()->getId(), $membersIds)) {
+            return $this->json('Not a member', 404);
+        }
+
         $account = $em->getRepository(Account::class)->find($accountId);
         if (!$account) {
             return $this->json('Account not found', 404);
-        }
-
-        if ($account->getUser()->getId() != $this->getUser()->getId()) {
-            return $this->json('You are not owner of this account', 403);
         }
 
         $data = json_decode($request->getContent(), true);
@@ -67,47 +78,61 @@ class ApiOperationController extends Controller
     }
 
     /**
-     * @Route("/{accountId}/operations", name="api_account_operations_list")
+     * @Route("/{id}/accounts/{accountId}/operations", name="api_organizations_account_operations_list")
      * @Method("GET")
      */
-    public function apiAccountOperationsListAction(Request $request, $accountId)
+    public function apiOrganizationAccountOperationsListAction(Request $request, $id, $accountId)
     {
-        $account = $this
-            ->getDoctrine()
-            ->getManager()
-            ->getRepository(Account::class)
-            ->find($accountId);
+        $em = $this->getDoctrine()->getManager();
 
-        if (!$account) {
-            return $this->json('Account not found', 404);
+        $organization = $em->getRepository(Organization::class)->find($id);
+        if (!$organization) {
+            return $this->json('Organization not found', 404);
         }
 
-        if ($account->getUser()->getId() != $this->getUser()->getId()) {
-            return $this->json('You are not owner of this account', 403);
+        $membersIds = array();
+        foreach ($organization->getMembers() as $member) {
+            array_push($membersIds, $member->getId());
+        }
+        if (!in_array($this->getUser()->getId(), $membersIds)) {
+            return $this->json('Not a member', 404);
+        }
+
+        $account = $em->getRepository(Account::class)->find($accountId);
+        if (!$account) {
+            return $this->json('Account not found', 404);
         }
 
         return $this->json(['operations' => $account->getOperations()], 200);
     }
 
     /**
-     * @Route("/{accountId}/operations/{operationId}/edit", name="api_account_operations_edit")
+     * @Route("/{id}/accounts/{accountId}/operations/{operationId}/edit", name="api_organizations_account_operations_edit")
      * @Method({"PUT"})
      */
-    public function apiAccountOperationsEditAction(Request $request, $accountId, $operationId)
+    public function apiOrganizationAccountOperationsEditAction(Request $request, $id, $accountId, $operationId)
     {
         $em = $this->getDoctrine()->getManager();
-        $account = $em->getRepository(Account::class)->find($accountId);
 
+        $organization = $em->getRepository(Organization::class)->find($id);
+        if (!$organization) {
+            return $this->json('Organization not found', 404);
+        }
+
+        $membersIds = array();
+        foreach ($organization->getMembers() as $member) {
+            array_push($membersIds, $member->getId());
+        }
+        if (!in_array($this->getUser()->getId(), $membersIds)) {
+            return $this->json('Not a member', 404);
+        }
+
+        $account = $em->getRepository(Account::class)->find($accountId);
         if (!$account) {
             return $this->json('Account not found', 404);
         }
 
-        if ($account->getUser()->getId() != $this->getUser()->getId()) {
-            return $this->json('You are not owner of this account', 403);
-        }
-
         $operation = $em->getRepository(Operation::class)->find($operationId);
-
         if (!$operation) {
             return $this->json('Operation not found', 404);
         }
@@ -156,20 +181,29 @@ class ApiOperationController extends Controller
     }
 
     /**
-     * @Route("/{accountId}/operations/{operationId}/delete", name="api_account_operations_delete")
+     * @Route("/{id}/accounts/{accountId}/operations/{operationId}/delete", name="api_organizations_account_operations_delete")
      * @Method({"DELETE"})
      */
-    public function apiAccountOperationsDeleteAction(Request $request, $accountId, $operationId)
+    public function apiOrganizationAccountOperationsDeleteAction(Request $request, $id, $accountId, $operationId)
     {
         $em = $this->getDoctrine()->getManager();
+
+        $organization = $em->getRepository(Organization::class)->find($id);
+        if (!$organization) {
+            return $this->json('Organization not found', 404);
+        }
+
+        $membersIds = array();
+        foreach ($organization->getMembers() as $member) {
+            array_push($membersIds, $member->getId());
+        }
+        if (!in_array($this->getUser()->getId(), $membersIds)) {
+            return $this->json('Not a member', 404);
+        }
 
         $account = $em->getRepository(Account::class)->find($accountId);
         if (!$account) {
             return $this->json('Account not found', 404);
-        }
-
-        if ($account->getUser()->getId() != $this->getUser()->getId()) {
-            return $this->json('You are not owner of this account', 403);
         }
 
         $operation = $em->getRepository(Operation::class)->find($operationId);

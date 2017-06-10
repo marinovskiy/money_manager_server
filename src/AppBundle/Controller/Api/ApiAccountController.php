@@ -32,12 +32,6 @@ class ApiAccountController extends Controller
         $form = $this->createForm(AddAccountType::class, $account);
         $form->submit($data['account']);
 
-        $logger = $this->get('logger');
-        $logger->info('I just got the logger');
-        foreach ($form->getErrors() as $err) {
-            $logger->info($err->getMessage());
-        }
-
         if ($form->isSubmitted() && $form->isValid()) {
             $account->setUser($this->getUser());
             $account->setBalance(0);
@@ -79,7 +73,15 @@ class ApiAccountController extends Controller
     public function apiEditAccountAction(Request $request, $id)
     {
         $em = $this->getDoctrine()->getManager();
+
         $account = $em->getRepository(Account::class)->find($id);
+        if (!$account) {
+            return $this->json('Account not found', 404);
+        }
+
+        if ($account->getUser()->getId() != $this->getUser()->getId()) {
+            return $this->json('You are not owner of this account', 403);
+        }
 
         $data = json_decode($request->getContent(), true);
 
@@ -103,15 +105,18 @@ class ApiAccountController extends Controller
         $em = $this->getDoctrine()->getManager();
 
         $account = $em->getRepository(Account::class)->find($id);
-
-        if ($account != null) {
-            $em->remove($account);
-            $em->flush();
-
-            return new Response('Successful deleted', 200);
+        if (!$account) {
+            return $this->json('Account not found', 404);
         }
 
-        return $this->json('Invalid data', 400);
+        if ($account->getUser()->getId() != $this->getUser()->getId()) {
+            return $this->json('You are not owner of this account', 403);
+        }
+
+        $em->remove($account);
+        $em->flush();
+
+        return new Response('Successful deleted', 200);
     }
 
     /**
@@ -123,11 +128,14 @@ class ApiAccountController extends Controller
         $em = $this->getDoctrine()->getManager();
 
         $account = $em->getRepository(Account::class)->find($id);
-
-        if ($account != null) {
-            return $this->json(['account' => $account], 200);
+        if (!$account) {
+            return $this->json('Account not found', 404);
         }
 
-        return $this->json('Account not found', 404);
+        if ($account->getUser()->getId() != $this->getUser()->getId()) {
+            return $this->json('You are not owner of this account', 403);
+        }
+
+        return $this->json(['account' => $account], 200);
     }
 }
