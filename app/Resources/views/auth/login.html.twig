@@ -3,6 +3,9 @@
 {% block body %}
     <div style="width: 100%;">
         <div style="display: table; margin: 0 auto; text-align: center;">
+            <p class="text-title">Авторизація</p>
+            <p class="text-subtitle">Вкажіть вашу електронну пошту, пароль<br>та натисність "Увійти"</p>
+
             {% if error %}
                 <div style="margin-top: 24px;">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
             {% endif %}
@@ -10,19 +13,19 @@
             <form action="{{ path('login') }}" method="post" style="width: 350px; margin: 0 auto;">
 
                 <div class="container-form">
-                    <label for="username">Username:</label>
+                    <label for="username">Електронна пошта:</label>
                     <input class="form-control" type="text" id="username" name="_username" value="{{ last_username }}"/>
                 </div>
 
                 <div class="container-form">
-                    <label for="password">Password:</label>
+                    <label for="password">Пароль:</label>
                     <input class="form-control" type="password" id="password" name="_password"/>
                 </div>
 
                 <input type="hidden" name="_target_path" value="/"/>
 
                 <div class="container-form">
-                    <button class="btn btn-block btn-primary" type="submit">Login</button>
+                    <button class="btn btn-block btn-primary" type="submit">Увійти</button>
                 </div>
             </form>
 

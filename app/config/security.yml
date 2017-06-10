@@ -36,7 +36,7 @@ security:
             security: false
 
         api_unsecured_lists:
-            pattern:  ^/api/(currencies|categories)$
+            pattern:  ^/api/(currencies|categories|unsecuredLists)$
             security: false
         api_auth:
             pattern:  ^/api/auth/(registration|login)$

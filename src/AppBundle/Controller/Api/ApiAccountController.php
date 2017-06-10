@@ -67,8 +67,8 @@ class ApiAccountController extends Controller
         $accounts = $this
             ->getDoctrine()
             ->getRepository('AppBundle:Account')
-            ->findAll();
-//            ->findBy(['user' => $this->getUser()->getId()]);
+//            ->findAll();
+            ->findBy(['user' => $this->getUser()->getId()]);
         return $this->json(['accounts' => $accounts], 200);
     }
 
@@ -78,7 +78,20 @@ class ApiAccountController extends Controller
      */
     public function apiEditAccountAction(Request $request, $id)
     {
+        $em = $this->getDoctrine()->getManager();
+        $account = $em->getRepository(Account::class)->find($id);
 
+        $data = json_decode($request->getContent(), true);
+
+        $form = $this->createForm(AddAccountType::class, $account);
+        $form->submit($data['account']);
+
+        if ($account != null && $form->isSubmitted() && $form->isValid()) {
+            $em->flush();
+            return $this->json(['account' => $account], 200);
+        }
+
+        return $this->json('Invalid data', 400);
     }
 
     /**
@@ -87,6 +100,34 @@ class ApiAccountController extends Controller
      */
     public function apiDeleteAccountAction(Request $request, $id)
     {
+        $em = $this->getDoctrine()->getManager();
 
+        $account = $em->getRepository(Account::class)->find($id);
+
+        if ($account != null) {
+            $em->remove($account);
+            $em->flush();
+
+            return new Response('Successful deleted', 200);
+        }
+
+        return $this->json('Invalid data', 400);
+    }
+
+    /**
+     * @Route("/{id}", name="api_account_details")
+     * @Method("GET")
+     */
+    public function apiAccountAction($id)
+    {
+        $em = $this->getDoctrine()->getManager();
+
+        $account = $em->getRepository(Account::class)->find($id);
+
+        if ($account != null) {
+            return $this->json(['account' => $account], 200);
+        }
+
+        return $this->json('Account not found', 404);
     }
 }

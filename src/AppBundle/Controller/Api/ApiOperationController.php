@@ -8,84 +8,164 @@
 
 namespace AppBundle\Controller\Api;
 
+use AppBundle\Entity\Account;
 use AppBundle\Entity\Operation;
-use AppBundle\Form\NewOperationType;
-use AppBundle\Manager\OperationManager;
+use AppBundle\Form\Operation\AddOperationType;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\HttpKernel\Exception\HttpException;
-use Symfony\Component\Serializer\Encoder\JsonEncoder;
-use Symfony\Component\Serializer\Normalizer\ObjectNormalizer;
-use Symfony\Component\Serializer\Serializer;
 
+/**
+ * @Route("/api/accounts")
+ */
 class ApiOperationController extends Controller
 {
-    /*
-     * @Route("/operations/new" name="operations_new")
-     * @Method("POST")
+    /**
+     * @Route("/{accountId}/operations/add", name="api_account_operations_add")
      */
-    public function operationsNewAction(Request $request)
+    public function apiAccountOperationsAddAction(Request $request, $accountId)
     {
-        $encoders = array(new JsonEncoder());
-        $normalizers = array(new ObjectNormalizer());
-        $serializer = new Serializer($normalizers, $encoders);
+        $em = $this->getDoctrine()->getManager();
+        $account = $em->getRepository(Account::class)->find($accountId);
 
         $data = json_decode($request->getContent(), true);
 
         $operation = new Operation();
-        $form = $this->createForm(NewOperationType::class, $operation);
+        $form = $this->createForm(AddOperationType::class, $operation);
         $form->submit($data['operation']);
 
-        $logger = $this->get('logger');
-        $logger->info('I just got the logger');
-        foreach ($form->getErrors() as $err) {
-            echo $err->getMessage();
-            $logger->info($err->getMessage());
+        if ($account && $form->isSubmitted() && $form->isValid()) {
+            $operation->setAccount($account);
+
+            $balance = $account->getBalance();
+            $sum = $operation->getSum();
+            if ($operation->getType() == Operation::TYPE_INCOME) {
+                $account->setBalance($balance + $sum);
+            } else if ($operation->getType() == Operation::TYPE_EXPENSE) {
+                $account->setBalance($balance - $sum);
+            }
+
+            $operation->setCreatedAt(new \DateTime());
+            $operation->setUpdatedAt(new \DateTime());
+
+            $em->persist($operation);
+            $em->flush();
+
+            return $this->json(['account' => $account], 200);
         }
 
-        if ($form->isSubmitted() && $form->isValid()) {
-//            $this->get('app.expense_manager')->addExpense($operation);
-            $this->getDoctrine()->getManager()->persist($operation);
-            $this->getDoctrine()->getManager()->flush();
-
-            $response = new Response(
-                $serializer->serialize(
-                    $operation,
-                    'json'
-                ),
-                200
-            );
-            $response->headers->set('Content-Type', 'application/json');
-            return $response;
-        }
-
-        throw new HttpException(400, 'Invalid data');
+        return $this->json('Invalid data', 400);
     }
 
-    /*
-     * @Route("/operations" name="operations_list")
+    /**
+     * @Route("/{accountId}/operations", name="api_account_operations_list")
      * @Method("GET")
      */
-    public function operationsListAction(Request $request)
+    public function apiAccountOperationsListAction(Request $request, $accountId)
     {
-        $encoders = array(new JsonEncoder());
-        $normalizers = array(new ObjectNormalizer());
-        $serializer = new Serializer($normalizers, $encoders);
+        $account = $this
+            ->getDoctrine()
+            ->getManager()
+            ->getRepository(Account::class)
+            ->find($accountId);
 
+        if ($account) {
+            return $this->json(['operations' => $account->getOperations()], 200);
+        }
+
+        return $this->json('Account not found', 404);
+    }
+
+    /**
+     * @Route("/{accountId}/operations/{operationId}/edit", name="api_account_operations_edit")
+     * @Method({"PUT"})
+     */
+    public function apiAccountOperationsEditAction(Request $request, $accountId, $operationId)
+    {
         $em = $this->getDoctrine()->getManager();
-        $operations = $em->getRepository(Operation::class)->loadAllOperations();
+        $account = $em->getRepository(Account::class)->find($accountId);
+        $operation = $em->getRepository(Operation::class)->find($operationId);
+        $previousType = $operation->getType();
+        $previousBalance = $account->getBalance();
+        $previousSum = $operation->getSum();
 
-        $response = new Response(
-            $serializer->serialize(
-                $operations,
-                'json'
-            ),
-            200
-        );
-        $response->headers->set('Content-Type', 'application/json');
-        return $response;
+        $data = json_decode($request->getContent(), true);
+
+        $form = $this->createForm(AddOperationType::class, $operation);
+        $form->submit($data['operation']);
+
+        if ($account != null && $form->isSubmitted() && $form->isValid()) {
+            $newSum = $operation->getSum();
+            $newBalance = $previousBalance;
+            $newType = $operation->getType();
+
+            if ($previousBalance >= 0) {
+                if ($previousType == Operation::TYPE_INCOME) {
+                    $newBalance = $previousBalance - $previousSum;
+                } else if ($previousType == Operation::TYPE_EXPENSE) {
+                    $newBalance = $previousBalance + $previousSum;
+                }
+            } else {
+                if ($previousType == Operation::TYPE_INCOME) {
+                    $newBalance = $previousBalance - $previousSum;
+                } else if ($previousType == Operation::TYPE_EXPENSE) {
+                    $newBalance = $previousBalance + $previousSum;
+                }
+            }
+
+            if ($newType == Operation::TYPE_INCOME) {
+                $newBalance = $newBalance + $newSum;
+            } else if ($newType == Operation::TYPE_EXPENSE) {
+                $newBalance = $newBalance - $newSum;
+            }
+
+            $account->setBalance($newBalance);
+
+            $em->flush();
+            return $this->json(['operation' => $operation], 200);
+        }
+
+        return $this->json('Invalid data', 400);
+    }
+
+    /**
+     * @Route("/{accountId}/operations/{operationId}/delete", name="api_account_operations_delete")
+     * @Method({"DELETE"})
+     */
+    public function apiAccountOperationsDeleteAction(Request $request, $accountId, $operationId)
+    {
+        $em = $this->getDoctrine()->getManager();
+        $account = $em->getRepository(Account::class)->find($accountId);
+
+        if ($account != null) {
+            $operation = $em->getRepository(Operation::class)->find($operationId);
+
+            if ($operation) {
+                $balance = $account->getBalance();
+                $sum = $operation->getSum();
+                if ($balance >= 0) {
+                    if ($operation->getType() == Operation::TYPE_INCOME) {
+                        $account->setBalance($balance - $sum);
+                    } else if ($operation->getType() == Operation::TYPE_EXPENSE) {
+                        $account->setBalance($balance + $sum);
+                    }
+                } else {
+                    if ($operation->getType() == Operation::TYPE_INCOME) {
+                        $account->setBalance($balance - $sum);
+                    } else if ($operation->getType() == Operation::TYPE_EXPENSE) {
+                        $account->setBalance($balance + $sum);
+                    }
+                }
+
+                $em->remove($operation);
+                $em->flush();
+            }
+
+            return new Response('Successful deleted', 200);
+        }
+
+        return $this->json('Invalid data', 400);
     }
 }

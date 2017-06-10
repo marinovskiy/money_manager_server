@@ -9,27 +9,13 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 
 /**
- * @Route("/api/categories")
+ * @Route("/api")
  */
-class ApiCategoryController extends Controller
+class ApiUnsecuredListsController extends Controller
 {
-    /**
-     * @Route("", name="api_categories_all")
-     * @Method({"GET"})
-     */
-    public function apiAllCategoriesAction()
-    {
-        $categories = $this
-            ->getDoctrine()
-            ->getManager()
-            ->getRepository(Category::class)
-            ->findAll();
-
-        return $this->json(['categories' => $categories], 200);
-    }
 
     /**
-     * @Route("/all", name="test_all")
+     * @Route("/unsecuredLists", name="api_unsecured_lists")
      */
     public function apiAllAction()
     {
@@ -45,6 +31,6 @@ class ApiCategoryController extends Controller
             ->getRepository(Currency::class)
             ->findAll();
 
-        return $this->json(['data' => ['categories' => $categories, 'currencies' => $currencies]], 200);
+        return $this->json(['categories' => $categories, 'currencies' => $currencies], 200);
     }
 }

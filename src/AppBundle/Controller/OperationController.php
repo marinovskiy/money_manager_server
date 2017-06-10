@@ -69,36 +69,40 @@ class OperationController extends Controller
         $account = $em->getRepository(Account::class)->find($accountId);
         $operation = $em->getRepository(Operation::class)->find($operationId);
         $previousType = $operation->getType();
-        $balance = $account->getBalance();
-        $sum = $operation->getSum();
+        $previousBalance = $account->getBalance();
+        $previousSum = $operation->getSum();
 
         $form = $this->createForm(AddOperationType::class, $operation);
 
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
-            if ($balance >= 0) {
+            $newSum = $operation->getSum();
+            $newBalance = $previousBalance;
+            $newType = $operation->getType();
+
+            if ($previousBalance >= 0) {
                 if ($previousType == Operation::TYPE_INCOME) {
-                    $account->setBalance($balance - $sum);
+                    $newBalance = $previousBalance - $previousSum;
                 } else if ($previousType == Operation::TYPE_EXPENSE) {
-                    $account->setBalance($balance + $sum);
+                    $newBalance = $previousBalance + $previousSum;
                 }
             } else {
                 if ($previousType == Operation::TYPE_INCOME) {
-                    $account->setBalance($balance - $sum);
+                    $newBalance = $previousBalance - $previousSum;
                 } else if ($previousType == Operation::TYPE_EXPENSE) {
-                    $account->setBalance($balance + $sum);
+                    $newBalance = $previousBalance + $previousSum;
                 }
             }
 
-            if ($operation->getType() == Operation::TYPE_INCOME) {
-                $account->setBalance($balance + $sum);
-            } else if ($operation->getType() == Operation::TYPE_EXPENSE) {
-                $account->setBalance($balance - $sum);
+            if ($newType == Operation::TYPE_INCOME) {
+                $newBalance = $newBalance + $newSum;
+            } else if ($newType == Operation::TYPE_EXPENSE) {
+                $newBalance = $newBalance - $newSum;
             }
 
+            $account->setBalance($newBalance);
             $operation->setUpdatedAt(new \DateTime());
 
-//            $em->refresh($operation);
             $em->flush();
 
             return $this->redirect($this->generateUrl('accounts_details', array('id' => $accountId)));
