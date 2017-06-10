@@ -10,7 +10,7 @@ use Doctrine\ORM\Mapping as ORM;
  * @ORM\Table(name="category")
  * @ORM\Entity(repositoryClass="AppBundle\Repository\CategoryRepository")
  */
-class Category
+class Category implements \JsonSerializable
 {
 //    const CATEGORY_TYPE_INCOME = 'income';
 //    const CATEGORY_TYPE_EXPENSE = 'expense';
@@ -100,5 +100,13 @@ class Category
     {
         return $this->getName();
     }
-}
 
+    function jsonSerialize()
+    {
+        return [
+            'id' => $this->getId(),
+            'name' => $this->getName(),
+            'type' => $this->getType()
+        ];
+    }
+}

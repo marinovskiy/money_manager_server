@@ -129,7 +129,7 @@ class ApiOperationController extends Controller
             if ($operation->getType() != $operation->getCategory()->getType()) {
                 return $this->json('Wrong operation/category type', 400);
             }
-            
+
             $newSum = $operation->getSum();
             $newBalance = $previousBalance;
             $newType = $operation->getType();

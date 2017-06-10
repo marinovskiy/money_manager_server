@@ -252,8 +252,10 @@ class Operation implements \JsonSerializable
             'type' => $this->getType(),
             'description' => $this->getDescription(),
             'sum' => $this->getSum(),
-            'category' => $this->getCategory()->getName(),
-            'accountId' => $this->getAccount()->getId()
+            'category' => $this->getCategory(),
+            'accountId' => $this->getAccount()->getId(),
+            'createdAt' => $this->getCreatedAt(),
+            'updatedAt' => $this->getUpdatedAt()
         ];
     }
 }

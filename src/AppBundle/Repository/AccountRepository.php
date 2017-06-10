@@ -56,4 +56,25 @@ class AccountRepository extends \Doctrine\ORM\EntityRepository
             ->getQuery()
             ->getArrayResult();
     }
+
+    public function loadAccounts($accountsIds)
+    {
+        $qb = $this->createQueryBuilder('account');
+
+//        return $qb
+//            ->add('where', $qb->expr()->in('account.id', 'accountsIds'))
+//            ->getQuery()
+//            ->getArrayResult();
+
+//        return $qb->select('account')
+//            ->from('AppBundle:Account', 'account')
+        return $qb
+//            ->where('account.id', ':accountsId')
+            ->where($qb->expr()->in('account.id', ':accountsIds'))
+            ->setParameter('accountsIds', $accountsIds)
+//            ->setParameter('accountsId', $accountsIds[0])
+//            ->join('account.operations', 'operations')
+            ->getQuery()
+            ->getArrayResult();
+    }
 }
