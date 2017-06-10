@@ -95,14 +95,14 @@ class User implements UserInterface, \JsonSerializable
     private $gender;
 
     /**
-     * @var ArrayCollection|$accounts[]
+     * @var Account[]|ArrayCollection
      *
      * @ORM\OneToMany(targetEntity="Account", mappedBy="user", cascade={"remove","persist"})
      */
     private $accounts;
 
     /**
-     * @var ArrayCollection|$createdOrganizations[]
+     * @var Organization[]|ArrayCollection
      *
      * @ORM\OneToMany(targetEntity="Organization", mappedBy="creator")
      */
@@ -123,12 +123,20 @@ class User implements UserInterface, \JsonSerializable
      */
     private $newses;
 
+    /**
+     * @var Feedback[]|ArrayCollection
+     *
+     * @ORM\OneToMany(targetEntity="Account", mappedBy="user", cascade={"remove","persist"})
+     */
+    private $feedbacks;
+
     public function __construct()
     {
         $this->devices = new ArrayCollection();
         $this->accounts = new ArrayCollection();
         $this->organizations = new ArrayCollection();
         $this->newses = new ArrayCollection();
+        $this->feedbacks = new ArrayCollection();
     }
 
     /**
@@ -529,6 +537,30 @@ class User implements UserInterface, \JsonSerializable
     public function getNewses()
     {
         return $this->newses;
+    }
+
+    /**
+     * Add feedback
+     *
+     * @param Feedback $feedback
+     *
+     * @return User
+     */
+    public function addFeedback(Feedback $feedback)
+    {
+        $this->feedbacks->add($feedback);
+
+        return $this;
+    }
+
+    /**
+     * Get feedbacks
+     *
+     * @return Feedback[]|ArrayCollection
+     */
+    public function getFeedbacks()
+    {
+        return $this->feedbacks;
     }
 
     public function getRoles()

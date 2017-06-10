@@ -1,0 +1,32 @@
+{% extends "::base.html.twig" %}
+{% block title %}MoneyManager - відгуки{% endblock %}
+{% block body %}
+
+    <div id="my-div-content-child" class="my-div-single" style="width: 97%; height: 78px;">
+        <div class="my-div-round-content-block-top my-div-round bg-primary" style="width: 100%; margin-bottom: 32px;">
+            <p class="my-text-title-white"><b>Відгуки MoneyManager:</b></p>
+        </div>
+
+        <div>
+            {% for feedback in feedbackList %}
+                <div class="my-div-round bg-primary" style="width: 100%; margin-top: 16px;">
+                    <p class="my-text-title-white">
+                        {{ feedback.text }}
+                        {#<a class="my-text-white"#}
+                           {#style="float: right; font-size: 16px; font-weight: 500;">{{ news.updatedAt|date('d.m.y') }}</a>#}
+                    </p>
+                    {#<p class="my-text-white">#}
+                        {#{{ news.text }}#}
+                    {#</p>#}
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+
+{% endblock %}
+{% block javascripts %}
+    {{ parent() }}
+    <script>
+    </script>
+
+{% endblock %}
