@@ -12,8 +12,8 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class Category
 {
-    const CATEGORY_TYPE_EXPENSE = 'expense';
-    const CATEGORY_TYPE_INCOME = 'income';
+//    const CATEGORY_TYPE_INCOME = 'income';
+//    const CATEGORY_TYPE_EXPENSE = 'expense';
 
     /**
      * @var int
@@ -37,7 +37,6 @@ class Category
      * @ORM\Column(name="type", type="string", length=255)
      */
     private $type;
-
 
     /**
      * Get id

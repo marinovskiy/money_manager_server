@@ -55,6 +55,10 @@ class ApiOrganizationOperationController extends Controller
         $form->submit($data['operation']);
 
         if ($account && $form->isSubmitted() && $form->isValid()) {
+            if ($operation->getType() != $operation->getCategory()->getType()) {
+                return $this->json('Wrong operation/category type', 400);
+            }
+
             $operation->setAccount($account);
 
             $balance = $account->getBalance();
@@ -147,6 +151,10 @@ class ApiOrganizationOperationController extends Controller
         $form->submit($data['operation']);
 
         if ($account != null && $form->isSubmitted() && $form->isValid()) {
+            if ($operation->getType() != $operation->getCategory()->getType()) {
+                return $this->json('Wrong operation/category type', 400);
+            }
+            
             $newSum = $operation->getSum();
             $newBalance = $previousBalance;
             $newType = $operation->getType();
