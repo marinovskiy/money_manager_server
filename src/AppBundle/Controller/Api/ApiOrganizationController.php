@@ -57,7 +57,8 @@ class ApiOrganizationController extends Controller
     {
         $organizations = $this->getUser()->getOrganizations();
 
-        return $this->json(['organizations' => $organizations], 200, [], [AbstractNormalizer::GROUPS => ['group1']]);
+//        return $this->json(['organizations' => $organizations], 200, [], [AbstractNormalizer::GROUPS => ['group1']]);
+        return $this->json(['organizations' => $organizations], 200);
     }
 
     /**

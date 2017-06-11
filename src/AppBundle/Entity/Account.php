@@ -12,7 +12,7 @@ use Symfony\Component\Serializer\Annotation\Groups;
  * @ORM\Table(name="account")
  * @ORM\Entity(repositoryClass="AppBundle\Repository\AccountRepository")
  */
-class Account/* implements \JsonSerializable*/
+class Account implements \JsonSerializable
 {
     /**
      * @var int
@@ -336,21 +336,21 @@ class Account/* implements \JsonSerializable*/
         return $this->updatedAt;
     }
 
-//    function jsonSerialize()
-//    {
-//        return [
-//            'id' => $this->getId(),
-//            'name' => $this->getName(),
-//            'description' => $this->getDescription(),
-//            'currency' => $this->getCurrency(),
-////            'currency' => $this->getCurrency()->getId(),
-//            'balance' => $this->getBalance(),
-//            'operations' => $this->getOperations(),
-//            'organization' => $this->getOrganization(),
-//            'createdAt' => $this->getCreatedAt(),
-//            'updatedAt' => $this->getUpdatedAt()
-//        ];
-//    }
+    function jsonSerialize()
+    {
+        return [
+            'id' => $this->getId(),
+            'name' => $this->getName(),
+            'description' => $this->getDescription(),
+            'currency' => $this->getCurrency(),
+//            'currency' => $this->getCurrency()->getId(),
+            'balance' => $this->getBalance(),
+            'operations' => $this->getOperations(),
+            'organization' => $this->getOrganization()->getId(),
+            'createdAt' => $this->getCreatedAt(),
+            'updatedAt' => $this->getUpdatedAt()
+        ];
+    }
 
     function __toString()
     {

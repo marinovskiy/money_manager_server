@@ -13,7 +13,7 @@ use Symfony\Component\Serializer\Annotation\Groups;
  * @ORM\Table(name="organization")
  * @ORM\Entity(repositoryClass="AppBundle\Repository\OrganizationRepository")
  */
-class Organization/* implements \JsonSerializable*/
+class Organization implements \JsonSerializable
 {
     const TYPE_FAMILY = 'family';
     const TYPE_COMPANY = 'company';
@@ -408,28 +408,28 @@ class Organization/* implements \JsonSerializable*/
         return $this;
     }
 
-//    function jsonSerialize()
-//    {
-//        return [
-//            'id' => $this->getId(),
-//            'name' => $this->getName(),
-//            'description' => $this->getDescription(),
-//            'type' => $this->getType(),
-//            'publicAccess' => $this->getPublicAccess(),
-//            'creator' => $this->getCreator(),
-//            'members' => $this->getMembers(),
-////            'members' => array(
-////                function (User $member) {
-////                    return $member->getId();
-////                },
-////                $this->getMembers()
-////            ),
-////            'accounts' => $this->getAccounts(),
-//            'enabled' => $this->getEnabled(),
-//            'createdAt' => $this->getCreatedAt(),
-//            'updatedAt' => $this->getUpdatedAt()
-//        ];
-//    }
+    function jsonSerialize()
+    {
+        return [
+            'id' => $this->getId(),
+            'name' => $this->getName(),
+            'description' => $this->getDescription(),
+            'type' => $this->getType(),
+            'publicAccess' => $this->getPublicAccess(),
+            'creator' => $this->getCreator(),
+            'members' => $this->getMembers(),
+//            'members' => array(
+//                function (User $member) {
+//                    return $member->getId();
+//                },
+//                $this->getMembers()
+//            ),
+            'accounts' => $this->getAccounts(),
+            'enabled' => $this->getEnabled(),
+            'createdAt' => $this->getCreatedAt(),
+            'updatedAt' => $this->getUpdatedAt()
+        ];
+    }
 
     function __toString()
     {

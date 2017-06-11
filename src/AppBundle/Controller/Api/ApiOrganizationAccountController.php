@@ -73,7 +73,8 @@ class ApiOrganizationAccountController extends Controller
 
             $this->get('logger')->info("test");
 
-            return $this->json(['account' => $account], 200, [], [AbstractNormalizer::GROUPS => ['group2']]);
+//            return $this->json(['account' => $account], 200, [], [AbstractNormalizer::GROUPS => ['group2']]);
+            return $this->json(['account' => $account], 200);
 //            return new JsonResponse($account);
 
 //            return new Response($serializer->serialize($account, 'json'));
