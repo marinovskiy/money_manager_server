@@ -27,6 +27,15 @@ class ApiOrganizationAccountController extends Controller
      */
     public function apiOrganizationNewAccountAction(Request $request, $id)
     {
+        $encoders = array(new JsonEncoder());
+        $normalizer = new ObjectNormalizer(null);
+//        $normalizer->setIgnoredAttributes(array('email'));
+        $normalizer->setCircularReferenceHandler(function ($object) {
+            return $object->getId();
+        });
+        $normalizers = array($normalizer);
+        $serializer = new Serializer($normalizers, $encoders);
+
         $em = $this->getDoctrine()->getManager();
 
         $organization = $em->getRepository(Organization::class)->find($id);
@@ -57,11 +66,16 @@ class ApiOrganizationAccountController extends Controller
             $account->setCreatedAt(new \DateTime());
             $account->setUpdatedAt(new \DateTime());
 
-            $em = $this->getDoctrine()->getManager();
+            $em->persist($organization);
             $em->persist($account);
             $em->flush();
 
-            return $this->json(['account' => $account], 200);
+            $this->get('logger')->info("test");
+
+//            return $this->json(['account' => $account], 200);
+            return new JsonResponse($account);
+
+//            return new Response($serializer->serialize($account, 'json'));
         }
 
         return $this->json('Invalid data', 400);
