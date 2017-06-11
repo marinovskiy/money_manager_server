@@ -168,7 +168,7 @@ class ApiOrganizationController extends Controller
             return $this->json(['organization' => $organization], 200);
         }
 
-        return $this->json('Invalid data', 400);
+        return $this->json(['msg' => 'bad request'], 400);
     }
 
 //    /**
@@ -198,7 +198,7 @@ class ApiOrganizationController extends Controller
             }
             $organization->setEnabled(false);
             $em->flush();
-            return $this->json('Disabled', 200);
+            return $this->json(['msg' => 'Disabled'], 200);
         }
 
         return $this->json('Not found', 404);
@@ -222,7 +222,7 @@ class ApiOrganizationController extends Controller
             }
             $organization->setEnabled(true);
             $em->flush();
-            return $this->json('Enabled', 200);
+            return $this->json(['msg' => 'Enabled'], 200);
         }
 
         return $this->json('Not found', 404);
@@ -265,7 +265,7 @@ class ApiOrganizationController extends Controller
         $organization->addMember($user);
         $em->flush();
 
-        return $this->json('Added', 200);
+        return $this->json(['msg' => 'Added'], 200);
     }
 
     /**
@@ -318,6 +318,6 @@ class ApiOrganizationController extends Controller
         $organization->removeMember($user);
         $em->flush();
 
-        return $this->json('Removed', 200);
+        return $this->json(['msg' => 'Removed'], 200);
     }
 }
