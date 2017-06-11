@@ -52,7 +52,7 @@ class ApiOrganizationAccountController extends Controller
         $form->submit($data['account']);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $account->setUser($this->getUser());
+            $account->setOrganization($organization);
             $account->setBalance(0);
             $account->setCreatedAt(new \DateTime());
             $account->setUpdatedAt(new \DateTime());
