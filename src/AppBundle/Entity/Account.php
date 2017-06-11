@@ -4,6 +4,7 @@ namespace AppBundle\Entity;
 
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Serializer\Annotation\Groups;
 
 /**
  * Account
@@ -11,7 +12,7 @@ use Doctrine\ORM\Mapping as ORM;
  * @ORM\Table(name="account")
  * @ORM\Entity(repositoryClass="AppBundle\Repository\AccountRepository")
  */
-class Account implements \JsonSerializable
+class Account/* implements \JsonSerializable*/
 {
     /**
      * @var int
@@ -19,6 +20,7 @@ class Account implements \JsonSerializable
      * @ORM\Column(name="id", type="integer")
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="AUTO")
+     * @Groups({"group1", "group2"})
      */
     private $id;
 
@@ -26,6 +28,7 @@ class Account implements \JsonSerializable
      * @var string
      *
      * @ORM\Column(name="name", type="string", length=255)
+     * @Groups({"group1", "group2"})
      */
     private $name;
 
@@ -33,6 +36,7 @@ class Account implements \JsonSerializable
      * @var string
      *
      * @ORM\Column(name="description", type="string", length=255, nullable=true)
+     * @Groups({"group1", "group2"})
      */
     private $description;
 
@@ -41,6 +45,7 @@ class Account implements \JsonSerializable
      *
      * @ORM\ManyToOne(targetEntity="Currency")
      * @ORM\JoinColumn(name="currency_id", referencedColumnName="id")
+     * @Groups({"group1", "group2"})
      */
     private $currency;
 
@@ -48,6 +53,7 @@ class Account implements \JsonSerializable
      * @var float
      *
      * @ORM\Column(name="balance", type="decimal", precision=10, scale=2)
+     * @Groups({"group1", "group2"})
      */
     private $balance;
 
@@ -55,6 +61,7 @@ class Account implements \JsonSerializable
      * @var User
      *
      * @ORM\ManyToOne(targetEntity="User", inversedBy="accounts")
+     * @Groups({"group1", "group2"})
      */
     private $user;
 
@@ -62,6 +69,7 @@ class Account implements \JsonSerializable
      * @var ArrayCollection|$operations[]
      *
      * @ORM\OneToMany(targetEntity="Operation", mappedBy="account", cascade={"remove","persist"})
+     * @Groups({"group1", "group2"})
      */
     private $operations;
 
@@ -69,6 +77,7 @@ class Account implements \JsonSerializable
      * @var Organization
      *
      * @ORM\ManyToOne(targetEntity="Organization", inversedBy="accounts")
+     * @Groups({"group2"})
      */
     private $organization;
 
@@ -76,6 +85,7 @@ class Account implements \JsonSerializable
      * @var \DateTime
      *
      * @ORM\Column(name="createdAt", type="datetime")
+     * @Groups({"group1", "group2"})
      */
     private $createdAt;
 
@@ -83,6 +93,7 @@ class Account implements \JsonSerializable
      * @var \DateTime
      *
      * @ORM\Column(name="updatedAt", type="datetime")
+     * @Groups({"group1", "group2"})
      */
     private $updatedAt;
 
@@ -325,21 +336,21 @@ class Account implements \JsonSerializable
         return $this->updatedAt;
     }
 
-    function jsonSerialize()
-    {
-        return [
-            'id' => $this->getId(),
-            'name' => $this->getName(),
-            'description' => $this->getDescription(),
-            'currency' => $this->getCurrency(),
-//            'currency' => $this->getCurrency()->getId(),
-            'balance' => $this->getBalance(),
-            'operations' => $this->getOperations(),
-            'organization' => $this->getOrganization(),
-            'createdAt' => $this->getCreatedAt(),
-            'updatedAt' => $this->getUpdatedAt()
-        ];
-    }
+//    function jsonSerialize()
+//    {
+//        return [
+//            'id' => $this->getId(),
+//            'name' => $this->getName(),
+//            'description' => $this->getDescription(),
+//            'currency' => $this->getCurrency(),
+////            'currency' => $this->getCurrency()->getId(),
+//            'balance' => $this->getBalance(),
+//            'operations' => $this->getOperations(),
+//            'organization' => $this->getOrganization(),
+//            'createdAt' => $this->getCreatedAt(),
+//            'updatedAt' => $this->getUpdatedAt()
+//        ];
+//    }
 
     function __toString()
     {

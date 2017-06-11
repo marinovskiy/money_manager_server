@@ -13,6 +13,7 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Serializer\Encoder\JsonEncoder;
+use Symfony\Component\Serializer\Normalizer\AbstractNormalizer;
 use Symfony\Component\Serializer\Normalizer\ObjectNormalizer;
 use Symfony\Component\Serializer\Serializer;
 
@@ -72,8 +73,8 @@ class ApiOrganizationAccountController extends Controller
 
             $this->get('logger')->info("test");
 
-//            return $this->json(['account' => $account], 200);
-            return new JsonResponse($account);
+            return $this->json(['account' => $account], 200, [], [AbstractNormalizer::GROUPS => ['group2']]);
+//            return new JsonResponse($account);
 
 //            return new Response($serializer->serialize($account, 'json'));
         }

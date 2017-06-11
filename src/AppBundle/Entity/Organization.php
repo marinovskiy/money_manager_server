@@ -5,6 +5,7 @@ namespace AppBundle\Entity;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Config\Definition\Exception\Exception;
+use Symfony\Component\Serializer\Annotation\Groups;
 
 /**
  * Organization
@@ -12,7 +13,7 @@ use Symfony\Component\Config\Definition\Exception\Exception;
  * @ORM\Table(name="organization")
  * @ORM\Entity(repositoryClass="AppBundle\Repository\OrganizationRepository")
  */
-class Organization implements \JsonSerializable
+class Organization/* implements \JsonSerializable*/
 {
     const TYPE_FAMILY = 'family';
     const TYPE_COMPANY = 'company';
@@ -30,6 +31,7 @@ class Organization implements \JsonSerializable
      * @ORM\Column(name="id", type="integer")
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="AUTO")
+     * @Groups({"group1", "group2"})
      */
     private $id;
 
@@ -37,6 +39,7 @@ class Organization implements \JsonSerializable
      * @var string
      *
      * @ORM\Column(name="name", type="string", length=255)
+     * @Groups({"group1", "group2"})
      */
     private $name;
 
@@ -44,6 +47,7 @@ class Organization implements \JsonSerializable
      * @var string
      *
      * @ORM\Column(name="description", type="string", length=255)
+     * @Groups({"group1", "group2"})
      */
     private $description;
 
@@ -51,6 +55,7 @@ class Organization implements \JsonSerializable
      * @var string
      *
      * @ORM\Column(name="type", type="string", length=255)
+     * @Groups({"group1", "group2"})
      */
     private $type;
 
@@ -58,6 +63,7 @@ class Organization implements \JsonSerializable
      * @var boolean
      *
      * @ORM\Column(name="publicAccess", type="boolean")
+     * @Groups({"group1", "group2"})
      */
     private $publicAccess;
 
@@ -65,6 +71,7 @@ class Organization implements \JsonSerializable
      * @var User
      *
      * @ORM\ManyToOne(targetEntity="User", inversedBy="createdOrganizations")
+     * @Groups({"group1", "group2"})
      */
     private $creator;
 
@@ -72,6 +79,7 @@ class Organization implements \JsonSerializable
      * @var \DateTime
      *
      * @ORM\Column(name="createdAt", type="datetime")
+     * @Groups({"group1", "group2"})
      */
     private $createdAt;
 
@@ -79,6 +87,7 @@ class Organization implements \JsonSerializable
      * @var \DateTime
      *
      * @ORM\Column(name="updatedAt", type="datetime")
+     * @Groups({"group1", "group2"})
      */
     private $updatedAt;
 
@@ -88,6 +97,7 @@ class Organization implements \JsonSerializable
      * @var User[]|ArrayCollection
      *
      * @ORM\ManyToMany(targetEntity="User", inversedBy="organizations")
+     * @Groups({"group1", "group2"})
      */
     private $members;
 //, cascade={"remove","persist"}
@@ -95,6 +105,7 @@ class Organization implements \JsonSerializable
      * @var Account[]|ArrayCollection
      *
      * @ORM\OneToMany(targetEntity="Account", mappedBy="organization")
+     * @Groups({"group1"})
      */
     private $accounts;
 
@@ -102,6 +113,7 @@ class Organization implements \JsonSerializable
      * @var bool
      *
      * @ORM\Column(name="enabled", type="boolean")
+     * @Groups({"group1", "group2"})
      */
     private $enabled;
 
@@ -396,28 +408,28 @@ class Organization implements \JsonSerializable
         return $this;
     }
 
-    function jsonSerialize()
-    {
-        return [
-            'id' => $this->getId(),
-            'name' => $this->getName(),
-            'description' => $this->getDescription(),
-            'type' => $this->getType(),
-            'publicAccess' => $this->getPublicAccess(),
-            'creator' => $this->getCreator(),
-            'members' => $this->getMembers(),
-//            'members' => array(
-//                function (User $member) {
-//                    return $member->getId();
-//                },
-//                $this->getMembers()
-//            ),
-            'accounts' => $this->getAccounts(),
-            'enabled' => $this->getEnabled(),
-            'createdAt' => $this->getCreatedAt(),
-            'updatedAt' => $this->getUpdatedAt()
-        ];
-    }
+//    function jsonSerialize()
+//    {
+//        return [
+//            'id' => $this->getId(),
+//            'name' => $this->getName(),
+//            'description' => $this->getDescription(),
+//            'type' => $this->getType(),
+//            'publicAccess' => $this->getPublicAccess(),
+//            'creator' => $this->getCreator(),
+//            'members' => $this->getMembers(),
+////            'members' => array(
+////                function (User $member) {
+////                    return $member->getId();
+////                },
+////                $this->getMembers()
+////            ),
+////            'accounts' => $this->getAccounts(),
+//            'enabled' => $this->getEnabled(),
+//            'createdAt' => $this->getCreatedAt(),
+//            'updatedAt' => $this->getUpdatedAt()
+//        ];
+//    }
 
     function __toString()
     {

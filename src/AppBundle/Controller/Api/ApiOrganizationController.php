@@ -11,6 +11,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Serializer\Encoder\JsonEncoder;
+use Symfony\Component\Serializer\Normalizer\AbstractNormalizer;
 use Symfony\Component\Serializer\Normalizer\ObjectNormalizer;
 use Symfony\Component\Serializer\Serializer;
 
@@ -56,7 +57,7 @@ class ApiOrganizationController extends Controller
     {
         $organizations = $this->getUser()->getOrganizations();
 
-        return $this->json(['organizations' => $organizations], 200);
+        return $this->json(['organizations' => $organizations], 200, [], [AbstractNormalizer::GROUPS => ['group1']]);
     }
 
     /**
