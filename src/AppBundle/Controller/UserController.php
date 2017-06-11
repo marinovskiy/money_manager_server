@@ -18,9 +18,19 @@ class UserController extends Controller
      */
     public function profileMeAction(Request $request)
     {
-        $accounts = $this->getDoctrine()->getManager()->getRepository(Account::class)->loadAllUserAccounts($this->getUser());
-        $organizations = $this->getDoctrine()->getManager()->getRepository(Organization::class)->loadAllOrganizations();
+//        $accounts = $this->getDoctrine()->getManager()->getRepository(Account::class)->loadAllUserAccounts($this->getUser());
+        $organizations1 = $this
+            ->getDoctrine()
+            ->getManager()
+            ->getRepository(Organization::class)
+            ->findAll();
 
+        $organizations = array();
+        foreach ($organizations1 as $org) {
+            if ($org->getMembers()->contains($this->getUser())) {
+                array_push($organizations, $org);
+            }
+        }
 
         $accounts = $this
             ->getDoctrine()
@@ -29,6 +39,7 @@ class UserController extends Controller
 
         return $this->render('user/profile_me.html.twig', [
             'accounts' => $accounts,
+            'createdOrganizations' => $this->getUser()->getCreatedOrganizations(),
             'organizations' => $organizations
         ]);
     }
@@ -120,7 +131,7 @@ class UserController extends Controller
 
         $user = $em->getRepository(User::class)->find($id);
 
-        if ($user && $user->getEnabled()) {
+        if ($user && $user->getEnabled() && $user->getRole() != User::ROLE_ADMIN) {
             $user->setEnabled(false);
             $em = $this->getDoctrine()->getManager();
             $em->flush();

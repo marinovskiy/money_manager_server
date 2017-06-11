@@ -2,54 +2,58 @@
 {% block title %}Адмін-панель - новини{% endblock %}
 {% block body %}
 
-    <div id="my-div-content-child" class="my-div-round my-div-single bg-primary" style="width: 97%; height: 78px;">
-        <div class="my-div-round-content-block-top" style="display: inline-block;">
+    <div id="my-div-content-child" class="my-div-single" style="width: 96.5%; height: 78px;">
+        <div class="my-div-round-content-block-top my-div-round bg-primary" style="width: 100%; margin-bottom: 32px;">
             <div>
-                <p class="my-text-title-white"><b>Новини:</b></p>
+                <a class="my-text-title-white" style="color: white;"><b>Новини:</b></a>
+                <form action="{{ path('news_add') }}" style="display: inline;">
+                    <button class="btn btn-secondary" type="submit" style="float: right;">Додати новину</button>
+                </form>
             </div>
 
             {#<div>#}
-            <form action="{{ path('news_add') }}">
-                <button class="btn btn-secondary" type="submit" style="float: right;">Додати новину</button>
-            </form>
             {#</div>#}
         </div>
 
-        <div class="my-div-round-content-block-middle" style="margin: 12px 0 0 0;">
-            <div>
-                {#<p>id firstName lastName email</p>#}
-                {% for news in newses %}
-                    <a class="card-text-text" style="vertical-align: middle;">
-                        {{ news.id }}
-                        {{ news.title }}
-                        {{ news.updatedAt|date('d.m.y') }}
-
-                        {% if news.enabled %}
-                            <form action="{{ path('news_hide', {'id': news.id}) }}">
-                                <button class="btn btn-outline-danger" type="submit"
-                                        style="float: right; font-weight: 600;">
-                                    Приховати
-                                </button>
-                            </form>
-                        {% else %}
-                            <form action="{{ path('news_show', {'id': news.id}) }}">
-                                <button class="btn btn-outline-success" type="submit"
-                                        style="float: right; font-weight: 600;">
-                                    Показати
-                                </button>
-                            </form>
-                        {% endif %}
-                        <form action="{{ path('news_edit', {'id': news.id}) }}">
-                            <button class="btn btn-outline-warning" type="submit"
-                                    style="float: right; font-weight: 600; margin-left: 12px; margin-right: 4px;">
-                                Редагувати
+        <div>
+            {% for news in newses %}
+                <div style="margin: 0 16px 0 16px;">
+                    <a href="{{ path('news_details', {'id': news.id}) }}">{{ news.id }} {{ news.title }}</a>
+                    {% if news.enabled %}
+                        <form action="{{ path('news_hide', {'id': news.id}) }}" style="display: inline;">
+                            <button class="btn btn-outline-danger" type="submit"
+                                    style="float: right; font-weight: 600;">
+                                Приховати
                             </button>
                         </form>
-                    </a>
-                    <br>
-                    <br>
-                {% endfor %}
-            </div>
+                    {% else %}
+                        <form action="{{ path('news_show', {'id': news.id}) }}" style="display: inline;">
+                            <button class="btn btn-outline-success" type="submit"
+                                    style="float: right; font-weight: 600;">
+                                Показати
+                            </button>
+                        </form>
+                    {% endif %}
+                    <form action="{{ path('news_edit', {'id': news.id}) }}" style="display: inline;">
+                        <button class="btn btn-outline-warning" type="submit"
+                                style="float: right; font-weight: 600; margin-left: 12px; margin-right: 4px;">
+                            Редагувати
+                        </button>
+                    </form>
+                </div>
+                {#<div class="my-div-round bg-primary" style="width: 100%; margin-top: 16px;">#}
+                    {#<p class="my-text-title-white">#}
+                        {#{{ news.title }}#}
+                        {#<a class="my-text-white"#}
+                           {#style="float: right; font-size: 16px; font-weight: 500;">{{ news.updatedAt|date('d.m.y') }}</a>#}
+                    {#</p>#}
+                    {#<p class="my-text-white">#}
+                        {#{{ news.text }}#}
+                    {#</p>#}
+                    {##}
+                {#</div>#}
+                <br>
+            {% endfor %}
         </div>
     </div>
 

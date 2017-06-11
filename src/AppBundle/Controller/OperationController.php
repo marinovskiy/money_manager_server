@@ -18,14 +18,20 @@ class OperationController extends Controller
      */
     public function addAccountOperationAction(Request $request, $id)
     {
+        $em = $this->getDoctrine()->getManager();
+        $account = $em->getRepository(Account::class)->find($id);
+        if (!$account) {
+            return new Response("Not found", 404);
+        }
+        if ($account->getUser()->getId() != $this->getUser()->getId()) {
+            return new Response("Not owner", 403);
+        }
+
         $operation = new Operation();
         $form = $this->createForm(AddOperationType::class, $operation);
 
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
-            $em = $this->getDoctrine()->getManager();
-
-            $account = $em->getRepository(Account::class)->find($id);
             $operation->setAccount($account);
 
             $balance = $account->getBalance();
@@ -43,23 +49,12 @@ class OperationController extends Controller
             $em->persist($operation);
             $em->flush();
 
-//            return $this->redirectToRoute('profile_me');
             return $this->redirect($this->generateUrl('accounts_details', array('id' => $id)));
         }
 
         return $this->render('operation/add_operation.html.twig', ['form' => $form->createView()]);
     }
 
-//    /**
-//     * @Route("/accounts/{id}/", name="accounts_all")
-//     */
-//    public function accountOperationsAction(Request $request, $id)
-//    {
-//        $accounts = $this->getDoctrine()->getManager()->getRepository(Account::class)->loadAllAccounts();
-//        return new JsonResponse($accounts);
-//    }
-
-    //TODO balance
     /**
      * @Route("/accounts/{accountId}/operations/{operationId}/edit", name="account_operations_edit", requirements={"id": "\d+"})
      */
@@ -71,6 +66,16 @@ class OperationController extends Controller
         $previousType = $operation->getType();
         $previousBalance = $account->getBalance();
         $previousSum = $operation->getSum();
+
+        if (!$account) {
+            return new Response("Account not found", 404);
+        }
+        if ($account->getUser()->getId() != $this->getUser()->getId()) {
+            return new Response("Not owner", 403);
+        }
+        if (!$operationId) {
+            return new Response("Operation not found", 404);
+        }
 
         $form = $this->createForm(AddOperationType::class, $operation);
 
@@ -121,6 +126,16 @@ class OperationController extends Controller
         $account = $em->getRepository(Account::class)->find($accountId);
         $operation = $em->getRepository(Operation::class)->find($operationId);
 
+        if (!$account) {
+            return new Response("Account not found", 404);
+        }
+        if ($account->getUser()->getId() != $this->getUser()->getId()) {
+            return new Response("Not owner", 403);
+        }
+        if (!$operationId) {
+            return new Response("Operation not found", 404);
+        }
+
         if ($account != null && $operation != null) {
             $balance = $account->getBalance();
             $sum = $operation->getSum();
@@ -141,7 +156,6 @@ class OperationController extends Controller
             $em->remove($operation);
             $em->flush();
 
-//            return new Response(null, 200);
             return $this->redirect($this->generateUrl('accounts_details', array('id' => $accountId)));
         }
 

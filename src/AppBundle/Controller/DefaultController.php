@@ -22,7 +22,7 @@ class DefaultController extends Controller
             ->getDoctrine()
             ->getManager()
             ->getRepository(News::class)
-            ->findBy(['enabled' => true]);
+            ->findBy(['enabled' => true], ['createdAt' => 'DESC']);
 
         return $this->render('default/main.html.twig', ['newses' =>$newses]);
     }

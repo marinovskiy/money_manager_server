@@ -33,14 +33,17 @@ class ApiOrganizationAccountController extends Controller
         if (!$organization) {
             return $this->json('Organization not found', 404);
         }
+        if ($organization->getCreator()->getId() != $this->getUser()->getId()) {
+            return $this->json('Not creator', 403);
+        }
 
-        $membersIds = array();
-        foreach ($organization->getMembers() as $member) {
-            array_push($membersIds, $member->getId());
-        }
-        if (!in_array($this->getUser()->getId(), $membersIds)) {
-            return $this->json('Not a member', 404);
-        }
+//        $membersIds = array();
+//        foreach ($organization->getMembers() as $member) {
+//            array_push($membersIds, $member->getId());
+//        }
+//        if (!in_array($this->getUser()->getId(), $membersIds)) {
+//            return $this->json('Not a member', 404);
+//        }
 
         $data = json_decode($request->getContent(), true);
 
@@ -88,14 +91,17 @@ class ApiOrganizationAccountController extends Controller
         if (!$organization) {
             return $this->json('Organization not found', 404);
         }
+        if ($organization->getCreator()->getId() != $this->getUser()->getId()) {
+            return $this->json('Not creator', 403);
+        }
 
-        $membersIds = array();
-        foreach ($organization->getMembers() as $member) {
-            array_push($membersIds, $member->getId());
-        }
-        if (!in_array($this->getUser()->getId(), $membersIds)) {
-            return $this->json('Not a member', 404);
-        }
+//        $membersIds = array();
+//        foreach ($organization->getMembers() as $member) {
+//            array_push($membersIds, $member->getId());
+//        }
+//        if (!in_array($this->getUser()->getId(), $membersIds)) {
+//            return $this->json('Not a member', 404);
+//        }
 
         $account = $em->getRepository(Account::class)->find($accountId);
         if (!$account) {
@@ -127,14 +133,17 @@ class ApiOrganizationAccountController extends Controller
         if (!$organization) {
             return $this->json('Organization not found', 404);
         }
+        if ($organization->getCreator()->getId() != $this->getUser()->getId()) {
+            return $this->json('Not creator', 403);
+        }
 
-        $membersIds = array();
-        foreach ($organization->getMembers() as $member) {
-            array_push($membersIds, $member->getId());
-        }
-        if (!in_array($this->getUser()->getId(), $membersIds)) {
-            return $this->json('Not a member', 404);
-        }
+//        $membersIds = array();
+//        foreach ($organization->getMembers() as $member) {
+//            array_push($membersIds, $member->getId());
+//        }
+//        if (!in_array($this->getUser()->getId(), $membersIds)) {
+//            return $this->json('Not a member', 404);
+//        }
 
         $account = $em->getRepository(Account::class)->find($accountId);
         if (!$account) {

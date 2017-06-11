@@ -1,0 +1,114 @@
+{% extends "::base.html.twig" %}
+{% block title %}MoneyManager - Новина{% endblock %}
+{% block body %}
+
+    <div id="my-div-content-child" class="my-div-single" style="width: 96.5%; height: 78px;">
+        <div class="my-div-round-content-block-top bg-primary" style="width: 100%; padding: 20px 20px 12px 20px;">
+            <p class="my-text-title-white">
+                <a class="my-text-title-white" style="color: white;"><b>{{ news.title }}</b></a>
+                <a class="my-text-white"
+                   style="float: right; font-size: 16px; font-weight: 500;">{{ news.updatedAt|date('d.m.Y') }}</a>
+            </p>
+        </div>
+        <br>
+        {% if app.user.role is constant('ROLE_ADMIN', app.user) %}
+            {% if news.enabled %}
+                <form action="{{ path('news_hide', {'id': news.id}) }}" style="display: inline;">
+                    <button class="btn btn-outline-danger" type="submit"
+                            style="float: right; font-weight: 600;">
+                        Приховати
+                    </button>
+                </form>
+            {% else %}
+                <form action="{{ path('news_show', {'id': news.id}) }}" style="display: inline;">
+                    <button class="btn btn-outline-success" type="submit"
+                            style="float: right; font-weight: 600;">
+                        Показати
+                    </button>
+                </form>
+            {% endif %}
+            <form action="{{ path('news_edit', {'id': news.id}) }}" style="display: inline;">
+                <button class="btn btn-outline-warning" type="submit"
+                        style="float: right; font-weight: 600; margin-left: 12px; margin-right: 4px;">
+                    Редагувати
+                </button>
+            </form>
+        {% endif %}
+        <br>
+        <br>
+
+        <div class="my-div-round bg-primary" style="width: 100%;  margin-top: 8px;">
+            <p class="my-text-white">
+                {{ news.text|trans|nl2br }}
+            </p>
+        </div>
+
+        <div class="my-div-round bg-primary" style="width: 100%;  margin-top: 24px;">
+            <p class="my-text-title-white"><b>Залишити коментар:</b></p>
+            <textarea id="text_area_comment" rows="3" cols="50" name="comment" placeholder="Ваш коментар"
+                      style="width: 100%;"></textarea>
+            <br>
+            <button id="btn_add_comment" type="submit" class="btn btn-secondary">Відправити</button>
+        </div>
+
+        <div class="my-div-round-content-block-top my-div-round bg-primary" style="width: 100%; margin-top: 24px;">
+            <p class="my-text-title-white">
+                <a class="my-text-title-white" style="color: white;"><b>Коментарі:</b></a>
+            </p>
+        </div>
+
+        <div style=" margin-top: 12px;">
+            {% for comment in comments %}
+                <div class="my-div-round bg-primary" style="width: 100%; margin-top: 4px;">
+                    <p class="my-text-white">
+                        <b>{{ comment.author.firstName }} {{ comment.author.lastName }}</b>
+                        <a class="my-text-white" style="float: right;">{{ comment.createdAt|date('d.m.y') }}</a>
+                        <br>
+                        {{ comment.text }}
+                    </p>
+                </div>
+                {% if app.user.role is constant('ROLE_ADMIN', app.user) %}
+                    <form action="{{ path('news_delete_comment', {'id': news.id, 'commentId': comment.id}) }}" style="margin-top: 4px;">
+                        <button class="btn btn-outline-danger" type="submit"
+                                style="float: right; font-weight: 600;">
+                            Видалити
+                        </button>
+                    </form>
+                    <br>
+                    <br>
+                {% endif %}
+            {% endfor %}
+        </div>
+    </div>
+
+
+{% endblock %}
+{% block javascripts %}
+    {{ parent() }}
+    <script>
+        $("#btn_add_comment").click(function () {
+            var commentText = $("#text_area_comment").val();
+
+            if (commentText.length == 0) {
+                alert('Ви не можете залишити пустий коментар');
+            } else {
+                $.ajax({
+                    type: "POST",
+                    url: "/news/" + {{ news.id }} +"/comments/add",
+                    data: {
+                        comment: commentText
+                    },
+                    success: function (msg) {
+                        console.log("success");
+                        location.reload();
+                    },
+                    error: function (msg, textStatus, xhr) {
+                        console.log("failed");
+                        alert(msg);
+                    }
+                });
+            }
+        });
+    </script>
+
+{% endblock %}

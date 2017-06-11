@@ -253,22 +253,14 @@ class ApiOrganizationController extends Controller
             return $this->json('You are not creator of this organization', 403);
         }
 
-        $membersIds = array();
-        foreach ($organization->getMembers() as $member) {
-            array_push($membersIds, $member->getId());
-        }
-
-        if (!in_array($userId, $membersIds)) {
-            return $this->json('Not a member', 404);
-        }
-        $logger = $this->get('logger');
-        $logger->info('LOGS');
-        $logger->info('$members.size = ' . sizeof($organization->getMembers()));
-        $logger->info('$membersIds.size = ' . sizeof($membersIds));
-        foreach ($membersIds as $membersId) {
-            $logger->info('memberId = ' . $membersId);
-        }
-        $logger->info('userID = ' . $userId);
+//        $membersIds = array();
+//        foreach ($organization->getMembers() as $member) {
+//            array_push($membersIds, $member->getId());
+//        }
+//
+//        if (!in_array($userId, $membersIds)) {
+//            return $this->json('Not a member', 404);
+//        }
 
         $organization->addMember($user);
         $em->flush();
@@ -317,6 +309,10 @@ class ApiOrganizationController extends Controller
 
         if (!in_array($userId, $membersIds)) {
             return $this->json('Not a member', 404);
+        }
+
+        if ($organization->getCreator()->getId() == $user->getId()) {
+            return $this->json('Creator can not be removed', 403);
         }
 
         $organization->removeMember($user);

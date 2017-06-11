@@ -2,21 +2,30 @@
 {% block title %}MoneyManager - головна{% endblock %}
 {% block body %}
 
-    <div id="my-div-content-child" class="my-div-single" style="width: 97%; height: 78px;">
+    <div id="my-div-content-child" class="my-div-single" style="width: 96.5%; height: 78px;">
         <div class="my-div-round-content-block-top my-div-round bg-primary" style="width: 100%; margin-bottom: 32px;">
-            <p class="my-text-title-white"><b>Новини MoneyManager:</b></p>
+            {#<p class="my-text-title-white"><b>Новини MoneyManager:</b></p>#}
+            <a class="my-text-title-white" style="color: white;"><b>Новини MoneyManager:</b></a>
+            {% if app.user.role is constant('ROLE_ADMIN', app.user) %}
+                <form action="{{ path('news_add') }}" style="display: inline;">
+                    <button class="btn btn-secondary" type="submit" style="float: right;">Додати новину</button>
+                </form>
+            {% endif %}
         </div>
 
         <div>
             {% for news in newses %}
                 <div class="my-div-round bg-primary" style="width: 100%; margin-top: 16px;">
-                    <p class="my-text-title-white">
-                        {{ news.title }}
-                        <a class="my-text-white"
-                           style="float: right; font-size: 16px; font-weight: 500;">{{ news.updatedAt|date('d.m.y') }}</a>
-                    </p>
+                    <p class="my-text-white">
+                        <a href="{{ path('news_details', {'id': news.id}) }}" class="my-text-title-white"
+                           style="color: white;">
+                            {{ news.title|trans|nl2br }}
+                            <a class="my-text-white"
+                               style="float: right; font-size: 16px; font-weight: 500;">{{ news.updatedAt|date('d.m.y') }}</a>
+                        </a>
                     <p class="my-text-white">
                         {{ news.text }}
+                    </p>
                     </p>
                 </div>
             {% endfor %}

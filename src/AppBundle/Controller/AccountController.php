@@ -46,7 +46,12 @@ class AccountController extends Controller
             ->getDoctrine()
             ->getManager()
             ->getRepository(Account::class)
-            ->loadDetailsAccount($this->getUser()->getId(), $id);
+            ->find($id);
+//            ->loadDetailsAccount($this->getUser()->getId(), $id);
+
+        if (!$account) {
+            return new Response(null, 404);
+        }
 
         return $this->render('account/account_details.html.twig', array(
             'account' => $account

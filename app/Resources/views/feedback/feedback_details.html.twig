@@ -2,31 +2,82 @@
 {% block title %}MoneyManager - відгуки{% endblock %}
 {% block body %}
 
-    <div id="my-div-content-child" class="my-div-single" style="width: 97%; height: 78px;">
+    {#<body style="padding-bottom: 16px;">#}
+    <div id="my-div-content-child" class="my-div-single" style="width: 96.5%; height: 78px;">
         <div class="my-div-round-content-block-top my-div-round bg-primary" style="width: 100%; margin-bottom: 32px;">
             <p class="my-text-title-white"><b>Відгуки MoneyManager:</b></p>
+            <p class="my-text-title-white" style="font-weight: 400; font-size: 16px;">Якщо у Вас є зауваження чи
+                пропозиції щодо роботи сайту або Ви просто хочете поділитися враженнями про сайт - залишіть, будь-ласка,
+                відгук</p>
+        </div>
+
+        <div class="my-div-round bg-primary">
+            <p class="my-text-title-white"><b>Залишити відгук:</b></p>
+            <textarea id="text_area_feedback" rows="3" cols="50" name="comment" form="usrform" placeholder="Ваш відгук"
+                      style="width: 100%;"></textarea>
+            <br>
+            <button id="btn_add_feedback" type="submit" disabled class="btn btn-secondary">Відправити</button>
         </div>
 
         <div>
             {% for feedback in feedbackList %}
-                <div class="my-div-round bg-primary" style="width: 100%; margin-top: 16px;">
-                    <p class="my-text-title-white">
-                        {{ feedback.text }}
-                        {#<a class="my-text-white"#}
-                           {#style="float: right; font-size: 16px; font-weight: 500;">{{ news.updatedAt|date('d.m.y') }}</a>#}
+                <div class="my-div-round-content-block-top bg-primary"
+                     style="width: 100%; margin-top: 12px; padding: 24px 24px 12px 24px;">
+                    <p class="my-text-white">
+                        <b>{{ feedback.author.firstName }} {{ feedback.author.lastName }}</b>
+                        <a class="my-text-white" style="float: right;">{{ feedback.createdAt|date('d.m.y') }}</a>
+                        <br>
+                        {{ feedback.text|trans|nl2br }}
                     </p>
-                    {#<p class="my-text-white">#}
-                        {#{{ news.text }}#}
-                    {#</p>#}
                 </div>
             {% endfor %}
         </div>
     </div>
+    {#</body>#}
 
 {% endblock %}
 {% block javascripts %}
     {{ parent() }}
     <script>
+        //        $('#text_area_feedback').change(function () {
+        //            $('#btn_add_feedback').prop("disabled", true);
+        //        });
+
+        $('#text_area_feedback').bind('input propertychange', function () {
+
+
+            $('#btn_add_feedback').prop("disabled", false);
+//            $("#btn_add_feedback").hide();
+
+            if (this.value.length == 0) {
+                $('#btn_add_feedback').prop("disabled", true);
+//                $("#yourBtnID").show();
+            }
+        });
+
+        $("#btn_add_feedback").click(function () {
+            var feedbackText = $("#text_area_feedback").val();
+
+            if (feedbackText.length == 0) {
+                alert('Ви не можете залишити пустий відгук');
+            } else {
+                $.ajax({
+                    type: "POST",
+                    url: "/feedback/add",
+                    data: {
+                        feedback: feedbackText
+                    },
+                    success: function (msg) {
+                        console.log("success");
+                        location.reload();
+                    },
+                    error: function (msg, textStatus, xhr) {
+                        console.log("failed");
+                        alert(msg);
+                    }
+                });
+            }
+        });
     </script>
 
 {% endblock %}

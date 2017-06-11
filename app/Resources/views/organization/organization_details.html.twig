@@ -1,6 +1,8 @@
 {% extends "::base.html.twig" %}
 {% block title %}Ваша група{% endblock %}
 {% block body %}
+    {#<body onload="disableContentIfOrganizationDisabled()">#}
+    <body>
     <div id="my-div-content-parent" class="div-content">
 
         <div id="my-div-content-child" class="my-div-left" style="width: 24%;">
@@ -17,160 +19,171 @@
                         <b>Створив:</b> {{ organization.creator.firstName }} {{ organization.creator.lastName }}
                     </p>
                     <p class="my-text-white">
-                        {#<b>Дата створення:</b> {{ organization.crea ? 'Розблокована':'Заблокована' }}#}
-                        <b>Дата створення:</b>
+                        <b>Дата створення:</b> {{ organization.createdAt|date('d.m.y') }}
+                        {#<b>Дата створення:</b>#}
                     </p>
                     <p class="my-text-white">
                         <b>Тип:</b> {{ organization.type }}
                     </p>
                     <p class="my-text-white">
-                        <b>Опис:</b> {{ organization.description }}
+                        <b>Опис:</b> {{ organization.description|trans|nl2br }}
                     </p>
-                    <p class="my-text-white">
-                        <b>Доступ:</b> {{ organization.publicAccess ? 'публічний':'приватний' }}
-                    </p>
+                    {#<p class="my-text-white">#}
+                    {#<b>Доступ:</b> {{ organization.publicAccess ? 'публічний':'приватний' }}#}
+                    {#</p>#}
                     <p class="my-text-white">
                         <b>Статус:</b> {{ organization.enabled ? 'Розблокована':'Заблокована' }}
                     </p>
                 </div>
 
                 <div class="my-div-round-content-block-bottom">
-                    {#<form action="{{ path('organization_members_add', {'id': organization.id}) }}">#}
-                    <button class="btn btn-secondary" onclick="">Make public</button>
-                    {#</form>#}
-                    {#<form action="{{ path('organization_members_add', {'id': organization.id}) }}">#}
-                    <button class="btn btn-secondary" onclick="">Заблокувати</button>
-                    {#</form>#}
-                    <form action="{{ path('organization_edit', {'id': organization.id}) }}">
-                        <button class="btn btn-secondary" onclick="">Редагувати</button>
-                    </form>
+                    {% if organization.creator.id == app.user.id %}
+                        {#<form action="{{ path('organization_members_add', {'id': organization.id}) }}">#}
+                        {#<button class="btn btn-secondary" onclick="">Make public</button>#}
+                        {#</form>#}
+                        {% if organization.enabled %}
+                            <form action="{{ path('organizations_disable', {'id': organization.id}) }}">
+                                <button class="btn btn-secondary" onclick="">Заблокувати</button>
+                            </form>
+                        {% else %}
+                            <form action="{{ path('organizations_enable', {'id': organization.id}) }}">
+                                <button class="btn btn-secondary" onclick="">Розблокувати</button>
+                            </form>
+                        {% endif %}
+                        <form action="{{ path('organization_edit', {'id': organization.id}) }}"
+                              style="margin-top: 16px;">
+                            <button class="btn btn-secondary" onclick="">Редагувати</button>
+                        </form>
+                    {% else %}
+                        <form action="{{ path('organization_exit', {'id': organization.id}) }}">
+                            <button class="btn btn-secondary" onclick="">Вийти з групи</button>
+                        </form>
+                    {% endif %}
                 </div>
             </div>
         </div>
 
         <div id="my-div-content-child" class="my-div-center" style="width: 32%; height: 78px;">
-            {% if accounts is empty %}
-                <div class="my-div-round my-div-round-content-block-top bg-primary" style="width: 100%; height: 100%;">
-                    <p class="my-div-round-text-title">"{{ organization.name }}" ще не має аккаунтів</p>
-                </div>
-            {% else %}
-                <div class="my-div-round my-div-round-content-block-top bg-primary" style="width: 100%; height: 100%;">
-                    <p class="my-div-round-text-title">Аккаунти "{{ organization.name }}":</p>
-                </div>
-            {% endif %}
+            <div id="my-div-accounts-info">
+                {% if accounts is empty %}
+                    <div class="my-div-round my-div-round-content-block-top bg-primary"
+                         style="width: 100%; height: 100%;">
+                        <p class="my-div-round-text-title">"{{ organization.name }}" ще не має аккаунтів</p>
+                    </div>
+                {% else %}
+                    <div class="my-div-round my-div-round-content-block-top bg-primary"
+                         style="width: 100%; height: 100%;">
+                        <p class="my-div-round-text-title">Аккаунти "{{ organization.name }}":</p>
+                    </div>
+                {% endif %}
 
-            <div class="my-div-content">
-                <div>
-                    <ol>
-                        {% for account in accounts %}
-                            <a href="{{ path('accounts_details', {'id': account.id}) }}"
-                               class="card-text-text">
+                <div class="my-div-content">
+                    <div>
+                        <ol>
+                            {% for account in accounts %}
+                                <a href="{{ path('accounts_details', {'id': account.id}) }}"
+                                   class="card-text-text">
+                                    <li class="my-text-black my-li-block">
+                                        {{ account.name }}
+
+                                        <form action="{{ path('organization_account_remove', {'id': organization.id, 'accountId': account.id}) }}"
+                                              style="display: inline;">
+                                            <button class="btn btn-outline-danger my-btn-action" type="submit"
+                                                    style="float: right; font-weight: 600;">
+                                                Видалити
+                                            </button>
+                                        </form>
+                                        <form action="{{ path('organization_account_edit', {'id': organization.id, 'accountId': account.id}) }}"
+                                              style="display: inline;">
+                                            <button class="btn btn-outline-warning my-btn-action" type="submit"
+                                                    style="float: right; font-weight: 600; margin-left: 12px; margin-right: 4px;">
+                                                Редагувати
+                                            </button>
+                                        </form>
+
+                                        {#<a style="float: right; margin-left: 6px;">{{ operation.createdAt|date("d.m.y") }}</a>#}
+                                        {% if account.balance >= 0 %}
+                                            <a style="color: #8BC34A; float: right; margin-right: 6px;">{{ account.balance }} {{ account.currency.symbol }}</a>
+                                        {% else %}
+                                            <a style="color: #F44336; float: right; margin-right: 6px;">-{{ account.balance }} {{ account.currency.symbol }}</a>
+                                        {% endif %}
+
+                                    </li>
+                                </a>
+                            {% endfor %}
+                        </ol>
+                    </div>
+                </div>
+
+                <div class="my-div-round-content-block-bottom">
+                    <form action="{{ path('organization_create_account', {'id': organization.id}) }}">
+                        <button id="add_member_btn" class="btn btn-outline-primary" type="submit">Додати аккаунт
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+        <div id="my-div-content-child" class="my-div-right" style="width: 36%; height: 78px;">
+            <div id="my-div-members-info">
+                <div class="my-div-round my-div-round-content-block-top bg-primary" style="width: 100%; height: 100%;">
+                    <p class="my-text-title-white"><b>Члени "{{ organization.name }}":</b></p>
+                </div>
+
+                <div class="my-div-content">
+                    <div>
+                        <ol>
+                            {% for member in organization.members %}
                                 <li class="my-text-black my-li-block">
-                                    {{ account.name }}
+                                    {{ member.firstName }}
+                                    {{ member.lastName }}
+                                    {#<a style="float: right;">{{ member.email }}</a>#}
 
-                                    <form action="{{ path('account_remove', {'accountId': account.id}) }}"
-                                          style="display: inline;">
-                                        <button class="btn btn-outline-danger my-btn-action" type="submit"
-                                                style="float: right; font-weight: 600;">
-                                            Видалити
-                                        </button>
-                                    </form>
-                                    <form action="{{ path('account_edit', {'accountId': account.id}) }}"
-                                          style="display: inline;">
+                                    {% if member.id != organization.creator.id %}
+                                        <form action="{{ path('organization_member_delete', {'id': organization.id, 'userId': member.id}) }}"
+                                              style="display: inline;">
+                                            <button class="btn btn-outline-danger my-btn-action" type="submit"
+                                                    style="float: right; font-weight: 600;">
+                                                Виключити
+                                            </button>
+                                        </form>
+                                        {#<form action="{{ path('account_edit', {'accountId': account.id}) }}" style="display: inline;">#}
                                         <button class="btn btn-outline-warning my-btn-action" type="submit"
                                                 style="float: right; font-weight: 600; margin-left: 12px; margin-right: 4px;">
                                             Редагувати
                                         </button>
-                                    </form>
-
-                                    {#<a style="float: right; margin-left: 6px;">{{ operation.createdAt|date("d.m.y") }}</a>#}
-                                    {% if account.balance >= 0 %}
-                                        <a style="color: #8BC34A; float: right; margin-right: 6px;">{{ account.balance }} {{ account.currency.symbol }}</a>
-                                    {% else %}
-                                        <a style="color: #F44336; float: right; margin-right: 6px;">-{{ account.balance }} {{ account.currency.symbol }}</a>
+                                        {#</form>#}
                                     {% endif %}
 
                                 </li>
-                            </a>
-                        {% endfor %}
-                    </ol>
+                            {% endfor %}
+                        </ol>
+                    </div>
+                </div>
+
+                <div class="my-div-round-content-block-bottom">
+                    <form action="{{ path('organization_members_search', {'id': organization.id}) }}">
+                        <button id="add_member_btn" class="btn btn-outline-primary" type="submit">Додати нових членів
+                        </button>
+                    </form>
                 </div>
             </div>
-
-            <div class="my-div-round-content-block-bottom">
-                <form action="{{ path('organization_create_account', {'id': organization.id}) }}">
-                    <button id="add_member_btn" class="btn btn-outline-primary" type="submit">Додати аккаунт</button>
-                </form>
-            </div>
         </div>
-
-        <div id="my-div-content-child" class="my-div-center" style="width: 36%; height: 78px;">
-            <div class="my-div-round my-div-round-content-block-top bg-primary" style="width: 100%; height: 100%;">
-                <p class="my-text-title-white"><b>Члени "{{ organization.name }}":</b></p>
-            </div>
-
-            <div class="my-div-content">
-                <div>
-                    <ol>
-                        {% for member in organization.members %}
-                            <li class="my-text-black my-li-block">
-                                {{ member.firstName }}
-                                {{ member.lastName }}
-                                {#<a style="float: right;">{{ member.email }}</a>#}
-
-                                {#<form action="{{ path('account_remove', {'accountId': account.id}) }}" style="display: inline;">#}
-                                <button class="btn btn-outline-danger my-btn-action" type="submit"
-                                        style="float: right; font-weight: 600;">
-                                    Виключити
-                                </button>
-                                {#</form>#}
-                                {#<form action="{{ path('account_edit', {'accountId': account.id}) }}" style="display: inline;">#}
-                                <button class="btn btn-outline-warning my-btn-action" type="submit"
-                                        style="float: right; font-weight: 600; margin-left: 12px; margin-right: 4px;">
-                                    Редагувати
-                                </button>
-                                {#</form>#}
-
-                            </li>
-                        {% endfor %}
-                    </ol>
-                </div>
-            </div>
-
-            <div class="my-div-round-content-block-bottom">
-                <form action="{{ path('organization_members_search', {'id': organization.id}) }}">
-                    <button id="add_member_btn" class="btn btn-outline-primary" type="submit">Додати нових членів
-                    </button>
-                </form>
-            </div>
-        </div>
-
-        {#<dialog open>test</dialog>#}
-
-        <dialog open>
-            <p>Наши Условия предоставления услуг …</p>
-            <form method="dialog">
-                <button type="submit" value="yes">Принять</button>
-                <button type="submit" value="no">Отказаться</button>
-            </form>
-        </dialog>
 
     </div>
+
+    </body>
 
 {% endblock %}
 {% block javascripts %}
     {{ parent() }}
     <script>
-        var $accountDelete = $('#delete-account'),
-            $accountDeleteDialog = $('#confirm-delete');
-
-        $accountDelete.on('click', function() {
-            $accountDeleteDialog[0].showModal();
-        });
-
-        $('#cancel').on('click', function() {
-            $accountDeleteDialog[0].close();
-        });
+        window.onload = function disableContentIfOrganizationDisabled() {
+            {% if not organization.enabled %}
+                $("#my-div-accounts-info *").attr("disabled", "disabled").off('click');
+                $("#my-div-members-info *").attr("disabled", "disabled").off('click');
+            {% endif %}
+        };
     </script>
 
 {% endblock %}

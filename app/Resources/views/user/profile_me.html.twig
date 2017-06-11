@@ -1,6 +1,5 @@
 {% extends "::base.html.twig" %}
 {% block body %}
-
     <div id="my-div-content-parent" class="div-content">
         <div id="my-div-content-child" class="my-div-left" style="width: 27%;">
             <div class="my-div-round bg-primary">
@@ -19,7 +18,8 @@
                         <b>Email:</b> {{ app.user.email }}
                     </p>
                     <p class="my-text-white">
-                        <b>Стать:</b> {{ app.user.gender }}
+                        {#<b>Стать:</b> {{ app.user.gender }}#}
+                        <b>Стать:</b> {% if app.user.gender is constant('GENDER_MALE', app.user) %} чоловік {% else %} жінка {% endif %}
                     </p>
                 </div>
 
@@ -96,12 +96,12 @@
                 <div class="my-div-round-content-block-middle" style="margin: -12px 0 0 40px;">
                     <div>
                         <ol>
-                            {% for organization in organizations %}
+                            {% for createdOrganization in createdOrganizations %}
                                 <li class="my-text-black my-li-block">
-                                    <a href="{{ path('organization_details', {'id': organization.id}) }}"
+                                    <a href="{{ path('organization_details', {'id': createdOrganization.id}) }}"
                                        class="card-text-text">
-                                        {{ organization.name }}
-                                        {{ organization.type|capitalize }}
+                                        {{ createdOrganization.name }}
+                                        {{ createdOrganization.type|capitalize }}
                                         {#Has public access: {{ organization.publicAccess ? 'Yes':'No' }}#}
                                     </a>
                                     <br>

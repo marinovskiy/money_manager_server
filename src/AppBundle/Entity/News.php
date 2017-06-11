@@ -2,6 +2,7 @@
 
 namespace AppBundle\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -62,6 +63,18 @@ class News
      * @ORM\Column(name="enabled", type="boolean")
      */
     private $enabled;
+
+    /**
+     * @var Comment[]|ArrayCollection
+     *
+     * @ORM\OneToMany(targetEntity="Comment", mappedBy="news")
+     */
+    private $comments;
+
+    public function __construct()
+    {
+        $this->comments = new ArrayCollection();
+    }
 
     /**
      * Get id
@@ -215,6 +228,40 @@ class News
         $this->enabled = $enabled;
 
         return $this;
+    }
+
+    /**
+     * Add comment
+     *
+     * @param Comment $comments
+     *
+     * @return News
+     */
+    public function addComment(Comment $comments)
+    {
+        $this->comments[] = $comments;
+
+        return $this;
+    }
+
+    /**
+     * Remove comment
+     *
+     * @param Comment $comments
+     */
+    public function removeComment(Comment $comments)
+    {
+        $this->comments->removeElement($comments);
+    }
+
+    /**
+     * Get comments
+     *
+     * @return ArrayCollection|$comments[]
+     */
+    public function getComments()
+    {
+        return $this->comments;
     }
 }
 
