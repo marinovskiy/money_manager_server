@@ -156,7 +156,7 @@ class ApiOrganizationAccountController extends Controller
         $em->remove($account);
         $em->flush();
 
-        return new Response('Successful deleted', 200);
+        return $this->json(['msg' => 'Deleted'], 200);
     }
 
     /**
