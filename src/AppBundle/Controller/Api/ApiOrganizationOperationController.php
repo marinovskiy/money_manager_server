@@ -238,6 +238,6 @@ class ApiOrganizationOperationController extends Controller
         $em->remove($operation);
         $em->flush();
 
-        return new Response('Successful deleted', 200);
+        return new $this->json(['msg' => 'Deleted'], 200);
     }
 }

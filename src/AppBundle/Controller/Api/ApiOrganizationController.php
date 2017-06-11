@@ -255,14 +255,14 @@ class ApiOrganizationController extends Controller
             return $this->json('You are not creator of this organization', 403);
         }
 
-//        $membersIds = array();
-//        foreach ($organization->getMembers() as $member) {
-//            array_push($membersIds, $member->getId());
-//        }
-//
-//        if (!in_array($userId, $membersIds)) {
-//            return $this->json('Not a member', 404);
-//        }
+        $membersIds = array();
+        foreach ($organization->getMembers() as $member) {
+            array_push($membersIds, $member->getId());
+        }
+
+        if (in_array($userId, $membersIds)) {
+            return $this->json(['msg' => 'Already added'], 409);
+        }
 
         $organization->addMember($user);
         $em->flush();
@@ -310,11 +310,11 @@ class ApiOrganizationController extends Controller
         }
 
         if (!in_array($userId, $membersIds)) {
-            return $this->json('Not a member', 404);
+            return $this->json(['msg' => 'Not a member'], 404);
         }
 
         if ($organization->getCreator()->getId() == $user->getId()) {
-            return $this->json('Creator can not be removed', 403);
+            return $this->json(['msg' => 'Creator can not be removed'], 409);
         }
 
         $organization->removeMember($user);
