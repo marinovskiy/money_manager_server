@@ -11,11 +11,8 @@ namespace AppBundle\Controller\Api;
 use AppBundle\Entity\Account;
 use AppBundle\Entity\Operation;
 use AppBundle\Form\Operation\AddOperationType;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpFoundation\Response;
 
 /**
  * @Route("/api/accounts")
@@ -204,6 +201,6 @@ class ApiOperationController extends Controller
         $em->remove($operation);
         $em->flush();
 
-        return new Response('Successful deleted', 200);
+        return $this->json(['msg' => 'Successful deleted'], 200);
     }
 }
