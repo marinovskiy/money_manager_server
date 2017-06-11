@@ -27,14 +27,14 @@ class ApiOrganizationAccountController extends Controller
      */
     public function apiOrganizationNewAccountAction(Request $request, $id)
     {
-        $encoders = array(new JsonEncoder());
-        $normalizer = new ObjectNormalizer(null);
-//        $normalizer->setIgnoredAttributes(array('email'));
-        $normalizer->setCircularReferenceHandler(function ($object) {
-            return $object->getId();
-        });
-        $normalizers = array($normalizer);
-        $serializer = new Serializer($normalizers, $encoders);
+//        $encoders = array(new JsonEncoder());
+//        $normalizer = new ObjectNormalizer(null);
+////        $normalizer->setIgnoredAttributes(array('email'));
+//        $normalizer->setCircularReferenceHandler(function ($object) {
+//            return $object->getId();
+//        });
+//        $normalizers = array($normalizer);
+//        $serializer = new Serializer($normalizers, $encoders);
 
         $em = $this->getDoctrine()->getManager();
 
