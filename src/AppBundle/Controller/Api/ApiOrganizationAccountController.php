@@ -54,6 +54,8 @@ class ApiOrganizationAccountController extends Controller
         if ($form->isSubmitted() && $form->isValid()) {
             $account->setUser($this->getUser());
             $account->setBalance(0);
+            $account->setCreatedAt(new \DateTime());
+            $account->setUpdatedAt(new \DateTime());
 
             $em = $this->getDoctrine()->getManager();
             $em->persist($account);
@@ -114,6 +116,7 @@ class ApiOrganizationAccountController extends Controller
         $form->submit($data['account']);
 
         if ($account != null && $form->isSubmitted() && $form->isValid()) {
+            $account->setUpdatedAt(new \DateTime());
             $em->flush();
             return $this->json(['account' => $account], 200);
         }

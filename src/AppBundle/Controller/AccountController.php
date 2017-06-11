@@ -26,6 +26,7 @@ class AccountController extends Controller
         if ($form->isSubmitted() && $form->isValid()) {
             $account->setUser($this->getUser());
             $account->setBalance(0);
+            $account->setCreatedAt(new \DateTime());
 
             $em = $this->getDoctrine()->getManager();
             $em->persist($account);
@@ -70,6 +71,7 @@ class AccountController extends Controller
 
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
+            $account->setUpdatedAt(new \DateTime());
             $em->flush();
             return $this->redirect($this->generateUrl('profile_me'));
         }
