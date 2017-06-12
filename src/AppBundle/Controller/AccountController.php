@@ -27,6 +27,7 @@ class AccountController extends Controller
             $account->setUser($this->getUser());
             $account->setBalance(0);
             $account->setCreatedAt(new \DateTime());
+            $account->setUpdatedAt(new \DateTime());
 
             $em = $this->getDoctrine()->getManager();
             $em->persist($account);

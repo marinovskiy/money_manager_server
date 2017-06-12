@@ -132,6 +132,8 @@ class OrganizationController extends Controller
         if ($form->isSubmitted() && $form->isValid()) {
             $account->setOrganization($organization);
             $account->setBalance(0);
+            $account->setCreatedAt(new \DateTime());
+            $account->setUpdatedAt(new \DateTime());
 
             $em = $this->getDoctrine()->getManager();
             $em->persist($account);
@@ -185,6 +187,7 @@ class OrganizationController extends Controller
 
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
+            $account->setUpdatedAt(new \DateTime());
             $em->flush();
             return $this->redirect($this->generateUrl('organization_details', ['id' => $id]));
         }
