@@ -1,0 +1,64 @@
+{% extends 'base.html.twig' %}
+{% block title %}Формування звіту{% endblock %}
+{% block body %}
+    <div style="text-align: center;">
+        <div style="width: 45%; display: inline-block;">
+            <p class="text-title">Формування звіту для аккаунта {{ account.name }}</p>
+
+            <div class="col-md-9" style="margin: 0 auto;">
+                <div class="panel-body">
+
+                    <br>
+                    <br>
+                    <a>Оберіть тип операції</a>
+                    <br>
+                    <br>
+
+                    <label class="radio-inline" style="margin-right: 8px;">
+                        <input type="radio" name="inlineRadioOptions" id="inlineRadio1" value="option1"> Усі
+                    </label>
+                    <label class="radio-inline" style="margin-left: 8px; margin-right: 8px;">
+                        <input type="radio" name="inlineRadioOptions" id="inlineRadio2" value="option2"> Надходження
+                    </label>
+                    <label class="radio-inline" style="margin-left: 8px;">
+                        <input type="radio" name="inlineRadioOptions" id="inlineRadio3" value="option3"> Витрати
+                    </label>
+
+                    <p>Або категорію</p>
+
+                    <select multiple id="users_select" class="form-control" size="10">
+                        <option>qwe</option>
+                        <option>qwe</option>
+                        <option>qwe</option>
+                    </select>
+
+                    <br>
+                    <a>Вкажіть дату</a>
+                    <br>
+
+                    <div style="display: inline-block;">
+                        <div style="float: left; margin-right: 8px;">
+                            <a>Від:</a>
+                            <br>
+                            <input type="date" name="bday">
+                        </div>
+
+                        <div style="float: right; margin-left: 8px;">
+                            <a>До:</a>
+                            <br>
+                            <input type="date" name="bday">
+                        </div>
+                    </div>
+
+                    <br>
+                    <br>
+                    <br>
+                    <button id="go_back_btn" type="submit" class="btn btn-primary" style="width: 275px;">
+                        Сформувати
+                    </button>
+
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
