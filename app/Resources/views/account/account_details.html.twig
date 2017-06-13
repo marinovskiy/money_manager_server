@@ -24,6 +24,14 @@
                     <button class="btn btn-secondary" type="submit">Додати операцію</button>
                 </form>
             </div>
+
+            <br>
+
+            <div class="my-div-round-content-block-bottom">
+                <form action="{{ path('report', {'accountId': account.id}) }}">
+                    <button id="report_btn" class="btn btn-secondary" type="submit">Сформувати звіт</button>
+                </form>
+            </div>
         </div>
 
         <div id="my-div-content-child" class="my-div-center" style="width: 49%; height: 78px;">
@@ -101,6 +109,22 @@
 {% block javascripts %}
     {{ parent() }}
     <script>
+        {#$('#report_btn').click(function () {#}
+            {#$.ajax({#}
+                {#type: "GET",#}
+                {#url: "/report?accountId" + {{ account.id }},#}
+{#//                url: "/report",#}
+{#//                data: {#}
+{#//                    accountId: account.id#}
+{#//                },#}
+                {#success: function (msg) {#}
+                    {#console.log("success");#}
+                {#},#}
+                {#error: function (msg, textStatus, xhr) {#}
+                    {#console.log("failed");#}
+                {#}#}
+            {#})#}
+        {#});#}
     </script>
 
 {% endblock %}

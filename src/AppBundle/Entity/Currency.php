@@ -35,6 +35,12 @@ class Currency implements \JsonSerializable
      */
     private $symbol;
 
+    /**
+     * @var bool
+     *
+     * @ORM\Column(name="enabled", type="boolean")
+     */
+    private $enabled;
 
     /**
      * Get id
@@ -94,12 +100,29 @@ class Currency implements \JsonSerializable
         return $this->symbol;
     }
 
+    /**
+     * @return bool
+     */
+    public function getEnabled()
+    {
+        return $this->enabled;
+    }
+
+    /**
+     * @param bool $enabled
+     */
+    public function setEnabled($enabled)
+    {
+        $this->enabled = $enabled;
+    }
+
     function jsonSerialize()
     {
         return [
             'id' => $this->getId(),
             'name' => $this->getName(),
             'symbol' => $this->getSymbol(),
+            'enabled' => $this->getEnabled()
         ];
     }
 

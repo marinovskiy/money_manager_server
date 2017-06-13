@@ -15,21 +15,27 @@
                     <br>
 
                     <label class="radio-inline" style="margin-right: 8px;">
-                        <input type="radio" name="inlineRadioOptions" id="inlineRadio1" value="option1"> Усі
+                        <input type="radio" name="inlineRadioOptions" id="type_all" value="option1"> Усі
                     </label>
                     <label class="radio-inline" style="margin-left: 8px; margin-right: 8px;">
-                        <input type="radio" name="inlineRadioOptions" id="inlineRadio2" value="option2"> Надходження
+                        <input type="radio" name="inlineRadioOptions" id="type_income" value="option2"> Надходження
                     </label>
                     <label class="radio-inline" style="margin-left: 8px;">
-                        <input type="radio" name="inlineRadioOptions" id="inlineRadio3" value="option3"> Витрати
+                        <input type="radio" name="inlineRadioOptions" id="type_expense" value="option3"> Витрати
                     </label>
+
+                    <br>
+                    <br>
 
                     <p>Або категорію</p>
 
-                    <select multiple id="users_select" class="form-control" size="10">
-                        <option>qwe</option>
-                        <option>qwe</option>
-                        <option>qwe</option>
+                    <select multiple="multiple" id="categories_select" class="form-control" size="10">
+                        {% for category in categories %}
+                            <option>{{ category.name }}</option>
+                        {% endfor %}
+                        {#<option>qwe</option>#}
+                        {#<option>qwe</option>#}
+                        {#<option>qwe</option>#}
                     </select>
 
                     <br>
@@ -40,20 +46,20 @@
                         <div style="float: left; margin-right: 8px;">
                             <a>Від:</a>
                             <br>
-                            <input type="date" name="bday">
+                            <input id="from_date" type="date" name="from_date">
                         </div>
 
                         <div style="float: right; margin-left: 8px;">
                             <a>До:</a>
                             <br>
-                            <input type="date" name="bday">
+                            <input id="to_date" type="date" name="to_date">
                         </div>
                     </div>
 
                     <br>
                     <br>
                     <br>
-                    <button id="go_back_btn" type="submit" class="btn btn-primary" style="width: 275px;">
+                    <button id="btn_make_report" type="submit" class="btn btn-primary" style="width: 275px;">
                         Сформувати
                     </button>
 
@@ -61,4 +67,57 @@
             </div>
         </div>
     </div>
+{% endblock %}
+{% block javascripts %}
+    {{ parent() }}
+    <script>
+        $('option').mousedown(function (e) {
+            $('#type_all').prop('checked', false);
+            $('#type_income').prop('checked', false);
+            $('#type_expense').prop('checked', false);
+
+            e.preventDefault();
+            $(this).prop('selected', !$(this).prop('selected'));
+            return false;
+        });
+
+        $('#type_all').change(function () {
+            $("option:selected").prop("selected", false);
+        });
+        $('#type_income').change(function () {
+            $("option:selected").prop("selected", false);
+        });
+        $('#type_expense').change(function () {
+            $("option:selected").prop("selected", false);
+        });
+        $('#categories_select').change(function () {
+            $('#type_all').prop('checked', false);
+            $('#type_income').prop('checked', false);
+            $('#type_expense').prop('checked', false);
+        });
+//        $('#btn_make_report').click(function () {
+//            console.log($('#from_date').val());
+//        });
+
+        $('#btn_make_report').click(function () {
+            var index = $('#users_select option:selected').val();
+
+            {#$.ajax({#}
+                {#type: "GET",#}
+                {#url: "/organizations/" + {{ organization.id }} +"/members/add",#}
+                {#data: {#}
+                    {#userId: selectedUser.id#}
+                {#},#}
+                {#success: function (msg) {#}
+                    {#$('#adding_result').html('Added');#}
+                    {#console.log("success");#}
+                {#},#}
+                {#error: function (msg, textStatus, xhr) {#}
+                    {#$('#adding_result').html("Цей користувач вже є членом даної групи");#}
+                    {#console.log("failed");#}
+                {#}#}
+            {#})#}
+        });
+    </script>
+
 {% endblock %}

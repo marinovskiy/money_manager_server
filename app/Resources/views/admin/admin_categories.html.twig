@@ -1,0 +1,61 @@
+{% extends "::base_admin.html.twig" %}
+{% block title %}Адмін-панель - категорії{% endblock %}
+{% block body %}
+
+    <div id="my-div-content-child" class="my-div-single" style="width: 96.5%; height: 78px;">
+        <div class="my-div-round-content-block-top my-div-round bg-primary" style="width: 100%; margin-bottom: 32px;">
+            <div>
+                <a class="my-text-title-white" style="color: white;"><b>Категорії:</b></a>
+                <form action="{{ path('categories_add') }}" style="display: inline;">
+                    <button class="btn btn-secondary" type="submit" style="float: right;">Додати категорію</button>
+                </form>
+            </div>
+
+            {#<div>#}
+            {#</div>#}
+        </div>
+
+        <div>
+            {% for category in categories %}
+                <div style="margin: 0 16px 0 16px;">
+                    <div style="width: 150px; display: inline;">
+                        <b>
+                            {{ category.id }}
+                            {% if category.type is constant('TYPE_INCOME', operation) %}
+                                Надходження
+                            {% else %}
+                                Витрати
+                            {% endif %}
+                        </b>
+                    </div>
+                    {#{{ constant('TYPE_INCOME', operation) }}#}
+                    {{ category.name }}
+                    {% if category.enabled %}
+                        <form action="{{ path('categories_hide', {'id': category.id}) }}" style="display: inline;">
+                            <button class="btn btn-outline-danger" type="submit"
+                                    style="float: right; font-weight: 600;">
+                                Приховати
+                            </button>
+                        </form>
+                    {% else %}
+                        <form action="{{ path('categories_show', {'id': category.id}) }}" style="display: inline;">
+                            <button class="btn btn-outline-success" type="submit"
+                                    style="float: right; font-weight: 600;">
+                                Показати
+                            </button>
+                        </form>
+                    {% endif %}
+                    <form action="{{ path('categories_edit', {'id': category.id}) }}" style="display: inline;">
+                        <button class="btn btn-outline-warning" type="submit"
+                                style="float: right; font-weight: 600; margin-left: 12px; margin-right: 4px;">
+                            Редагувати
+                        </button>
+                    </form>
+                    {#<a style="float: right; margin-right: 250px;">{{ category.name }}</a>#}
+                </div>
+                <br>
+            {% endfor %}
+        </div>
+    </div>
+
+{% endblock %}

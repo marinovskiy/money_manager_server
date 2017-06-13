@@ -14,9 +14,9 @@ class DefaultController extends Controller
      */
     public function indexAction(Request $request)
     {
-        if (!$this->getUser()) {
-            return $this->redirectToRoute('login');
-        }
+//        if (!$this->getUser()) {
+//            return $this->redirectToRoute('login');
+//        }
 
         $newses = $this
             ->getDoctrine()

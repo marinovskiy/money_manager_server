@@ -1,0 +1,27 @@
+{% extends 'base.html.twig' %}
+{% block title %}Звіт{% endblock %}
+{% block body %}
+    <div style="text-align: center;">
+        <div style="width: 45%; display: inline-block;">
+            <p class="text-title">Звіт для аккаунта {{ account.name }}</p>
+
+            <div class="col-md-9" style="margin: 0 auto;">
+                <div class="panel-body">
+
+                    <ol>
+                        {% for operation in operations %}
+                            <li class="my-li-block">
+                                {{ operation.type }}
+                                {{ operation.description }}
+                                {{ operation.sum }}
+                                {{ operation.createdAt|date('d.m.Y') }}
+                                {{ operation.category }}
+                            </li>
+                        {% endfor %}
+                    </ol>
+
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

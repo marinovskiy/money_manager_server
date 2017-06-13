@@ -6,7 +6,7 @@
         <div class="my-div-round-content-block-top my-div-round bg-primary" style="width: 100%; margin-bottom: 32px;">
             {#<p class="my-text-title-white"><b>Новини MoneyManager:</b></p>#}
             <a class="my-text-title-white" style="color: white;"><b>Новини MoneyManager:</b></a>
-            {% if app.user.role is constant('ROLE_ADMIN', app.user) %}
+            {% if app.user and app.user.role is constant('ROLE_ADMIN', app.user) %}
                 <form action="{{ path('news_add') }}" style="display: inline;">
                     <button class="btn btn-secondary" type="submit" style="float: right;">Додати новину</button>
                 </form>

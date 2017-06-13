@@ -39,6 +39,13 @@ class Category implements \JsonSerializable
     private $type;
 
     /**
+     * @var bool
+     *
+     * @ORM\Column(name="enabled", type="boolean")
+     */
+    private $enabled;
+
+    /**
      * Get id
      *
      * @return int
@@ -101,12 +108,29 @@ class Category implements \JsonSerializable
         return $this->getName();
     }
 
+    /**
+     * @return bool
+     */
+    public function getEnabled()
+    {
+        return $this->enabled;
+    }
+
+    /**
+     * @param bool $enabled
+     */
+    public function setEnabled($enabled)
+    {
+        $this->enabled = $enabled;
+    }
+
     function jsonSerialize()
     {
         return [
             'id' => $this->getId(),
             'name' => $this->getName(),
-            'type' => $this->getType()
+            'type' => $this->getType(),
+            'enabled' => $this->getEnabled()
         ];
     }
 }

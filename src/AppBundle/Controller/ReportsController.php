@@ -20,23 +20,8 @@ use Symfony\Component\HttpFoundation\Response;
 
 class ReportsController extends Controller
 {
-//    /**
-//     * @Route("/{id}/comments/add", name="comment_add")
-//     * @Method("GET")
-//     */
-//    public function commentAddAction(Request $request, $id)
-//    {
-//        $em = $this->getDoctrine()->getManager();
-//        $categories = $em->getRepository(Category::class)->findAll();
-//
-//        $report = new Report();
-//        $form = $this->createForm(new AccountReportType($categories), $report);
-//
-//        return $this->render('report/reports.html.twig', array('form' => $form->createView()));
-//    }
-
     /**
-     * @Route("report", name="report")
+     * @Route("/report", name="report")
      * @Method("GET")
      */
     public function reportAction(Request $request)
@@ -45,9 +30,29 @@ class ReportsController extends Controller
 
         $em = $this->getDoctrine()->getManager();
         $account = $em->getRepository(Account::class)->find($accountsId);
+        $categories = $em->getRepository(Category::class)->findAll();
 
         return $this->render('report/reports.html.twig', array(
-            'account' => $account
+            'account' => $account,
+            'categories' => $categories
+        ));
+    }
+
+    /**
+     * @Route("/reportResult", name="reportResult")
+     * @Method("GET")
+     */
+    public function reportResultAction(Request $request)
+    {
+        $accountsId = $request->query->get('accountId');
+
+        $em = $this->getDoctrine()->getManager();
+        $account = $em->getRepository(Account::class)->find($accountsId);
+        $categories = $em->getRepository(Category::class)->findAll();
+
+        return $this->render('report/reports.html.twig', array(
+            'account' => $account,
+            'categories' => $categories
         ));
     }
 }

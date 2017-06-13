@@ -1,0 +1,49 @@
+{% extends "::base_admin.html.twig" %}
+{% block title %}Адмін-панель - категорії{% endblock %}
+{% block body %}
+
+    <div id="my-div-content-child" class="my-div-single" style="width: 96.5%; height: 78px;">
+        <div class="my-div-round-content-block-top my-div-round bg-primary" style="width: 100%; margin-bottom: 32px;">
+            <div>
+                <a class="my-text-title-white" style="color: white;"><b>Грошові одиниці:</b></a>
+                <form action="{{ path('currencies_add') }}" style="display: inline;">
+                    <button class="btn btn-secondary" type="submit" style="float: right;">Додати грошову одиницю</button>
+                </form>
+            </div>
+
+        </div>
+
+        <div>
+            {% for currency in currencies %}
+                <div style="margin: 0 16px 0 16px;">
+                    {{ currency.id }}
+                    {{ currency.name }}
+                    {{ currency.symbol }}
+                    {% if currency.enabled %}
+                        <form action="{{ path('currencies_hide', {'id': currency.id}) }}" style="display: inline;">
+                            <button class="btn btn-outline-danger" type="submit"
+                                    style="float: right; font-weight: 600;">
+                                Приховати
+                            </button>
+                        </form>
+                    {% else %}
+                        <form action="{{ path('currencies_show', {'id': currency.id}) }}" style="display: inline;">
+                            <button class="btn btn-outline-success" type="submit"
+                                    style="float: right; font-weight: 600;">
+                                Показати
+                            </button>
+                        </form>
+                    {% endif %}
+                    <form action="{{ path('currencies_edit', {'id': currency.id}) }}" style="display: inline;">
+                        <button class="btn btn-outline-warning" type="submit"
+                                style="float: right; font-weight: 600; margin-left: 12px; margin-right: 4px;">
+                            Редагувати
+                        </button>
+                    </form>
+                </div>
+                <br>
+            {% endfor %}
+        </div>
+    </div>
+
+{% endblock %}

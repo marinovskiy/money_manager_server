@@ -29,6 +29,10 @@
                    style="color: white; text-decoration:none;">Користувачі</a>
                 <a class="my-nav-bar-menu-item-selected" href="{{ path('admin_newses') }}"
                    style="color: white; text-decoration:none;">Новини</a>
+                <a class="my-nav-bar-menu-item-selected" href="{{ path('categories_list') }}"
+                   style="color: white; text-decoration:none;">Категорії</a>
+                <a class="my-nav-bar-menu-item-selected" href="{{ path('currencies_list') }}"
+                   style="color: white; text-decoration:none;">Грошові одиниці</a>
                 <a class="my-nav-bar-menu-item" href="{{ path('logout') }}" style="color: white; text-decoration:none;">Вихід</a>
             {% endif %}
             {% if app.user %}
