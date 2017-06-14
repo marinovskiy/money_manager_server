@@ -5,6 +5,7 @@ namespace AppBundle\Controller\Api;
 use AppBundle\Entity\Category;
 use AppBundle\Entity\Currency;
 use AppBundle\Entity\Feedback;
+use AppBundle\Form\AddFeedbackType;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
@@ -29,6 +30,32 @@ class ApiFeedbackController extends Controller
         return $this->json(['feedbackList' => $feedbackList], 200);
     }
 
+//    /**
+//     * @Route("/add", name="api_feedback_add")
+//     * @Method("POST")
+//     */
+//    public function apiFeedbackAddAction(Request $request)
+//    {
+//        $data = json_decode($request->getContent(), true);
+//        $feedbackText = $data['feedbackText'];
+//
+//        if ($feedbackText == '') {
+//            return $this->json('Ви не можете залишити пустий відгук', 400);
+//        }
+//
+//        $feedback = new Feedback();
+//        $feedback->setText($feedbackText);
+//        $feedback->setAuthor($this->getUser());
+//        $feedback->setEnabled(true);
+//        $feedback->setCreatedAt(new \DateTime());
+//
+//        $em = $this->getDoctrine()->getManager();
+//        $em->persist($feedback);
+//        $em->flush();
+//
+//        return $this->json(['feedback' => $feedback], 200);
+//    }
+
     /**
      * @Route("/add", name="api_feedback_add")
      * @Method("POST")
@@ -36,22 +63,23 @@ class ApiFeedbackController extends Controller
     public function apiFeedbackAddAction(Request $request)
     {
         $data = json_decode($request->getContent(), true);
-        $feedbackText = $data['feedbackText'];
-
-        if ($feedbackText == '') {
-            return $this->json('Ви не можете залишити пустий відгук', 400);
-        }
 
         $feedback = new Feedback();
-        $feedback->setText($feedbackText);
-        $feedback->setAuthor($this->getUser());
-        $feedback->setEnabled(true);
-        $feedback->setCreatedAt(new \DateTime());
+        $form = $this->createForm(AddFeedbackType::class, $feedback);
+        $form->submit($data['feedback']);
 
-        $em = $this->getDoctrine()->getManager();
-        $em->persist($feedback);
-        $em->flush();
+        if ($form->isSubmitted() && $form->isValid()) {
+            $feedback->setAuthor($this->getUser());
+            $feedback->setEnabled(true);
+            $feedback->setCreatedAt(new \DateTime());
 
-        return $this->json(['feedback' => $feedback], 200);
+            $em = $this->getDoctrine()->getManager();
+            $em->persist($feedback);
+            $em->flush();
+
+            return $this->json(['msg' => 'success'], 200);
+        }
+
+        return $this->json('Invalid data', 400);
     }
 }
