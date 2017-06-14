@@ -3,7 +3,7 @@
 {% block body %}
     <div style="text-align: center;">
         <div style="width: 45%; display: inline-block;">
-            <p class="text-title">Формування звіту для аккаунта {{ account.name }}</p>
+            <p class="text-title">Формування звіту для усіх аккаунтів групи {{ organization.name }}</p>
 
             <div class="col-md-9" style="margin: 0 auto;">
                 <div class="panel-body">
@@ -147,7 +147,7 @@
                     if (type === undefined && selectedCategories.length == 0 && isNaN(fromDate) && isNaN(toDate)) {
                         alert("Вкажіть хоча б один параметр для формування звіту");
                     } else {
-                        var link = '/report/account/reportResult?accountId[]=' + {{ account.id }};
+                        var link = '/report/organization/reportResult?organizationId=' + {{ organization.id }};
 
                         if (type != undefined) {
                             link = link + "&type=" + type;

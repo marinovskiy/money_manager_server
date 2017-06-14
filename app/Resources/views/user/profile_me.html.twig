@@ -1,4 +1,5 @@
 {% extends "::base.html.twig" %}
+{% block title %}MoneyManager - профіль{% endblock %}
 {% block body %}
     <div id="my-div-content-parent" class="div-content">
         <div id="my-div-content-child" class="my-div-left" style="width: 27%;">
@@ -79,6 +80,10 @@
             <div class="my-div-round-content-block-bottom" style="margin: 8px 0 0 0;">
                 <form action="{{ path('accounts_add') }}">
                     <button class="btn btn-outline-primary" type="submit">Додати аккаунт</button>
+                </form>
+                <br>
+                <form action="{{ path('reportAccounts') }}">
+                    <button class="btn btn-outline-primary" type="submit">Сформувати звіт по аккаунтам</button>
                 </form>
             </div>
         </div>

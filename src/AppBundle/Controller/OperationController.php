@@ -23,9 +23,9 @@ class OperationController extends Controller
         if (!$account) {
             return new Response("Not found", 404);
         }
-        if ($account->getUser()->getId() != $this->getUser()->getId()) {
-            return new Response("Not owner", 403);
-        }
+//        if ($account->getUser()->getId() != $this->getUser()->getId()) {
+//            return new Response("Not owner", 403);
+//        }
 
         $operation = new Operation();
         $form = $this->createForm(AddOperationType::class, $operation);

@@ -38,6 +38,15 @@ a:active {
     margin-bottom: 8px;
 }
 
+.my-li-td{
+    margin-left: 16px;
+}
+
+.my-td {
+    vertical-align: middle;
+    text-align: left;
+}
+
 #search_panel {
     text-align: center;
 }

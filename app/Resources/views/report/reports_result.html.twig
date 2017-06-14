@@ -2,23 +2,80 @@
 {% block title %}Звіт{% endblock %}
 {% block body %}
     <div style="text-align: center;">
-        <div style="width: 45%; display: inline-block;">
-            <p class="text-title">Звіт для аккаунта {{ account.name }}</p>
+        <div style="width: 100%; display: inline-block;">
+            {% if account is defined %}
+                <p class="text-title">Звіт для аккаунта {{ account.name }}</p>
+            {% elseif organization is defined %}
+                <p class="text-title">Звіт для усіх аккаунтів групи {{ organization.name }}</p>
+            {% else %}
+                <p class="text-title">Звіт для усіх Ваших аккаунтів</p>
+            {% endif %}
 
-            <div class="col-md-9" style="margin: 0 auto;">
+            <div class="col-md-11" style="margin: 0 auto;">
                 <div class="panel-body">
 
-                    <ol>
-                        {% for operation in operations %}
-                            <li class="my-li-block">
-                                {{ operation.type }}
-                                {{ operation.description }}
-                                {{ operation.sum }}
-                                {{ operation.createdAt|date('d.m.Y') }}
-                                {{ operation.category }}
-                            </li>
-                        {% endfor %}
-                    </ol>
+                    <br>
+                    {% if operations %}
+                        <ol>
+                            <table style="width:100%">
+                                <tr>
+                                    <td class="my-td"><b>Номер</b></td>
+                                    <td class="my-td"><b>Тип</b></td>
+                                    <td class="my-td"><b>Категорія</b></td>
+                                    <td class="my-td"><b>Опис</b></td>
+                                    <td class="my-td"><b>Сума</b></td>
+                                    <td class="my-td"><b>Дата</b></td>
+                                    {% if account is not defined %}
+                                        <td class="my-td"><b>Аккаунт</b></td>
+                                    {% endif %}
+                                </tr>
+                                <tr>
+                                    <td class="my-td"></td>
+                                    <td class="my-td"></td>
+                                    <td class="my-td"></td>
+                                    <td class="my-td"></td>
+                                    <td class="my-td"></td>
+                                    <td class="my-td"></td>
+                                    {% if account is not defined %}
+                                        <td class="my-td"></td>
+                                    {% endif %}
+                                </tr>
+                                {% for operation in operations %}
+                                    <tr>
+                                        <td class="my-td">
+                                            <li class="my-li-td"></li>
+                                        </td>
+                                        <td class="my-td">{{ operation.type }}</td>
+                                        <td class="my-td">{{ operation.category }}</td>
+                                        <td class="my-td">{{ operation.description }}</td>
+                                        <td class="my-td">
+                                            {% if operation.type == 'income' %}
+                                                <a style="color: #9CCC65; padding-left: 4px;">+{{ operation.sum }}</a>
+                                            {% else %}
+                                                <a style="color: #E57373; padding-left: 4px;">- {{ operation.sum }}</a>
+                                            {% endif %}
+                                        </td>
+                                        <td class="my-td">{{ operation.createdAt|date('d.m.Y') }}</td>
+                                        {% if account is not defined %}
+                                            <td class="my-td">{{ operation.account.name }}</td>
+                                        {% endif %}
+                                    </tr>
+                                {% endfor %}
+                            </table>
+
+                            <br>
+                            <br>
+                            <div>
+                                <p align="left"><b>Сума надходжень:</b> <a style="color: #9CCC65; padding-left: 4px;">
+                                        +{{ operationsSumIncome }}</a></p>
+                                <p align="left"><b>Сума витрат:</b> <a style="color: #E57373; padding-left: 4px;">
+                                        {{ operationsSumExpense }}</a></p>
+                            </div>
+                            <br>
+                        </ol>
+                    {% else %}
+                        За вказаними Вами параметрами не знайдено жодної операції
+                    {% endif %}
 
                 </div>
             </div>
